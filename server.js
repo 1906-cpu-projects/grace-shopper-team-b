@@ -6,7 +6,7 @@ const app = express();
 
 const db = require('./db');
 const { models } = require('./db');
-const { User, Product } = models;
+const { Product } = models;
 
 const Sequelize = require('sequelize');
 
@@ -14,7 +14,7 @@ const Sequelize = require('sequelize');
 
 //ISSUES WITH WEBPACK - COMMENTING OUT THE BELOW
 //app.use(express.json());
-//app.use('/dist', express.static(path.join(__dirname, '../dist')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 const port = process.env.PORT || 3000;
 
@@ -30,7 +30,10 @@ app.get('/api/products', (req, res, next) => {
 
 
 
-//db.syncAndSeed()
-//.then(() => {
+db.syncAndSeed()
+.then(() => {
 app.listen(port, ()=> console.log(`listening on port ${port}`))
-//});
+});
+
+
+module.exports = app;

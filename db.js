@@ -6,6 +6,8 @@ const {TEXT, ARRAY, STRING, DECIMAL, INTEGER, UUID, UUIDV4} = Sequelize;
 
 const conn = new Sequelize(process.env.DATABASE || 'postgres://localhost/teamb-graceshopperdb')
 
+//USERS COMMENTED OUT UNTIL PRODUCTS WORKS
+/*
 const User = conn.define('user', {
   id: {
     type: UUID,
@@ -36,6 +38,8 @@ const User = conn.define('user', {
     type: STRING
   }
 
+  */
+
   /* COMMMENTING THIS OUT FOR NOW AS NOT SURE HOW THIS WILL WORK
   ,
   cart: {
@@ -43,7 +47,9 @@ const User = conn.define('user', {
     defaultValue: []
   }
   */
-});
+//});
+
+
 
 const Product = conn.define('product', {
   id: {
@@ -93,17 +99,22 @@ const Product = conn.define('product', {
 const syncAndSeed = async() => {
   await conn.sync({ force: true}); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
 
+  /*
   const users = [
 
   ]
 
   const [] = await Promise.all(users.map(user => User.create(user)));
 
+  */
   const products = [
-
+    {productName: "acme product 1"},
+    {productName: "acme product 2"},
+    {productName: "acme product 3"}
   ]
 
-    const [] = await Promise.all(products.map(product => Product.create(product)));
+
+    const [product1, product2, product3] = await Promise.all(products.map(product => Product.create(product)));
 
 }
 
@@ -111,8 +122,9 @@ const syncAndSeed = async() => {
 module.exports = {
   syncAndSeed,
   models: {
-    Product,
-    User
+    Product
+    //,
+    //User
   }
 }
 
