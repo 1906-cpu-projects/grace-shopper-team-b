@@ -20,6 +20,10 @@
           justify-content: space-around;
         }
 
+        body {
+          font-family: Helvetica, Arial, sans-serif;
+        }
+
       </style>
 
 
@@ -45,6 +49,8 @@
       <nav>
         <Link to="/">Home</Link>
         <Link to="/products">Products</Link>
+        <Link to="/about">About Us</Link>
+        <Link to="/contact">Contact Us</Link>
         <Link to="/cart">Cart</Link>
       </nav>
     )
@@ -66,6 +72,22 @@
     )
   }
 
+  const About = () => {
+    return (
+      <div>
+        <h1> About Us coming soon...</h1>
+      </div>
+    )
+  }
+
+  const Contact = () => {
+    return (
+      <div>
+        <h1> Contact us via the email address below...</h1>
+        <p> contact (at) store.com </p>
+      </div>
+    )
+  }
 
   const Cart = () => {
     return (
@@ -88,7 +110,10 @@
           <Switch>
             <Route exact path='/' component={ Home } />
             <Route exact path='/products' component={ Products } />
+            <Route exact path='/about' component={ About } />
+            <Route exact path='/contact' component={ Contact } />
             <Route exact path='/cart' component={ Cart } />
+
           </Switch>
 
         </HashRouter>
