@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+      <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+      <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+      <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.4/redux.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.1.1/react-redux.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.1/react-router-dom.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.3.0/redux-thunk.js'></script>
+
+
+      <style>
+        nav {
+          display: flex;
+          justify-content: space-around;
+        }
+
+      </style>
+
+
+
+  </head>
+
+  <body>
+
+    <div id='root'>
+
+    </div>
+
+
+
+  <script type='text/babel'>
+    const root = document.querySelector('#root')
+    const { Component } = React;
+    const { render } = ReactDOM;
+    const { HashRouter, Switch, Link, Route } = ReactRouterDOM;
+
+  const Nav = () => {
+    return (
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/products">Products</Link>
+        <Link to="/cart">Cart</Link>
+      </nav>
+    )
+  }
+
+  const Home = () => {
+    return (
+      <div>
+        <h1> Home coming soon...</h1>
+      </div>
+    )
+  }
+
+  const Products = () => {
+    return (
+      <div>
+        <h1> Products coming soon...</h1>
+      </div>
+    )
+  }
+
+
+  const Cart = () => {
+    return (
+      <div>
+        <h1> Shopping Cart coming soon...</h1>
+      </div>
+    )
+  }
+
+
+  class App extends Component {
+    constructor() {
+      super()
+    }
+
+    render() {
+      return (
+        <HashRouter>
+          <Route component= { Nav } />
+          <Switch>
+            <Route exact path='/' component={ Home } />
+            <Route exact path='/products' component={ Products } />
+            <Route exact path='/cart' component={ Cart } />
+          </Switch>
+
+        </HashRouter>
+      )
+    }
+
+  }
+
+render(<App />, root)
+
+  </script>
+</body>
+
+</html>
