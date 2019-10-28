@@ -11,6 +11,7 @@ import About from './About'
 import Contact from './Contact'
 import Cart from './Cart'
 import Nav from './Nav'
+import Login from './Login'
 
 import store, { setProductsThunk } from './store';
 
@@ -38,7 +39,7 @@ class App extends Component {
           <Route exact path='/about' component={ About } />
           <Route exact path='/contact' component={ Contact } />
           <Route exact path='/cart' component={ Cart } />
-
+          <Route exact path='/login' component={ Login } />
         </Switch>
 
       </HashRouter>
