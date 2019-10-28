@@ -1,3 +1,3 @@
 # grace-shopper-team-b
 
-James has touched ReadMe, twice.
+James has touched ReadMe, thrice.
