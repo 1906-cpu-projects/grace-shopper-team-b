@@ -14,10 +14,9 @@ const Products = () => {
 
 */
 
-
 class _Login extends Component {
   constructor() {
-    super()
+    super();
   }
 
   render() {
@@ -25,21 +24,27 @@ class _Login extends Component {
 
     return (
       <div>
-        <h1>Login page coming soon....</h1>
+        <h1>Login</h1>
+        <form method="post" action="/login">
+          <input type="email" name="email" placeholder="Email" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input type="submit" />
+        </form>
+        <a href="/register">Register</a>
       </div>
-    )
-
+    );
   }
-
 }
 
-
-const Login = connect(({products}) => {
+const Login = connect(({ products }) => {
   return {
     products
-  }
-})(_Login)
-
-
+  };
+})(_Login);
 
 export default Login;
