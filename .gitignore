@@ -36,6 +36,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# app.js
+assets/
+.app
 # TypeScript v1 declaration files
 typings/
 
@@ -59,5 +62,3 @@ typings/
 
 # next.js build output
 .next
-
-assets/
