@@ -1,7 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 import { render } from 'react-dom'
-import "../app.css";
 import { HashRouter, Switch, Link, Route } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 
