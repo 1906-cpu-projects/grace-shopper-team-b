@@ -27,6 +27,7 @@
   "homepage": "https://github.com/robcodehub/grace-shopper-team-b#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "pg": "^7.12.1",
     "sequelize": "^5.21.1"
   },
