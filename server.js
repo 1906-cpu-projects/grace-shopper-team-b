@@ -41,6 +41,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 //   })
 // );
 
+/*
 app.use((req, res, next) => {
   const { userId } = req.session;
   if (userId) {
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
   }
   next();
 });
+*/
 
 const port = process.env.PORT || 3000;
 
