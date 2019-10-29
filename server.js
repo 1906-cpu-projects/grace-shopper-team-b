@@ -41,13 +41,14 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 //   })
 // );
 
-app.use((req, res, next) => {
-  const { userId } = req.session;
-  if (userId) {
-    res.locals.user = users.find(user => user.id === userId);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(req)
+//   const { id } = req.session;
+//   if (id) {
+//     res.locals.user = users.find(user => user.id === id);
+//   }
+//   next();
+// });
 
 const port = process.env.PORT || 3000;
 
@@ -59,6 +60,12 @@ app.get('/api/users', (req, res, next) => {
   User.findAll()
     .then(users => res.send(users))
     .catch(next);
+});
+
+app.get('/api/users/:id', (req, res, next) => {
+  User.findAll({ where: { id: req.params.id } })
+    .then(users => res.send(users))
+    .catch(next)
 });
 
 app.get('/api/products', (req, res, next) => {
