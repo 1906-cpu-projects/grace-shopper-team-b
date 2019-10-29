@@ -1,8 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { render } from 'react-dom'
-
-import { HashRouter, Switch, Link, Route  } from 'react-router-dom';
+import { HashRouter, Switch, Link, Route } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 
 import Home from './Home'
@@ -12,10 +11,11 @@ import Contact from './Contact'
 import Cart from './Cart'
 import Nav from './Nav'
 import Login from './Login'
+import User from './User'
 
-import store, { setProductsThunk } from './store';
+import store, { setProductsThunk, setUsersThunk } from './store';
 
-  const root = document.querySelector('#root')
+const root = document.querySelector('#root')
 
 
 class App extends Component {
@@ -25,24 +25,26 @@ class App extends Component {
 
   async componentDidMount() {
     store.dispatch(setProductsThunk());
+    store.dispatch(setUsersThunk());
   }
 
 
   render() {
     return (
       <Provider store={store}>
-      <HashRouter>
-        <Route component= { Nav } />
-        <Switch>
-          <Route exact path='/' component={ Home } />
-          <Route exact path='/products' component={ Products } />
-          <Route exact path='/about' component={ About } />
-          <Route exact path='/contact' component={ Contact } />
-          <Route exact path='/cart' component={ Cart } />
-          <Route exact path='/login' component={ Login } />
-        </Switch>
+        <HashRouter>
+          <Route component={Nav} />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/products' component={Products} />
+            <Route exact path='/about' component={About} />
+            <Route exact path='/contact' component={Contact} />
+            <Route exact path='/cart' component={Cart} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/users/:id' component={User} />
+          </Switch>
 
-      </HashRouter>
+        </HashRouter>
       </Provider>
     )
   }
