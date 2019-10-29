@@ -111,9 +111,21 @@ const Product = conn.define('product', {
 //==============================ORDERS?==============================
 //==============HOW TO HANDLE ORDERS? SEPERATE MODEL OR ARRAY ON USER?
 
+const Order = conn.define('order', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  }
+});
+
 //==============================CART?==============================
 //==============HOW TO HANDLE CART? SEPERATE MODEL OR ARRAY ON USER?
 //==============SHOULD CART BY HANDLED BY STORE AND FRONT END? WILL THIS BE PERSISTENT?
+
+Order.belongsTo(User);
+Order.hasMany(Product);
+
 
 //SYNC AND SEED COMING SOON...
 
@@ -147,6 +159,7 @@ module.exports = {
   models: {
     Product,
     Guest,
+    Order,
     User
   }
 };
