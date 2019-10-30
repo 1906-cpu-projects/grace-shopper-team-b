@@ -2,7 +2,7 @@ const pg = require('pg');
 
 const Sequelize = require('sequelize');
 
-const { TEXT, ARRAY, STRING, DECIMAL, INTEGER, UUID, UUIDV4 } = Sequelize;
+const { TEXT, ARRAY, STRING, DECIMAL, INTEGER, UUID, UUIDV4, DATE, ENUM } = Sequelize;
 
 const conn = new Sequelize(
   process.env.DATABASE || 'postgres://localhost/teamb_graceshopperdb'
@@ -116,15 +116,57 @@ const Order = conn.define('order', {
     type: UUID,
     primaryKey: true,
     defaultValue: UUIDV4
+  },
+  status: {
+    type: ENUM('cart', 'completed'),
+    defaultValue: 'cart'
+  },
+  orderDate:{
+    type: DATE
+  },
+  shippingAddress: {
+    type: TEXT
+  },
+  total: {
+    type: DECIMAL,
+    defaultValue: 0.00
   }
 });
 
 //==============================CART?==============================
 //==============HOW TO HANDLE CART? SEPERATE MODEL OR ARRAY ON USER?
 //==============SHOULD CART BY HANDLED BY STORE AND FRONT END? WILL THIS BE PERSISTENT?
+const OrderProducts = conn.define('orderproducts', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  quantity: {
+    type: INTEGER,
+    validate: {
+      min: 1
+    }
+  },
+  price: {
+    type: DECIMAL,
+    notEmpty: true
+  },
+  subTotal: {
+    type: DECIMAL,
+    notEmpty: true
+  }
+})
 
-Order.belongsTo(User);
-Order.hasMany(Product);
+//==============================RELATIONSHIPS==============================
+
+User.hasMany(Order)
+Order.belongsTo(User)
+Order.hasMany(OrderProducts);
+
+OrderProducts.belongsTo(Order)
+OrderProducts.belongsTo(Product)
+
 
 
 //SYNC AND SEED COMING SOON...
