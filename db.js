@@ -2,7 +2,7 @@ const pg = require('pg');
 
 const Sequelize = require('sequelize');
 
-const { TEXT, ARRAY, STRING, DECIMAL, INTEGER, UUID, UUIDV4 } = Sequelize;
+const { TEXT, ARRAY, STRING, DECIMAL, INTEGER, UUID, UUIDV4, DATE, ENUM } = Sequelize;
 
 const conn = new Sequelize(
   process.env.DATABASE || 'postgres://localhost/teamb_graceshopperdb'
@@ -111,9 +111,63 @@ const Product = conn.define('product', {
 //==============================ORDERS?==============================
 //==============HOW TO HANDLE ORDERS? SEPERATE MODEL OR ARRAY ON USER?
 
+const Order = conn.define('order', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  status: {
+    type: ENUM('cart', 'completed'),
+    defaultValue: 'cart'
+  },
+  orderDate:{
+    type: DATE
+  },
+  shippingAddress: {
+    type: TEXT
+  },
+  total: {
+    type: DECIMAL,
+    defaultValue: 0.00
+  }
+});
+
 //==============================CART?==============================
 //==============HOW TO HANDLE CART? SEPERATE MODEL OR ARRAY ON USER?
 //==============SHOULD CART BY HANDLED BY STORE AND FRONT END? WILL THIS BE PERSISTENT?
+const OrderProducts = conn.define('orderproducts', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  quantity: {
+    type: INTEGER,
+    validate: {
+      min: 1
+    }
+  },
+  price: {
+    type: DECIMAL,
+    notEmpty: true
+  },
+  subTotal: {
+    type: DECIMAL,
+    notEmpty: true
+  }
+})
+
+//==============================RELATIONSHIPS==============================
+
+User.hasMany(Order)
+Order.belongsTo(User)
+Order.hasMany(OrderProducts);
+
+OrderProducts.belongsTo(Order)
+OrderProducts.belongsTo(Product)
+
+
 
 //SYNC AND SEED COMING SOON...
 
@@ -140,6 +194,19 @@ const syncAndSeed = async () => {
   const [product1, product2, product3] = await Promise.all(
     products.map(product => Product.create(product))
   );
+
+  const orders = [
+    { userId: dominiqueUser.id},
+    { userId: robUser.id }
+  ];
+  const [domOrder, robOrder] = await Promise.all( orders.map( order => Order.create(order)))
+
+  const orderProducts = [
+    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: domOrder.id, productId: product1.id},
+    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: domOrder.id, productId: product2.id},
+    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: robOrder.id, productId: product3.id}
+  ];
+  const [orderProduct1, orderProduct2, orderProduct3] = await Promise.all( orderProducts.map( orderProduct => OrderProducts.create(orderProduct)))
 };
 
 module.exports = {
@@ -147,6 +214,8 @@ module.exports = {
   models: {
     Product,
     Guest,
+    Order,
+    OrderProducts,
     User
   }
 };
