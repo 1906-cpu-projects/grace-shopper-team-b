@@ -15,6 +15,10 @@ const SET_PRODUCTS = 'SET_PRODUCTS';
 /////////////////////////USERS- ACTION TYPES//////////////////////////
 const SET_USERS = 'SET_USERS';
 
+/////////////////////////ORDERS- ACTION TYPES//////////////////////////
+const SET_ORDERS = 'SET_ORDERS';
+const SET_ORDERPRODUCTS = 'SET_ORDERPRODUCTS';
+
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////REDUX - ACTION CREATORS////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -24,6 +28,10 @@ const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 const setUsersAction = users => ({ type: SET_USERS, users });
+
+/////////////////////////ORDER ACTION CREATORS//////////////////////////
+const setOrdersAction = orders => ({ type: SET_ORDERS, orders });
+const setOrderProducts = orderProducts => ({ type: SET_ORDERPRODUCTS, orderProducts });
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////     REDUX - THUNKS    ////////////////////////////
@@ -72,6 +80,22 @@ const setUsersThunk = () => {
   };
 };
 
+////////////////////////     ORDERS - THUNKS    //////////////////////////
+
+const setOrdersThunk = () => {
+  return async dispatch => {
+    const allOrders = (await axios.get('/api/orders')).data;
+    dispatch(setOrdersAction(allOrders));
+  };
+};
+
+const setOrderProductsThunk = () => {
+  return async dispatch => {
+    const allOrderProducts = (await axios.get('/api/orderProducts')).data;
+    dispatch(setOrderProducts(allOrderProducts))
+  }
+}
+
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////     REDUX - REDUCERS    //////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -103,11 +127,29 @@ const userReducer = (state = [], action) => {
   return state;
 };
 
+////////////////////////   REDUX - ORDERS REDUCER   ////////////////////
+
+const orderReducer = (state = [], action) => {
+  if (action.type === SET_ORDERS) {
+    state = action.orders;
+  }
+  return state;
+};
+
+const orderProdutsReducer = (state = [], action) => {
+  if (action.type === SET_ORDERPRODUCTS) {
+    state = action.orderProducts;
+  }
+  return state;
+};
+
 ////////////////////////   REDUX - COMBINE REDUCERS    ////////////////////
 const reducer = combineReducers({
   auth: authReducer,
   products: productReducer,
-  users: userReducer
+  users: userReducer,
+  orders: orderReducer,
+  orderProducts: orderProdutsReducer
 });
 
 //////////////////////////////////////////////////////////////////////////
@@ -122,6 +164,8 @@ export { setProductsAction, setUsersAction };
 export {
   setProductsThunk,
   setUsersThunk,
+  setOrdersThunk,
+  setOrderProductsThunk,
   attemptLogin,
   attemptSessionLogin,
   logout

@@ -16,7 +16,9 @@ import User from './User';
 import store, {
   attemptSessionLogin,
   setProductsThunk,
-  setUsersThunk
+  setUsersThunk,
+  setOrdersThunk,
+  setOrderProductsThunk
 } from './store';
 
 const root = document.querySelector('#root');
@@ -29,6 +31,8 @@ class _App extends Component {
   async componentDidMount() {
     store.dispatch(setProductsThunk());
     store.dispatch(setUsersThunk());
+    store.dispatch(setOrdersThunk());
+    store.dispatch(setOrderProductsThunk());
   }
 
   render() {
