@@ -3,16 +3,6 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-/*
-const Products = () => {
-  return (
-    <div>
-      <h1> Products coming soon...</h1>
-    </div>
-  )
-}
-
-*/
 
 
 class _Products extends Component {

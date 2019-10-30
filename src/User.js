@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const _User = ({ users, match }) => {
-  console.log("MATCH ", match.params.id)
-  console.log("USER ", users)
+const _User = ({ users, auth, match }) => {
 
   return (
     <div>
@@ -17,9 +15,10 @@ const _User = ({ users, match }) => {
   )
 }
 
-const User = connect(({ users }) => {
+const User = connect(({ users, auth }) => {
   return {
-    users
+    users,
+    auth
   }
 })(_User)
 
