@@ -2,12 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const _Nav = ({ products }) => {
+const _Nav = ({ products, auth }) => {
+
+  let userPath = `/users/${auth.id}`
+
+  if (auth.id === undefined) {
+    userPath = '/login'
+  }
+
   return (
     <nav>
       <Link to="/">Home</Link>
       <Link to="/products">Products ({products.length})</Link>
-      <Link to="/about">About Us</Link>
+      <Link to={userPath}>Profile</Link>
       <Link to="/login">Login</Link>
       <Link to="/cart">Cart</Link>
     </nav>
@@ -15,9 +22,10 @@ const _Nav = ({ products }) => {
 }
 
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({products, auth}) => {
   return {
-    products
+    products,
+    auth
   }
 }
 

@@ -30,6 +30,7 @@ class _App extends Component {
 
   async componentDidMount() {
     store.dispatch(setProductsThunk());
+    store.dispatch(attemptSessionLogin());
     store.dispatch(setUsersThunk());
     store.dispatch(setOrdersThunk());
     store.dispatch(setOrderProductsThunk());
@@ -47,9 +48,9 @@ class _App extends Component {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/cart" component={Cart} />
-            <Route path="/login" component={Login} exact />
-            {loggedIn && <Redirect to="/" />}
             <Route exact path="/users/:id" component={User} />
+            {loggedIn && <Redirect to="/" />}
+            <Route path="/login" component={Login} exact />
           </Switch>
         </HashRouter>
       </Provider>
