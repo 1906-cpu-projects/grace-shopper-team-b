@@ -31,7 +31,7 @@ class _Login extends Component {
     const { error, email, password } = this.state;
     const { onChange, attemptLogin } = this;
     return (
-      <div>
+      <div className={"container"}>
         <h2>
           Welcome to the grace shopper California, you can login anytime but you
           can never leave. Please login...

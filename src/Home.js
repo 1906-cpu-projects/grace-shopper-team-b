@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logout } from './store';
 
 const _Home = ({ auth, logout }) => (
-  <div>
+  <div className={"container"}>
     Home - Welcome {auth.email}
     <button onClick={logout}>Logout</button>
   </div>

@@ -22,7 +22,7 @@ const _Nav = ({ products, auth }) => {
 }
 
 
-const mapStateToProps = ({products, auth}) => {
+const mapStateToProps = ({ products, auth }) => {
   return {
     products,
     auth
