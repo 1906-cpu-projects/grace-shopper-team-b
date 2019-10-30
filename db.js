@@ -194,6 +194,19 @@ const syncAndSeed = async () => {
   const [product1, product2, product3] = await Promise.all(
     products.map(product => Product.create(product))
   );
+
+  const orders = [
+    { userId: dominiqueUser.id},
+    { userId: robUser.id }
+  ];
+  const [domOrder, robOrder] = await Promise.all( orders.map( order => Order.create(order)))
+
+  const orderProducts = [
+    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: domOrder.id, productId: product1.id},
+    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: domOrder.id, productId: product2.id},
+    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: robOrder.id, productId: product3.id}
+  ];
+  const [orderProduct1, orderProduct2, orderProduct3] = await Promise.all( orderProducts.map( orderProduct => OrderProducts.create(orderProduct)))
 };
 
 module.exports = {
@@ -202,6 +215,7 @@ module.exports = {
     Product,
     Guest,
     Order,
+    OrderProducts,
     User
   }
 };

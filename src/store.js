@@ -67,7 +67,7 @@ const setProductsThunk = () => {
 const setUsersThunk = () => {
   return async dispatch => {
     const allUsers = (await axios.get('/api/users')).data;
-    console.log('THUNKS ', allUsers);
+    // console.log('THUNKS ', allUsers);
     dispatch(setUsersAction(allUsers));
   };
 };

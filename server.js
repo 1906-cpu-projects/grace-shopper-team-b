@@ -6,7 +6,7 @@ const app = express();
 
 const db = require('./db');
 const { models } = require('./db');
-const { Product, User, Guest } = models;
+const { Product, User, Guest, Order, OrderProducts } = models;
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -55,6 +55,18 @@ app.get('/api/users/:id', (req, res, next) => {
 app.get('/api/products', (req, res, next) => {
   Product.findAll()
     .then(products => res.send(products))
+    .catch(next);
+});
+
+app.get('/api/orders', (req, res, next) => {
+  Order.findAll()
+    .then(orders => res.send(orders))
+    .catch(next);
+});
+
+app.get('/api/orderProducts', (req, res, next) => {
+  OrderProducts.findAll()
+    .then(orders => res.send(orders))
     .catch(next);
 });
 

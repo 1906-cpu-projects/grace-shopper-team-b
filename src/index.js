@@ -60,7 +60,7 @@ const App = connect(
     };
   },
   dispatch => {
-    console.log(attemptSessionLogin);
+    // console.log(attemptSessionLogin);
     return {
       attemptSessionLogin: () => dispatch(attemptSessionLogin())
     };

@@ -9,6 +9,7 @@ class Cart extends React.Component {
     super();
   }
   render(){
+    // console.log('session', req.session)
     return (
       <div>
         <h1>Your Shopping Cart</h1>
