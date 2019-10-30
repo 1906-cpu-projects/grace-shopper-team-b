@@ -77,21 +77,6 @@ class _Cart extends React.Component {
   }
 }
 
-
-// const _Cart = () => {
-//   return (
-//     <div>
-//       <h1> Shopping Cart coming soon...</h1>
-//     </div>
-//   )
-// }
-
-
-// const dispatchToProps = (dispatch) => {
-//   return {
-//     getUsers: async ()
-//   }
-// }
 const mapPropsToDispatch = ({orders, users, products, orderProducts}) => {
   return ({
     orders,
