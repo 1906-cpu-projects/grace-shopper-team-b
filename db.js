@@ -175,10 +175,10 @@ const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
 
   const users = [
-    { name: 'James', email: 'archer@gmail.com', password: 'ARCHER' },
-    { name: 'Rob', email: 'caster@gmail.com', password: 'CASTER' },
-    { name: 'Paul', email: 'saber@gmail.com', password: 'SABER' },
-    { name: 'Dominique', email: 'lancer@gmail.com', password: 'LANCER' }
+    { firstName: 'James', lastName: 'Fuller', username: 'jf', email: 'archer@gmail.com', password: 'ARCHER' },
+    { firstName: 'Rob', lastName: 'Wise', username: 'rw', email: 'caster@gmail.com', password: 'CASTER' },
+    { firstName: 'Paul', lastName: 'Blackburn', username: 'pb', email: 'saber@gmail.com', password: 'SABER' },
+    { firstName: 'Dominique', lastName: 'Boyer', username: 'db', email: 'lancer@gmail.com', password: 'LANCER' }
   ];
 
   const [jamesUser, robUser, paulUser, dominiqueUser] = await Promise.all(

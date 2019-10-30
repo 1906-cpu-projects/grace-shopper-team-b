@@ -1,13 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logout } from './store';
 
-const Home = () => {
-  return (
-    <div>
-      <h1> Home coming soon...</h1>
-    </div>
-  )
-}
+const _Home = ({ auth, logout }) => (
+  <div>
+    Home - Welcome {auth.email}
+    <button onClick={logout}>Logout</button>
+  </div>
+);
+
+const Home = connect(
+  ({ auth }) => {
+    return { auth };
+  },
+  dispatch => {
+    return {
+      logout: () => dispatch(logout())
+    };
+  }
+)(_Home);
 
 export default Home;
