@@ -6,10 +6,10 @@ import { setUsersThunk, setProductsThunk, setOrdersThunk, setOrderProductsThunk 
 
 
 class _Cart extends React.Component {
-  constructor(props){
+  constructor(props) {
     super();
   }
-  async componentDidMount(){
+  async componentDidMount() {
     await this.props.getUsers()
     await this.props.getProducts()
     await this.props.getOrders()
@@ -21,9 +21,9 @@ class _Cart extends React.Component {
     // console.log('users', users)
     // console.log('orders',orders)
     const cart = orders.find(order => order.userId === auth.id && order.status ==='cart');
-    console.log('cart', cart)
+    // console.log('cart', cart)
     // console.log('products', products)
-    console.log('orderProducts', orderProducts)
+    // console.log('orderProducts', orderProducts)
 
     return (
       <div>

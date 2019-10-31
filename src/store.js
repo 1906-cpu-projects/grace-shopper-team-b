@@ -14,6 +14,7 @@ const SET_PRODUCTS = 'SET_PRODUCTS';
 
 /////////////////////////USERS- ACTION TYPES//////////////////////////
 const SET_USERS = 'SET_USERS';
+const UPDATE_USER = 'UPDATE_USER';
 
 /////////////////////////ORDERS- ACTION TYPES//////////////////////////
 const SET_ORDERS = 'SET_ORDERS';
@@ -28,6 +29,7 @@ const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 const setUsersAction = users => ({ type: SET_USERS, users });
+const updateUserAction = users => ({ type: UPDATE_USER, users });
 
 /////////////////////////ORDER ACTION CREATORS//////////////////////////
 const setOrdersAction = orders => ({ type: SET_ORDERS, orders });
@@ -80,6 +82,14 @@ const setUsersThunk = () => {
   };
 };
 
+const updateUserThunk = () => {
+  return async dispatch => {
+    const allUsers = (await axios.get('/api/users')).data;
+    // console.log('THUNKS ', allUsers);
+    dispatch(updateUserAction(allUsers));
+  };
+};
+
 ////////////////////////     ORDERS - THUNKS    //////////////////////////
 
 const setOrdersThunk = () => {
@@ -123,6 +133,9 @@ const productReducer = (state = [], action) => {
 const userReducer = (state = [], action) => {
   if (action.type === SET_USERS) {
     state = action.users;
+  }
+  if (action.type === UPDATE_USER) {
+
   }
   return state;
 };
