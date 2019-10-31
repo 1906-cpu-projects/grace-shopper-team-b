@@ -33,16 +33,8 @@ class _Login extends Component {
     const { error, email, password } = this.state;
     const { onChange, attemptLogin } = this;
     return (
-<<<<<<< HEAD
-      <div className={"container"}>
-        <h2>
-||||||| merged common ancestors
-      <div>
-        <h2>
-=======
       <div className="container">
         <h4>
->>>>>>> 12641003e9a7583c02906d554293e13fae10848c
           Welcome to the grace shopper California, you can login anytime but you
           can never leave. Please login...
         </h4>

@@ -12,35 +12,8 @@ class _Products extends Component {
     const { products } = this.props;
 
     return (
-      <div className={"container"}>
+      <div>
         <h1>Our Products</h1>
-<<<<<<< HEAD
-        <div id='products'>
-          {
-            products.map(product => <div key={product.id}> <br />
-              Product Name: {product.productName} <br />
-              Description: {product.description} <br />
-              Price: ${product.price} <br />
-              Amount In Stock: {product.inventory} <br />
-              Product Image: <br /> <img height="200" width="200" src={product.imageURL} /> <br />
-              <button>Add to Cart</button>
-            </div>
-            )
-          }
-||||||| merged common ancestors
-        <div id='products'>
-          {
-            products.map(product => <div key={product.id}> <br/>
-                Product Name: {product.productName} <br />
-                Description: {product.description} <br />
-                Price: ${product.price} <br />
-                Amount In Stock: {product.inventory} <br/>
-                Product Image: <br /> <img height="200" width="200" src={product.imageURL} /> <br />
-                <button>Add to Cart</button>
-              </div>
-            )
-          }
-=======
         <div id="products">
           {products.map(product => (
             <div key={product.id}>
@@ -58,22 +31,13 @@ class _Products extends Component {
               </button>
             </div>
           ))}
->>>>>>> 12641003e9a7583c02906d554293e13fae10848c
         </div>
       </div>
     );
   }
 }
 
-<<<<<<< HEAD
-
 const Products = connect(({ products }) => {
-||||||| merged common ancestors
-
-const Products = connect(({products}) => {
-=======
-const Products = connect(({ products }) => {
->>>>>>> 12641003e9a7583c02906d554293e13fae10848c
   return {
     products
   };
