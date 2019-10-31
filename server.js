@@ -52,6 +52,13 @@ app.get('/api/users/:id', (req, res, next) => {
     .catch(next);
 });
 
+app.put('/api/users/:id', (req, res, next) => {
+  User.findByPk(req.params.id)
+    .then(_user => _user.update({ username: req.body.username, email: req.body.email, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, shippingAddress: req.body.shippingAddress, billingAddress: req.body.billingAddress, wishlist: req.body.wishlist }))
+    .then(() => res.sendStatus(201))
+    .catch(next)
+})
+
 app.get('/api/products', (req, res, next) => {
   Product.findAll()
     .then(products => res.send(products))
@@ -98,11 +105,9 @@ app.get('/api/sessions', (req, res, next) => {
 });
 
 app.delete('/api/sessions', (req, res, next) => {
-  console.log(req.session);
   req.session.destroy();
   req.session = null;
   res.sendStatus(204);
-  console.log(req.session);
 });
 
 db.syncAndSeed().then(() => {
