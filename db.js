@@ -15,9 +15,7 @@ const {
 } = Sequelize;
 
 const conn = new Sequelize(
-  process.env.DATABASE ||
-    'postgres://localhost/teamb_graceshopperdb' ||
-    'postgres://emlkmliavcrucu:65ad7806dfb8457136048746d5293ab0ac4ad23bcef811bb0ce9116637afc793@ec2-107-21-126-201.compute-1.amazonaws.com:5432/d27hjo913s9hku'
+  process.env.DATABASE_URL || 'postgres://localhost/teamb_graceshopperdb'
 );
 
 //USERS COMMENTED OUT UNTIL PRODUCTS WORKS
