@@ -6,62 +6,62 @@ import { setUsersThunk, setProductsThunk, setOrdersThunk, setOrderProductsThunk 
 
 
 class _Cart extends React.Component {
-  constructor(props){
+  constructor(props) {
     super();
   }
-  async componentDidMount(){
+  async componentDidMount() {
     await this.props.getUsers()
     await this.props.getProducts()
     await this.props.getOrders()
     await this.props.getOrderProdcuts()
   }
-  render(){
-    const { orders , users, products, orderProducts } = this.props;
-    const _orderItems = orderProducts.map( item => {
-        const productInfo = products.filter( product => product.id === item.productId)[0];
-        return ({...item, productInfo})
-      }
+  render() {
+    const { orders, users, products, orderProducts } = this.props;
+    const _orderItems = orderProducts.map(item => {
+      const productInfo = products.filter(product => product.id === item.productId)[0];
+      return ({ ...item, productInfo })
+    }
     );
-    const _orders = orders.map( order => {
+    const _orders = orders.map(order => {
       const userInfo = users.filter(user => user.id === order.userId);
-      const orderItems = _orderItems.filter( item => item.orderId === order.id)
-      return ({...order, userInfo, orderItems})
+      const orderItems = _orderItems.filter(item => item.orderId === order.id)
+      return ({ ...order, userInfo, orderItems })
 
     });
     console.log(products, users, orders, orderProducts)
-     console.log('new orders', _orders)
+    console.log('new orders', _orders)
     let thing = _orders[0]
     // console.log(thing.userInfo)
     return (
-      <div>
+      <div className={"container"}>
         <h1>Shopping Carts</h1>
-        <br/>
+        <br />
         {
-          orders.map( order => <li key={order.id}>
+          orders.map(order => <li key={order.id}>
             {
               order.status === 'cart' ? (
                 <div>
-                  Order #: {order.id}<br/>
-                  Order Status: {order.status}<br/>
-                  {users.filter( user => user.id ===order.userId).map(user => (
-                      <div>
-                        User: {user.firstName}
-                      </div>
-                    )
+                  Order #: {order.id}<br />
+                  Order Status: {order.status}<br />
+                  {users.filter(user => user.id === order.userId).map(user => (
+                    <div>
+                      User: {user.firstName}
+                    </div>
+                  )
                   )}
-                  {orderProducts.filter( item => item.orderId === order.id).map( item => {
+                  {orderProducts.filter(item => item.orderId === order.id).map(item => {
                     const product = products.filter(product => product.id === item.productId)[0]
                     console.log(product)
                     return (<div>
-                      Product Name: {product.productName}<br/>
+                      Product Name: {product.productName}<br />
                       Price: {product.price}
-                      </div>)
+                    </div>)
                   })}
                   Total: ???
                    {/* need to add a function to make total here */}
 
-                  <hr/>
-                  <br/>
+                  <hr />
+                  <br />
                 </div>
               ) : ''
             }
@@ -77,7 +77,7 @@ class _Cart extends React.Component {
   }
 }
 
-const mapPropsToDispatch = ({orders, users, products, orderProducts}) => {
+const mapPropsToDispatch = ({ orders, users, products, orderProducts }) => {
   return ({
     orders,
     users,
