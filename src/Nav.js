@@ -3,33 +3,40 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const _Nav = ({ products, auth }) => {
-
-  let userPath = `/users/${auth.id}`
+  let userPath = `/users/${auth.id}`;
 
   if (auth.id === undefined) {
-    userPath = '/login'
+    userPath = '/login';
   }
 
   return (
     <nav>
-      <Link to="/">Home</Link>
-      <Link to="/products">Products ({products.length})</Link>
-      <Link to={userPath}>Profile</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/cart">Cart</Link>
+      <Link className="nav-link" to="/">
+        Home
+      </Link>
+      <Link className="nav-link" to="/products">
+        Products ({products.length})
+      </Link>
+      <Link className="nav-link" to={userPath}>
+        Profile
+      </Link>
+      <Link className="nav-link" to="/login">
+        Login
+      </Link>
+      <Link className="nav-link" to="/cart">
+        Cart
+      </Link>
     </nav>
-  )
-}
+  );
+};
 
-
-const mapStateToProps = ({products, auth}) => {
+const mapStateToProps = ({ products, auth }) => {
   return {
     products,
     auth
-  }
-}
+  };
+};
 
-
-const Nav = connect(mapStateToProps)(_Nav)
+const Nav = connect(mapStateToProps)(_Nav);
 
 export default Nav;
