@@ -23,7 +23,6 @@ class _UpdateUserForm extends React.Component {
   }
   async componentDidMount(props) {
     const user = (await axios.get(`api/users/${this.props.match}`)).data;
-    console.log("USER ", user)
     this.setState({
       id: user[0].id,
       username: user[0].username,
@@ -37,7 +36,7 @@ class _UpdateUserForm extends React.Component {
     })
   }
   handleChange(ev) {
-    console.log
+
     this.setState({ [ev.target.name]: ev.target.value })
   }
   handleSubmit(ev) {

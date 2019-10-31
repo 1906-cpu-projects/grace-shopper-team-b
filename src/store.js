@@ -30,7 +30,6 @@ const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 const setUsersAction = users => ({ type: SET_USERS, users });
 const updateUserAction = (user) => {
-  console.log("UPDATE USER ACTION ", user)
   return { type: UPDATE_USER, id: user.id, username: user.username, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName, shippingAddress: user.shippingAddress, billingAddress: user.billingAddress, wishlist: user.wishlist };
 }
 
@@ -97,7 +96,6 @@ const updateUserThunk = (id, username, email, password, firstName, lastName, shi
     billingAddress: billingAddress,
     wishlist: wishlist
   }
-  console.log("USER THUNKS ", user)
   return async (dispatch) => {
     await axios.put(`/api/users/${user.id}`, {
       username: user.username,
@@ -159,7 +157,6 @@ const userReducer = (state = [], action) => {
     state = action.users;
   }
   if (action.type === UPDATE_USER) {
-    console.log("ACTION ", action)
     return state.map(user => action.id === user.id ? {
       ...user, username: action.username, email: action.email, password: action.password, firstName: action.firstName, lastName: action.lastName, shippingAddress: action.shippingAddress, billingAddress: action.billingAddress, wishlist: action.wishlist
     } : user);
