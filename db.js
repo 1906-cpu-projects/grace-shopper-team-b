@@ -178,7 +178,7 @@ const syncAndSeed = async () => {
     { firstName: 'James', lastName: 'Fuller', username: 'jf', email: 'archer@gmail.com', password: 'ARCHER' },
     { firstName: 'Rob', lastName: 'Wise', username: 'rw', email: 'caster@gmail.com', password: 'CASTER' },
     { firstName: 'Paul', lastName: 'Blackburn', username: 'pb', email: 'saber@gmail.com', password: 'SABER' },
-    { firstName: 'Dominique', lastName: 'Boyer', username: 'db', email: 'lancer@gmail.com', password: 'LANCER' }
+    { firstName: 'Dominique', lastName: 'Boyer', username: 'db', email: 'dom@gmail.com', password: 'DOM' }
   ];
 
   const [jamesUser, robUser, paulUser, dominiqueUser] = await Promise.all(
@@ -186,9 +186,9 @@ const syncAndSeed = async () => {
   );
 
   const products = [
-    { productName: 'acme product 1' },
-    { productName: 'acme product 2' },
-    { productName: 'acme product 3' }
+    { productName: 'acme product 1', inventory: 5 },
+    { productName: 'acme product 2', inventory: 3 },
+    { productName: 'acme product 3', inventory: 4 }
   ];
 
   const [product1, product2, product3] = await Promise.all(
@@ -196,8 +196,8 @@ const syncAndSeed = async () => {
   );
 
   const orders = [
-    { userId: dominiqueUser.id},
-    { userId: robUser.id }
+    { userId: dominiqueUser.id, total:198.98 },
+    { userId: robUser.id, total: 99.99 }
   ];
   const [domOrder, robOrder] = await Promise.all( orders.map( order => Order.create(order)))
 

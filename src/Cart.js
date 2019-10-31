@@ -16,73 +16,69 @@ class _Cart extends React.Component {
     await this.props.getOrderProdcuts()
   }
   render(){
-    const { orders , users, products, orderProducts } = this.props;
-    const _orderItems = orderProducts.map( item => {
-        const productInfo = products.filter( product => product.id === item.productId)[0];
-        return ({...item, productInfo})
-      }
-    );
-    const _orders = orders.map( order => {
-      const userInfo = users.filter(user => user.id === order.userId);
-      const orderItems = _orderItems.filter( item => item.orderId === order.id)
-      return ({...order, userInfo, orderItems})
+    const { orders , users, products, orderProducts, auth } = this.props;
+    // console.log('auth', auth)
+    // console.log('users', users)
+    // console.log('orders',orders)
+    const cart = orders.find(order => order.userId === auth.id && order.status ==='cart');
+    console.log('cart', cart)
+    // console.log('products', products)
+    console.log('orderProducts', orderProducts)
 
-    });
-    // console.log(products, users, orders, orderProducts)
-    //  console.log('new orders', _orders)
-    let thing = _orders[0]
-    // console.log(thing.userInfo)
     return (
       <div>
-        <h1>Shopping Carts</h1>
+        <h1>{auth.firstName}'s Shopping Cart</h1>
         <br/>
-        {
-          orders.map( order => <li key={order.id}>
-            {
-              order.status === 'cart' ? (
-                <div>
-                  Order #: {order.id}<br/>
-                  Order Status: {order.status}<br/>
-                  {users.filter( user => user.id ===order.userId).map(user => (
-                      <div>
-                        User: {user.firstName}
-                      </div>
-                    )
-                  )}
-                  {orderProducts.filter( item => item.orderId === order.id).map( item => {
-                    const product = products.filter(product => product.id === item.productId)[0]
-                    // console.log(product)
-                    return (<div key={product.id}>
-                      Product Name: {product.productName}<br/>
-                      Price: {product.price}
-                      </div>)
-                  })}
-                  Total: ???
-                   {/* need to add a function to make total here */}
-
-                  <hr/>
-                  <br/>
-                </div>
-              ) : ''
-            }
-          </li>)
-        }
         <div id='cart'>
+          <div>
+            Order # {cart.id} <br/>
+            Order Status: In Progress...
+          </div>
+          <div id='cartProducts'>
+            {
+              orderProducts.filter(item => item.orderId === cart.id).map( item => {
+                const product = products.find(product => product.id === item.productId)
+                return (
+                  <div key={item.id} id='cartProduct'>
+                    <div>
+                      <img height="100" width="100" src={product.imageURL} />
+                    </div>
+                    <div>
+                      Product Name: {product.productName} <br/>
+                      Description: {product.description} <br/>
+                      Price: ${product.price}<br/>
+                      {product.inventory < 6 ? `Only ${product.inventory} left in stock - order soon` : ''}<br/>
+                      Quantity <select>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                      </select><br/>
+                      <button>Delete Item</button>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
         </div>
         <div id='total'>
-
+          <div>
+            Total ({orderProducts.filter(item => item.orderId === cart.id).length > 1 ? `${orderProducts.filter(item => item.orderId === cart.id).length} items`: '1 item' }): {cart.total}
+          </div>
+          <button className="btn btn-outline-success">Proceed to Checkout</button>
         </div>
       </div>
     );
   }
 }
 
-const mapPropsToDispatch = ({orders, users, products, orderProducts}) => {
+const mapPropsToDispatch = ({orders, users, products, orderProducts, auth}) => {
   return ({
     orders,
     users,
     products,
-    orderProducts
+    orderProducts,
+    auth
   })
 };
 
