@@ -12,6 +12,7 @@ import Cart from './Cart';
 import Nav from './Nav';
 import Login from './Login';
 import User from './User';
+import OrderHistory from './OrderHistory';
 
 import store, {
   attemptSessionLogin,
@@ -48,6 +49,7 @@ class _App extends Component {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/orders" component={OrderHistory} />
             <Route exact path="/users/:id" component={User} />
             {loggedIn && <Redirect to="/" />}
             <Route path="/login" component={Login} exact />

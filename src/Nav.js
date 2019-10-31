@@ -4,10 +4,15 @@ import { connect } from 'react-redux';
 
 const _Nav = ({ products, auth }) => {
   let userPath = `/users/${auth.id}`;
+  let orderPath = '/orders'
+  let cartPath = '/cart'
 
   if (auth.id === undefined) {
     userPath = '/login';
+    orderPath = '/login'
+    cartPath = '/login'
   }
+
 
   return (
     <nav>
@@ -23,7 +28,10 @@ const _Nav = ({ products, auth }) => {
       <Link className="nav-link" to="/login">
         Login
       </Link>
-      <Link className="nav-link" to="/cart">
+      <Link className="nav-link" to={orderPath}>
+        Orders
+      </Link>
+      <Link className="nav-link" to={cartPath}>
         Cart
       </Link>
     </nav>
