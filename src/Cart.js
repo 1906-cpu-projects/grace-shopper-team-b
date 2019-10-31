@@ -28,8 +28,8 @@ class _Cart extends React.Component {
       return ({...order, userInfo, orderItems})
 
     });
-    console.log(products, users, orders, orderProducts)
-     console.log('new orders', _orders)
+    // console.log(products, users, orders, orderProducts)
+    //  console.log('new orders', _orders)
     let thing = _orders[0]
     // console.log(thing.userInfo)
     return (
@@ -51,8 +51,8 @@ class _Cart extends React.Component {
                   )}
                   {orderProducts.filter( item => item.orderId === order.id).map( item => {
                     const product = products.filter(product => product.id === item.productId)[0]
-                    console.log(product)
-                    return (<div>
+                    // console.log(product)
+                    return (<div key={product.id}>
                       Product Name: {product.productName}<br/>
                       Price: {product.price}
                       </div>)
