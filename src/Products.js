@@ -3,11 +3,9 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
-
 class _Products extends Component {
   constructor() {
-    super()
+    super();
   }
 
   render() {
@@ -16,34 +14,33 @@ class _Products extends Component {
     return (
       <div>
         <h1>Our Products</h1>
-        <div id='products'>
-          {
-            products.map(product => <div key={product.id}> <br/>
-                Product Name: {product.productName} <br />
-                Description: {product.description} <br />
-                Price: ${product.price} <br />
-                Amount In Stock: {product.inventory} <br/>
-                Product Image: <br /> <img height="200" width="200" src={product.imageURL} /> <br />
-                <button>Add to Cart</button>
-              </div>
-            )
-          }
+        <div id="products">
+          {products.map(product => (
+            <div key={product.id}>
+              {' '}
+              <br />
+              Product Name: {product.productName} <br />
+              Description: {product.description} <br />
+              Price: ${product.price} <br />
+              Amount In Stock: {product.inventory} <br />
+              Product Image: <br />{' '}
+              <img height="200" width="200" src={product.imageURL} /> <br />
+              <br />
+              <button type="submit" className="btn btn-outline-success">
+                Add to Cart
+              </button>
+            </div>
+          ))}
         </div>
-
       </div>
-    )
-
+    );
   }
-
 }
 
-
-const Products = connect(({products}) => {
+const Products = connect(({ products }) => {
   return {
     products
-  }
-})(_Products)
-
-
+  };
+})(_Products);
 
 export default Products;
