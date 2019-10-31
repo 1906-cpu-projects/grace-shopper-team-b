@@ -2,10 +2,22 @@ const pg = require('pg');
 
 const Sequelize = require('sequelize');
 
-const { TEXT, ARRAY, STRING, DECIMAL, INTEGER, UUID, UUIDV4, DATE, ENUM } = Sequelize;
+const {
+  TEXT,
+  ARRAY,
+  STRING,
+  DECIMAL,
+  INTEGER,
+  UUID,
+  UUIDV4,
+  DATE,
+  ENUM
+} = Sequelize;
 
 const conn = new Sequelize(
-  process.env.DATABASE || 'postgres://localhost/teamb_graceshopperdb'
+  process.env.DATABASE ||
+    'postgres://localhost/teamb_graceshopperdb' ||
+    'postgres://emlkmliavcrucu:65ad7806dfb8457136048746d5293ab0ac4ad23bcef811bb0ce9116637afc793@ec2-107-21-126-201.compute-1.amazonaws.com:5432/d27hjo913s9hku'
 );
 
 //USERS COMMENTED OUT UNTIL PRODUCTS WORKS
@@ -121,7 +133,7 @@ const Order = conn.define('order', {
     type: ENUM('cart', 'completed'),
     defaultValue: 'cart'
   },
-  orderDate:{
+  orderDate: {
     type: DATE
   },
   shippingAddress: {
@@ -129,7 +141,7 @@ const Order = conn.define('order', {
   },
   total: {
     type: DECIMAL,
-    defaultValue: 0.00
+    defaultValue: 0.0
   }
 });
 
@@ -156,18 +168,16 @@ const OrderProducts = conn.define('orderproducts', {
     type: DECIMAL,
     notEmpty: true
   }
-})
+});
 
 //==============================RELATIONSHIPS==============================
 
-User.hasMany(Order)
-Order.belongsTo(User)
+User.hasMany(Order);
+Order.belongsTo(User);
 Order.hasMany(OrderProducts);
 
-OrderProducts.belongsTo(Order)
-OrderProducts.belongsTo(Product)
-
-
+OrderProducts.belongsTo(Order);
+OrderProducts.belongsTo(Product);
 
 //SYNC AND SEED COMING SOON...
 
@@ -175,10 +185,34 @@ const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
 
   const users = [
-    { firstName: 'James', lastName: 'Fuller', username: 'jf', email: 'archer@gmail.com', password: 'ARCHER' },
-    { firstName: 'Rob', lastName: 'Wise', username: 'rw', email: 'caster@gmail.com', password: 'CASTER' },
-    { firstName: 'Paul', lastName: 'Blackburn', username: 'pb', email: 'saber@gmail.com', password: 'SABER' },
-    { firstName: 'Dominique', lastName: 'Boyer', username: 'db', email: 'lancer@gmail.com', password: 'LANCER' }
+    {
+      firstName: 'James',
+      lastName: 'Fuller',
+      username: 'jf',
+      email: 'archer@gmail.com',
+      password: 'ARCHER'
+    },
+    {
+      firstName: 'Rob',
+      lastName: 'Wise',
+      username: 'rw',
+      email: 'caster@gmail.com',
+      password: 'CASTER'
+    },
+    {
+      firstName: 'Paul',
+      lastName: 'Blackburn',
+      username: 'pb',
+      email: 'saber@gmail.com',
+      password: 'SABER'
+    },
+    {
+      firstName: 'Dominique',
+      lastName: 'Boyer',
+      username: 'db',
+      email: 'lancer@gmail.com',
+      password: 'LANCER'
+    }
   ];
 
   const [jamesUser, robUser, paulUser, dominiqueUser] = await Promise.all(
@@ -195,18 +229,37 @@ const syncAndSeed = async () => {
     products.map(product => Product.create(product))
   );
 
-  const orders = [
-    { userId: dominiqueUser.id},
-    { userId: robUser.id }
-  ];
-  const [domOrder, robOrder] = await Promise.all( orders.map( order => Order.create(order)))
+  const orders = [{ userId: dominiqueUser.id }, { userId: robUser.id }];
+  const [domOrder, robOrder] = await Promise.all(
+    orders.map(order => Order.create(order))
+  );
 
   const orderProducts = [
-    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: domOrder.id, productId: product1.id},
-    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: domOrder.id, productId: product2.id},
-    { quantity: 1, price: 99.99, subTotal: 99.99, orderId: robOrder.id, productId: product3.id}
+    {
+      quantity: 1,
+      price: 99.99,
+      subTotal: 99.99,
+      orderId: domOrder.id,
+      productId: product1.id
+    },
+    {
+      quantity: 1,
+      price: 99.99,
+      subTotal: 99.99,
+      orderId: domOrder.id,
+      productId: product2.id
+    },
+    {
+      quantity: 1,
+      price: 99.99,
+      subTotal: 99.99,
+      orderId: robOrder.id,
+      productId: product3.id
+    }
   ];
-  const [orderProduct1, orderProduct2, orderProduct3] = await Promise.all( orderProducts.map( orderProduct => OrderProducts.create(orderProduct)))
+  const [orderProduct1, orderProduct2, orderProduct3] = await Promise.all(
+    orderProducts.map(orderProduct => OrderProducts.create(orderProduct))
+  );
 };
 
 module.exports = {
