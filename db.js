@@ -189,17 +189,17 @@ const syncAndSeed = async () => {
     { productName: 'Rocket Powered Roller Skates', inventory: 5 },
     { productName: 'Jet Propelled Tennis Shoes', inventory: 3, imageURL: "https://storage.googleapis.com/thehundreds/media/2018/09/jet-propelled-tennis-shoes-fleet-foot.png", price: 49.99 },
     { productName: 'Artificial Rock', inventory: 4, imageURL: "https://storage.googleapis.com/thehundreds/media/2018/09/artifial-rock-acme.png", price: 39.99 },
-    { productName: 'Jet Propelled Pogo Stick', inventory: 10, imageURL: "http://acme.com/catalog/jetprop.jpg", price: 129.99 },
-    { productName: 'Boomerang', inventory: 8, imageURL: "http://acme.com/catalog/boomerang.jpg", price: 79.99 },
+    { productName: 'Jet Propelled Pogo Stick', inventory: 10, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/4/4d/Jet-Propelled_Pogo-Stick.png/revision/latest/scale-to-width-down/100?cb=20150117160112", price: 129.99 },
+    { productName: 'Boomerang', inventory: 8, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/7/7c/Boomerang.png/revision/latest?cb=20150117032356", price: 79.99 },
     { productName: 'Super Outfit', inventory: 9, imageURL: "https://pbs.twimg.com/media/DQdsYXLX4AAWvWf.jpg", price: 19.99 },
-    { productName: 'Bat Man Outfit', inventory: 7, imageURL: "http://acme.com/catalog/batman.jpg", price: 19.99 },
-    { productName: 'Anvil', inventory: 50, imageURL: "http://acme.com/catalog/anvil.jpg", price: 199.99 },
-    { productName: 'Iron Carrot', inventory: 25, imageURL: "http://acme.com/catalog/ironcarrot.jpg", price: 29.99 },
-    { productName: 'Rocket Sled', inventory: 1, imageURL: "http://acme.com/catalog/acmerocketsled.jpg", price: 499.99 },
-    { productName: 'Giant Rubber Band', inventory: 5, imageURL: "http://acme.com/catalog/giantrubber2.jpg" },
-    { productName: 'Jet Propelled Unicycle', inventory: 2, imageURL: "http://acme.com/catalog/acmejetuni.jpg", price: 299.99 },
-    { productName: 'Axle Grease', inventory: 2, imageURL: "http://acme.com/catalog/axle.jpg", price: 9.99 },
-    { productName: 'Dehydrated Boulders', inventory: 2, imageURL: "http://acme.com/catalog/dehydrated.jpg", price: 299.99 }
+    { productName: 'Bat Man Outfit', inventory: 7, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/d/da/Bat-Man%27s_Outfit.png/revision/latest/scale-to-width-down/150?cb=20150115225343", price: 19.99 },
+    { productName: 'Anvil', inventory: 50, imageURL: "https://images-na.ssl-images-amazon.com/images/I/51O2UPm7CuL.jpg", price: 199.99 },
+    { productName: 'Iron Carrot', inventory: 25, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/7/7f/Iron_Carrot.png/revision/latest?cb=20150115210803", price: 29.99 },
+    { productName: 'Rocket Sled', inventory: 1, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/4/4a/Rocket_Sled.png/revision/latest/scale-to-width-down/150?cb=20150117002527", price: 499.99 },
+    { productName: 'Giant Rubber Band', inventory: 5, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/f/f2/Giant_Rubber_Band_V3.png/revision/latest/scale-to-width-down/150?cb=20150116050517" },
+    { productName: 'Jet Propelled Unicycle', inventory: 2, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/1/13/Jet-Propelled_Unicycle.png/revision/latest?cb=20150117160141", price: 299.99 },
+    { productName: 'Axle Grease', inventory: 2, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/d/d1/Axle_Grease.png/revision/latest/scale-to-width-down/150?cb=20150117034005", price: 9.99 },
+    { productName: 'Dehydrated Boulders', inventory: 2, imageURL: "https://vignette.wikia.nocookie.net/looneytunes/images/7/76/Dehydrated_Boudlers.png/revision/latest?cb=20150116011522", price: 299.99 }
   ];
 
   const [product1, product2, product3, product4, product5, product6, product7, product8, product9, product10, product11, product12, product13, product14] = await Promise.all(
