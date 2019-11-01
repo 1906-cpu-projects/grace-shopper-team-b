@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import store, { updateUserThunk } from '../store';
 import axios from 'axios';
 
-
 class _UpdateUserForm extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +16,7 @@ class _UpdateUserForm extends React.Component {
       shippingAddress: '',
       billingAddress: '',
       wishlist: ''
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -33,17 +32,35 @@ class _UpdateUserForm extends React.Component {
       shippingAddress: user[0].shippingAddress,
       billingAddress: user[0].billingAddress,
       wishlist: user[0].wishlist
-    })
+    });
   }
   handleChange(ev) {
-
-    this.setState({ [ev.target.name]: ev.target.value })
+    this.setState({ [ev.target.name]: ev.target.value });
   }
   handleSubmit(ev) {
     ev.preventDefault();
-    const id = this.props.match
-    const { username, email, password, firstName, lastName, shippingAddress, billingAddress, wishlist } = this.state;
-    this.props.updateUser(id, username, email, password, firstName, lastName, shippingAddress, billingAddress, wishlist);
+    const id = this.props.match;
+    const {
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      shippingAddress,
+      billingAddress,
+      wishlist
+    } = this.state;
+    this.props.updateUser(
+      id,
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      shippingAddress,
+      billingAddress,
+      wishlist
+    );
     this.setState({
       username: username,
       email: email,
@@ -53,38 +70,126 @@ class _UpdateUserForm extends React.Component {
       shippingAddress: shippingAddress,
       billingAddress: billingAddress,
       wishlist: wishlist
-    })
+    });
   }
   render() {
-    console.log("PROPS ", this.props)
+    console.log('PROPS ', this.props);
     return (
-      <div className={"container"}>
+      <div className={'container'}>
         <h3>Update Your Information</h3>
         {
-          <form method="post" onSubmit={this.handleSubmit} >
+          <form method="post" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              {' '}
+              <input
+                name="username"
+                className="form-control"
+                type="text"
+                value={this.state.username}
+                onChange={this.handleChange}
+                placeholder="Username"
+                required
+              />
+            </div>
 
-            <div className="form-group"> <input name="username" className="form-control" type="text" value={this.state.username} onChange={this.handleChange} placeholder="Username" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                name="email"
+                className="form-control"
+                type="text"
+                value={this.state.email}
+                onChange={this.handleChange}
+                placeholder="Email"
+                required
+              />
+            </div>
 
-            <div className="form-group"> <input name="email" className="form-control" type="text" value={this.state.email} onChange={this.handleChange} placeholder="Email" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                type="password"
+                name="password"
+                type="text"
+                className="form-control"
+                value={this.state.password}
+                onChange={this.handleChange}
+                placeholder="Password"
+                required
+              />
+            </div>
 
-            <div className="form-group"> <input type="password" name="password" type="text" className="form-control" value={this.state.password} onChange={this.handleChange} placeholder="Password" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                name="firstName"
+                className="form-control"
+                type="text"
+                value={this.state.firstName}
+                onChange={this.handleChange}
+                placeholder="First Name"
+                required
+              />
+            </div>
 
-            <div className="form-group"> <input name="firstName" className="form-control" type="text" value={this.state.firstName} onChange={this.handleChange} placeholder="First Name" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                name="lastName"
+                className="form-control"
+                type="text"
+                value={this.state.lastName}
+                onChange={this.handleChange}
+                placeholder="Last Name"
+                required
+              />
+            </div>
 
-            <div className="form-group"> <input name="lastName" className="form-control" type="text" value={this.state.lastName} onChange={this.handleChange} placeholder="Last Name" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                name="shippingAddress"
+                className="form-control"
+                type="text"
+                value={this.state.shippingAddress}
+                onChange={this.handleChange}
+                placeholder="Shipping Address"
+                required
+              />
+            </div>
 
-            <div className="form-group">  <input name="shippingAddress" className="form-control" type="text" value={this.state.shippingAddress} onChange={this.handleChange} placeholder="Shipping Address" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                name="billingAddress"
+                className="form-control"
+                type="text"
+                value={this.state.billingAddress}
+                onChange={this.handleChange}
+                placeholder="Billing Address"
+                required
+              />
+            </div>
 
-            <div className="form-group"> <input name="billingAddress" className="form-control" type="text" value={this.state.billingAddress} onChange={this.handleChange} placeholder="Billing Address" required /></div>
+            <div className="form-group">
+              {' '}
+              <input
+                name="wishlist"
+                className="form-control"
+                type="text"
+                value={this.state.wishlist}
+                onChange={this.handleChange}
+                placeholder="Wishlist"
+              />
+            </div>
 
-            <div className="form-group"> <input name="wishlist" className="form-control" type="text" value={this.state.wishlist} onChange={this.handleChange} placeholder="Wishlist" /></div>
-
-            <button>Update Information</button>
+            <button type="submit" className="btn btn-outline-primary">
+              Update Information
+            </button>
           </form>
-
         }
-      </div >
-    )
+      </div>
+    );
   }
 }
 
@@ -94,18 +199,42 @@ class _UpdateUserForm extends React.Component {
 //   }
 // })(_UpdateUserForm)
 
-
-
 // export default UpdateUserForm;
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   users: state.users
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateUser: (id, username, email, password, firstName, lastName, shippingAddress, billingAddress, wishlist) => dispatch(updateUserThunk(id, username, email, password, firstName, lastName, shippingAddress, billingAddress, wishlist))
-  }
-}
+    updateUser: (
+      id,
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      shippingAddress,
+      billingAddress,
+      wishlist
+    ) =>
+      dispatch(
+        updateUserThunk(
+          id,
+          username,
+          email,
+          password,
+          firstName,
+          lastName,
+          shippingAddress,
+          billingAddress,
+          wishlist
+        )
+      )
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(_UpdateUserForm)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(_UpdateUserForm);
