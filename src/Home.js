@@ -6,7 +6,7 @@ import { logout } from './store';
 const _Home = ({ auth, logout }) => (
   <div className="container">
     <h2>Home</h2>
-    <h4>Welcome {auth.email}</h4>
+    <h4>Welcome {auth.firstName}!</h4>
     <button
       type="button"
       className="btn btn-outline-secondary"

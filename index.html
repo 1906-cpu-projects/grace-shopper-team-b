@@ -52,12 +52,14 @@
 
     #products {
       display: flex;
+      flex-wrap: wrap;
     }
     #products > div {
       border: solid black 1px;
       margin: 1rem;
       padding: 1rem;
       border-radius: 5%;
+      width: calc(100%/3 - 2)
     }
 
     #cartProducts{

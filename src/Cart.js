@@ -1,27 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setUsersThunk, setProductsThunk, setOrdersThunk, setOrderProductsThunk } from './store';
+import { deleteOrderProductsThunk, updateOrderProductThunk } from './store';
+
 
 
 
 class _Cart extends React.Component {
   constructor(props) {
     super();
+    this.deleteItem = this.deleteItem.bind(this);
+    this.updateItem = this.updateItem.bind(this);
   }
-  async componentDidMount() {
-    await this.props.getUsers()
-    await this.props.getProducts()
-    await this.props.getOrders()
-    await this.props.getOrderProdcuts()
+  async deleteItem (id){
+    await this.props.deleteItem(id)
+  }
+  async updateItem (item) {
+    await this.props.updateItem(item)
   }
   render(){
-    const { orders , users, products, orderProducts, auth } = this.props;
+    const { orders , users, products, orderProducts, auth, match } = this.props;
+    // console.log('props', this.props)
     // console.log('auth', auth)
     // console.log('users', users)
     // console.log('orders',orders)
     const cart = orders.find(order => order.userId === auth.id && order.status ==='cart');
-    // console.log('cart', cart)
+    const cartItems = orderProducts.filter(item => item.orderId === cart.id);
+    const totalItems = cartItems.reduce(((sum, item) => sum + Number(item.quantity)), 0);
+    console.log('totalItems', totalItems)
+    const items = (total) => {
+      if (total === 1){
+        return '1 item'
+      }
+      if (total){
+        return `${total} items`
+      }
+      else return '0 items'
+    };
+    console.log('cartitems', cartItems)
+    const total = cartItems.reduce(((sum, item)=> sum + Number(item.subTotal)), 0)
+    // console.log('total', total)
     // console.log('products', products)
     // console.log('orderProducts', orderProducts)
 
@@ -48,12 +66,14 @@ class _Cart extends React.Component {
                       Description: {product.description} <br/>
                       Price: ${product.price}<br/>
                       {product.inventory < 6 ? `Only ${product.inventory} left in stock - order soon` : ''}<br/>
-                      Quantity <select>
+                      Quantity {item.quantity}
+                      Change Quantity <select>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
                       </select><br/>
-                      <button>Delete Item</button>
+                      <button onClick={ () => this.deleteItem(item.id)}>Delete Item </button>
+                      Item id: {item.id}
                     </div>
                   </div>
                 )
@@ -63,7 +83,12 @@ class _Cart extends React.Component {
         </div>
         <div id='total'>
           <div>
-            Total ({orderProducts.filter(item => item.orderId === cart.id).length > 1 ? `${orderProducts.filter(item => item.orderId === cart.id).length} items`: '1 item' }): {cart.total}
+            Total (
+            {
+
+              items(totalItems)
+            }
+            ): ${total}
           </div>
           <button className="btn btn-outline-success">Proceed to Checkout</button>
         </div>
@@ -72,22 +97,21 @@ class _Cart extends React.Component {
   }
 }
 
-const mapPropsToDispatch = ({orders, users, products, orderProducts, auth}) => {
+const mapPropsToDispatch = ({orders, users, products, orderProducts, auth, match}) => {
   return ({
     orders,
     users,
     products,
     orderProducts,
-    auth
+    auth,
+    match
   })
 };
 
 const dispatchToProps = dispatch => {
   return ({
-    getUsers: async () => dispatch(setUsersThunk()),
-    getProducts: async () => dispatch(setProductsThunk()),
-    getOrders: async () => dispatch(setOrdersThunk()),
-    getOrderProdcuts: async () => dispatch(setOrderProductsThunk()),
+    deleteItem: async (id) => dispatch(deleteOrderProductsThunk(id)),
+    updateItem: async (item) => dispatch(updateOrderProductThunk(item))
   })
 }
 

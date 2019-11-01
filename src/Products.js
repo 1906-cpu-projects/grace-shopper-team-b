@@ -9,8 +9,8 @@ class _Products extends Component {
   }
 
   render() {
-    const { products } = this.props;
-
+    const { products, auth } = this.props;
+    // console.log('auth', auth)
     return (
       <div>
         <h1>Our Products</h1>
@@ -37,9 +37,10 @@ class _Products extends Component {
   }
 }
 
-const Products = connect(({ products }) => {
+const Products = connect(({ products, auth }) => {
   return {
-    products
+    products,
+    auth
   };
 })(_Products);
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 const _Nav = ({ products, auth }) => {
   let userPath = `/users/${auth.id}`;
   let orderPath = '/orders'
-  let cartPath = '/cart'
+  let cartPath = `/users/${auth.id}/cart`
 
   if (auth.id === undefined) {
     userPath = '/login';

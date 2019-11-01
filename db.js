@@ -223,9 +223,9 @@ const syncAndSeed = async () => {
   const orderProducts = [
     { quantity: 1, price: 99.99, subTotal: 99.99, orderId: order1.id, productId: product1.id },
     { quantity: 2, price: 49.99, subTotal: 99.98, orderId: order1.id, productId: product2.id },
-    { quantity: 3, price: 39.99, subTotal: 99.97, orderId: order2.id, productId: product3.id },
-    { quantity: 4, price: 49.99, subTotal: 199.96, orderId: order3.id, productId: product4.id },
-    { quantity: 1, price: 79.99, subTotal: 39.99, orderId: order3.id, productId: product5.id },
+    { quantity: 3, price: 39.99, subTotal: 119.97, orderId: order2.id, productId: product3.id },
+    { quantity: 1, price: 129.99, subTotal: 129.99, orderId: order3.id, productId: product4.id },
+    { quantity: 1, price: 79.99, subTotal: 79.99, orderId: order3.id, productId: product5.id },
     { quantity: 2, price: 19.99, subTotal: 39.98, orderId: order3.id, productId: product6.id },
     { quantity: 3, price: 19.99, subTotal: 59.97, orderId: order4.id, productId: product7.id },
     { quantity: 5, price: 199.99, subTotal: 999.95, orderId: order5.id, productId: product8.id },
@@ -235,8 +235,8 @@ const syncAndSeed = async () => {
     { quantity: 1, price: 299.99, subTotal: 299.99, orderId: order7.id, productId: product12.id },
     { quantity: 5, price: 9.99, subTotal: 49.95, orderId: order8.id, productId: product13.id },
     { quantity: 2, price: 299.99, subTotal: 599.98, orderId: order8.id, productId: product14.id },
-    { quantity: 3, price: 99.99, subTotal: 99.99, orderId: order9.id, productId: product1.id },
-    { quantity: 5, price: 49.99, subTotal: 199.95, orderId: order10.id, productId: product2.id }
+    { quantity: 3, price: 99.99, subTotal: 299.97, orderId: order9.id, productId: product1.id },
+    { quantity: 5, price: 49.99, subTotal: 249.95, orderId: order10.id, productId: product2.id }
   ];
 
   const [orderProduct1, orderProduct2, orderProduct3, orderProduct4, orderProduct5, orderProduct6, orderProduct7, orderProduct8, orderProduct9, orderProduct10, orderProduct11, orderProduct12, orderProduct13, orderProduct14, orderProduct15, orderProduct16] = await Promise.all(orderProducts.map(orderProduct => OrderProducts.create(orderProduct)))
