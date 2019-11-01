@@ -77,6 +77,22 @@ app.get('/api/orderProducts', (req, res, next) => {
     .catch(next);
 });
 
+app.post('/api/orderProduct', async (req, res, next) => {
+  const item = await OrderProducts.create(req.body);
+  res.send(item)
+})
+
+app.delete('/api/orderProducts/:id', async (req, res, next) => {
+  await OrderProducts.destroy({where: {id: req.params.id}})
+  res.sendStatus(204)
+});
+
+app.put('/api/orderProducts/:id', async (req, res, next) => {
+  const item = await OrderProducts.update({quantity: req.body.quantity}, {where: {id: req.body.id}});
+  console.log(item)
+  res.send( item );
+})
+
 // Login
 
 app.post('/api/sessions', (req, res, next) => {

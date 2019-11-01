@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import UserUpdateForm from './forms/UserUpdateForm';
 
 const _User = ({ users, auth, match }) => {
+  console.log('auth', auth)
   return (
     <div>
       <ul>
