@@ -29,7 +29,9 @@ const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 const setUsersAction = users => ({ type: SET_USERS, users });
-const updateUserAction = users => ({ type: UPDATE_USER, users });
+const updateUserAction = (user) => {
+  return { type: UPDATE_USER, id: user.id, username: user.username, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName, shippingAddress: user.shippingAddress, billingAddress: user.billingAddress, wishlist: user.wishlist };
+}
 
 /////////////////////////ORDER ACTION CREATORS//////////////////////////
 const setOrdersAction = orders => ({ type: SET_ORDERS, orders });
@@ -82,11 +84,31 @@ const setUsersThunk = () => {
   };
 };
 
-const updateUserThunk = () => {
-  return async dispatch => {
-    const allUsers = (await axios.get('/api/users')).data;
+const updateUserThunk = (id, username, email, password, firstName, lastName, shippingAddress, billingAddress, wishlist) => {
+  const user = {
+    id: id,
+    username: username,
+    email: email,
+    password: password,
+    firstName: firstName,
+    lastName: lastName,
+    shippingAddress: shippingAddress,
+    billingAddress: billingAddress,
+    wishlist: wishlist
+  }
+  return async (dispatch) => {
+    await axios.put(`/api/users/${user.id}`, {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      shippingAddress: user.shippingAddress,
+      billingAddress: user.billingAddress,
+      wishlist: user.wishlist
+    }).data;
     // console.log('THUNKS ', allUsers);
-    dispatch(updateUserAction(allUsers));
+    dispatch(updateUserAction(user));
   };
 };
 
@@ -135,7 +157,9 @@ const userReducer = (state = [], action) => {
     state = action.users;
   }
   if (action.type === UPDATE_USER) {
-
+    return state.map(user => action.id === user.id ? {
+      ...user, username: action.username, email: action.email, password: action.password, firstName: action.firstName, lastName: action.lastName, shippingAddress: action.shippingAddress, billingAddress: action.billingAddress, wishlist: action.wishlist
+    } : user);
   }
   return state;
 };
@@ -177,6 +201,7 @@ export { setProductsAction, setUsersAction };
 export {
   setProductsThunk,
   setUsersThunk,
+  updateUserThunk,
   setOrdersThunk,
   setOrderProductsThunk,
   attemptLogin,
