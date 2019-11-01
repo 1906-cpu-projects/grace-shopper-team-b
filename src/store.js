@@ -33,15 +33,17 @@ const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 const setUsersAction = users => ({ type: SET_USERS, users });
 const updateUserAction = (user) => {
-  return { type: UPDATE_USER, id: user.id, username: user.username, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName, shippingAddress: user.shippingAddress, billingAddress: user.billingAddress, wishlist: user.wishlist };
+  return {
+    type: UPDATE_USER, id: user.id, username: user.username, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName, streetAddress: user.streetAddress, city: user.city, state: user.state, zipcode: user.zipcode, billStreetAddress: user.billStreetAddress, billCity: user.billCity, billState: user.billState, billZipcode: user.billZipcode, wishlist: user.wishlist
+  };
 }
 
 /////////////////////////ORDER ACTION CREATORS//////////////////////////
 const setOrdersAction = orders => ({ type: SET_ORDERS, orders });
 const setOrderProducts = orderProducts => ({ type: SET_ORDERPRODUCTS, orderProducts });
-const deleteOrderProducts = id => ({type: DELETE_ORDERPRODUCT, id});
-const updateOrderProduct = orderProduct => ({ type: UPDATE_ORDERPRODUCT, orderProduct});
-const addOrderProduct = orderProduct => ({ type: ADD_ORDERPRODUCT, orderProduct});
+const deleteOrderProducts = id => ({ type: DELETE_ORDERPRODUCT, id });
+const updateOrderProduct = orderProduct => ({ type: UPDATE_ORDERPRODUCT, orderProduct });
+const addOrderProduct = orderProduct => ({ type: ADD_ORDERPRODUCT, orderProduct });
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////     REDUX - THUNKS    ////////////////////////////
@@ -90,7 +92,7 @@ const setUsersThunk = () => {
   };
 };
 
-const updateUserThunk = (id, username, email, password, firstName, lastName, shippingAddress, billingAddress, wishlist) => {
+const updateUserThunk = (id, username, email, password, firstName, lastName, streetAddress, city, state, zipcode, billStreetAddress, billCity, billState, billZipcode, wishlist) => {
   const user = {
     id: id,
     username: username,
@@ -98,8 +100,14 @@ const updateUserThunk = (id, username, email, password, firstName, lastName, shi
     password: password,
     firstName: firstName,
     lastName: lastName,
-    shippingAddress: shippingAddress,
-    billingAddress: billingAddress,
+    streetAddress: streetAddress,
+    city: city,
+    state: state,
+    zipcode: zipcode,
+    billStreetAddress: billStreetAddress,
+    billCity: billCity,
+    billState: billState,
+    billZipcode: billZipcode,
     wishlist: wishlist
   }
   return async (dispatch) => {
@@ -109,8 +117,14 @@ const updateUserThunk = (id, username, email, password, firstName, lastName, shi
       password: user.password,
       firstName: user.firstName,
       lastName: user.lastName,
-      shippingAddress: user.shippingAddress,
-      billingAddress: user.billingAddress,
+      streetAddress: user.streetAddress,
+      city: user.city,
+      state: user.state,
+      zipcode: user.zipcode,
+      billStreetAddress: user.billStreetAddress,
+      billCity: user.billCity,
+      billState: user.billState,
+      billZipcode: user.billZipcode,
       wishlist: user.wishlist
     }).data;
     // console.log('THUNKS ', allUsers);
@@ -143,7 +157,7 @@ const deleteOrderProductsThunk = (id) => {
 
 const updateOrderProductThunk = (cartItem) => {
   return async dispatch => {
-    const updated =(await axios.put(`/api/orderProducts/${cartItem.id}`, cartItem)).data
+    const updated = (await axios.put(`/api/orderProducts/${cartItem.id}`, cartItem)).data
     dispatch(updateOrderProduct(updated))
   }
 }
@@ -185,7 +199,7 @@ const userReducer = (state = [], action) => {
   }
   if (action.type === UPDATE_USER) {
     return state.map(user => action.id === user.id ? {
-      ...user, username: action.username, email: action.email, password: action.password, firstName: action.firstName, lastName: action.lastName, shippingAddress: action.shippingAddress, billingAddress: action.billingAddress, wishlist: action.wishlist
+      ...user, username: action.username, email: action.email, password: action.password, firstName: action.firstName, lastName: action.lastName, streetAddress: action.streetAddress, city: action.city, state: action.state, zipcode: action.zipcode, billStreetAddress: action.billStreetAddress, billCity: action.billCity, billState: action.billState, billZipcode: action.billZipcode, wishlist: action.wishlist
     } : user);
   }
   return state;
@@ -204,13 +218,13 @@ const orderProdutsReducer = (state = [], action) => {
   if (action.type === SET_ORDERPRODUCTS) {
     state = action.orderProducts;
   }
-  if( action.type === DELETE_ORDERPRODUCT){
-    state = state.filter( item => item.id !== action.id)
+  if (action.type === DELETE_ORDERPRODUCT) {
+    state = state.filter(item => item.id !== action.id)
   }
-  if( action. type === UPDATE_ORDERPRODUCT){
+  if (action.type === UPDATE_ORDERPRODUCT) {
     state = state.map(item => item.id === action.item.id ? action.item : item)
   }
-  if(action.type === ADD_ORDERPRODUCT){
+  if (action.type === ADD_ORDERPRODUCT) {
     state = [...state, action.orderProduct]
   }
   return state;
