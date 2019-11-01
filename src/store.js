@@ -19,6 +19,9 @@ const UPDATE_USER = 'UPDATE_USER';
 /////////////////////////ORDERS- ACTION TYPES//////////////////////////
 const SET_ORDERS = 'SET_ORDERS';
 const SET_ORDERPRODUCTS = 'SET_ORDERPRODUCTS';
+const DELETE_ORDERPRODUCT = 'DELETE_ORDERPRODUCT';
+const UPDATE_ORDERPRODUCT = 'UPDATE_ORDERPRODUCT';
+const ADD_ORDERPRODUCT = 'ADD_ORDERPRODUCT';
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////REDUX - ACTION CREATORS////////////////////////////
@@ -36,6 +39,9 @@ const updateUserAction = (user) => {
 /////////////////////////ORDER ACTION CREATORS//////////////////////////
 const setOrdersAction = orders => ({ type: SET_ORDERS, orders });
 const setOrderProducts = orderProducts => ({ type: SET_ORDERPRODUCTS, orderProducts });
+const deleteOrderProducts = id => ({type: DELETE_ORDERPRODUCT, id});
+const updateOrderProduct = orderProduct => ({ type: UPDATE_ORDERPRODUCT, orderProduct});
+const addOrderProduct = orderProduct => ({ type: ADD_ORDERPRODUCT, orderProduct});
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////     REDUX - THUNKS    ////////////////////////////
@@ -128,6 +134,27 @@ const setOrderProductsThunk = () => {
   }
 }
 
+const deleteOrderProductsThunk = (id) => {
+  return async dispatch => {
+    await axios.delete(`/api/orderProducts/${id}`);
+    dispatch(deleteOrderProducts(id))
+  }
+}
+
+const updateOrderProductThunk = (cartItem) => {
+  return async dispatch => {
+    const updated =(await axios.put(`/api/orderProducts/${cartItem.id}`, cartItem)).data
+    dispatch(updateOrderProduct(updated))
+  }
+}
+
+const addOrderProductThunk = (cartItem) => {
+  return async dispatch => {
+    const item = (await axios.post('/api/orderProducts', cartItem)).data
+    dispatch(addOrderProduct(item))
+  }
+}
+
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////     REDUX - REDUCERS    //////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -177,6 +204,15 @@ const orderProdutsReducer = (state = [], action) => {
   if (action.type === SET_ORDERPRODUCTS) {
     state = action.orderProducts;
   }
+  if( action.type === DELETE_ORDERPRODUCT){
+    state = state.filter( item => item.id !== action.id)
+  }
+  if( action. type === UPDATE_ORDERPRODUCT){
+    state = state.map(item => item.id === action.item.id ? action.item : item)
+  }
+  if(action.type === ADD_ORDERPRODUCT){
+    state = [...state, action.orderProduct]
+  }
   return state;
 };
 
@@ -204,6 +240,8 @@ export {
   updateUserThunk,
   setOrdersThunk,
   setOrderProductsThunk,
+  deleteOrderProductsThunk,
+  updateOrderProductThunk,
   attemptLogin,
   attemptSessionLogin,
   logout
