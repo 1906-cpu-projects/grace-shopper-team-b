@@ -68,8 +68,7 @@ app.put('/api/users/:id', (req, res, next) => {
         billStreetAddress: req.body.billStreetAddress,
         billCity: req.body.billCity,
         billState: req.body.billState,
-        billZipcode: req.body.billZipcode,
-        wishlist: req.body.wishlist
+        billZipcode: req.body.billZipcode
       })
     )
     .then(() => res.sendStatus(201))

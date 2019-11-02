@@ -20,8 +20,7 @@ class _UpdateUserForm extends React.Component {
       billStreetAddress: '',
       billCity: '',
       billState: '',
-      billZipcode: '',
-      wishlist: ''
+      billZipcode: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,8 +41,7 @@ class _UpdateUserForm extends React.Component {
       billStreetAddress: user[0].billStreetAddress,
       billCity: user[0].billCity,
       billState: user[0].billState,
-      billZipcode: user[0].billZipcode,
-      wishlist: user[0].wishlist
+      billZipcode: user[0].billZipcode
     });
   }
   handleChange(ev) {
@@ -65,8 +63,7 @@ class _UpdateUserForm extends React.Component {
       billStreetAddress,
       billCity,
       billState,
-      billZipcode,
-      wishlist
+      billZipcode
     } = this.state;
     this.props.updateUser(
       id,
@@ -82,8 +79,7 @@ class _UpdateUserForm extends React.Component {
       billStreetAddress,
       billCity,
       billState,
-      billZipcode,
-      wishlist
+      billZipcode
     );
     this.setState({
       username: username,
@@ -98,8 +94,7 @@ class _UpdateUserForm extends React.Component {
       billStreetAddress: billStreetAddress,
       billCity: billCity,
       billState: billState,
-      billZipcode: billZipcode,
-      wishlist: wishlist
+      billZipcode: billZipcode
     });
   }
   render() {
@@ -174,18 +169,6 @@ class _UpdateUserForm extends React.Component {
                 required
               />
             </div>
-
-            <div className="form-group">
-              {' '}
-              <input
-                name="wishlist"
-                className="form-control"
-                type="text"
-                value={this.state.wishlist}
-                onChange={this.handleChange}
-                placeholder="Wishlist"
-              />
-            </div>
             <br /><br />
             <h4>Shipping Address:</h4>
             <div className="form-group">
@@ -235,7 +218,7 @@ class _UpdateUserForm extends React.Component {
                 type="text"
                 value={this.state.zipcode}
                 onChange={this.handleChange}
-                placeholder="ZipCode"
+                placeholder="Zip Code"
                 required
               />
             </div>
@@ -289,7 +272,7 @@ class _UpdateUserForm extends React.Component {
                 type="text"
                 value={this.state.billZipcode}
                 onChange={this.handleChange}
-                placeholder="ZipCode"
+                placeholder="Zip Code"
                 required
               />
             </div>
@@ -324,8 +307,7 @@ const mapDispatchToProps = dispatch => {
       billStreetAddress,
       billCity,
       billState,
-      billZipcode,
-      wishlist
+      billZipcode
     ) =>
       dispatch(
         updateUserThunk(
@@ -342,8 +324,7 @@ const mapDispatchToProps = dispatch => {
           billStreetAddress,
           billCity,
           billState,
-          billZipcode,
-          wishlist
+          billZipcode
         )
       )
   };
