@@ -107,14 +107,6 @@ app.post('/api/orderProducts', async (req, res, next) => {
       res.send(item);
     })
     .catch(err => next(err));
-
-  // console.log('server.body', req.body)
-
-  // const order = Order.findOne({where: { userId: req.body.userId, status: 'cart'}})
-  // console.log('order', order)
-  // const item = await OrderProducts.create({...req.body, orderId: order.id});
-  // console.log('server item', item)
-  // res.send(item);
 });
 
 app.delete('/api/orderProducts/:id', async (req, res, next) => {
