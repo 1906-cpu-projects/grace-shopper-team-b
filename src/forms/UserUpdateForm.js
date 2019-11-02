@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store, { updateUserThunk } from '../store';
+import { updateUserThunk } from '../store';
 import axios from 'axios';
 
 class _UpdateUserForm extends React.Component {
@@ -169,7 +169,8 @@ class _UpdateUserForm extends React.Component {
                 required
               />
             </div>
-            <br /><br />
+            <br />
+            <br />
             <h4>Shipping Address:</h4>
             <div className="form-group">
               {' '}
@@ -223,7 +224,8 @@ class _UpdateUserForm extends React.Component {
               />
             </div>
 
-            <br /><br />
+            <br />
+            <br />
             <h4>Billing Address:</h4>
             <div className="form-group">
               {' '}

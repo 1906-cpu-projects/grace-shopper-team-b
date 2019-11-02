@@ -1,23 +1,17 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-
 const app = express();
-
 const db = require('./db');
 const { models } = require('./db');
 const { Product, User, Guest, Order, OrderProducts } = models;
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
-
 const SESS_NAME = 'sid';
 const SESS_SECRET = 'BRAVO';
 const SESS_LIFETIME = TWO_HOURS;
 
-const Sequelize = require('sequelize');
-
-//ISSUES WITH WEBPACK - COMMENTING OUT THE BELOW
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -34,7 +28,7 @@ app.use(
   })
 );
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, './index.html'));
@@ -101,8 +95,10 @@ app.post('/api/orderProducts', async (req, res, next) => {
     }
   })
     .then(async order => {
-      const item = await OrderProducts.create({ ...req.body, orderId: order.id })
-      // console.log('server item', item)
+      const item = await OrderProducts.create({
+        ...req.body,
+        orderId: order.id
+      });
       res.send(item);
     })
     .catch(err => next(err));
@@ -164,7 +160,7 @@ app.get('*', (req, res) => {
 });
 
 db.syncAndSeed().then(() => {
-  app.listen(port, () => console.log(`listening on port ${port}`));
+  app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 });
 
 module.exports = app;
