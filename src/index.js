@@ -6,8 +6,6 @@ import { Provider, connect } from 'react-redux';
 
 import Home from './Home';
 import Products from './Products';
-import About from './About';
-import Contact from './Contact';
 import Cart from './Cart';
 import Nav from './Nav';
 import Login from './Login';
@@ -46,9 +44,11 @@ class _App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={Products} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/contact" component={Contact} />
-            <Route exact path="/users/cart/:id" render={(props)=> <Cart {...props}/>} />
+            <Route
+              exact
+              path="/users/cart/:id"
+              render={props => <Cart {...props} />}
+            />
             <Route exact path="/orders" component={OrderHistory} />
             <Route exact path="/users/:id" component={User} />
             {loggedIn && <Redirect to="/" />}
