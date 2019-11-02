@@ -12,6 +12,12 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
   }
+  async componentDidMount() {
+    await this.props.getUsers()
+    await this.props.getProducts()
+    await this.props.getOrders()
+    await this.props.getOrderProdcuts()
+  }
   async deleteItem (id){
     await this.props.deleteItem(id)
   }
@@ -19,15 +25,13 @@ class _Cart extends React.Component {
     await this.props.updateItem(item)
   }
   render(){
-    const { orders , users, products, orderProducts, auth, match } = this.props;
-    // console.log('props', this.props)
-    // console.log('auth', auth)
-    // console.log('users', users)
-    // console.log('orders',orders)
+    const { orders , products, orderProducts, auth, match } = this.props || {};
     const cart = orders.find(order => order.userId === auth.id && order.status ==='cart');
+    console.log('cart', cart)
+    console.log('match', match)
+    console.log('auth', auth)
     const cartItems = orderProducts.filter(item => item.orderId === cart.id);
     const totalItems = cartItems.reduce(((sum, item) => sum + Number(item.quantity)), 0);
-    console.log('totalItems', totalItems)
     const items = (total) => {
       if (total === 1){
         return '1 item'
@@ -37,12 +41,7 @@ class _Cart extends React.Component {
       }
       else return '0 items'
     };
-    console.log('cartitems', cartItems)
     const total = cartItems.reduce(((sum, item)=> sum + Number(item.subTotal)), 0)
-    // console.log('total', total)
-    // console.log('products', products)
-    // console.log('orderProducts', orderProducts)
-
     return (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
@@ -110,6 +109,10 @@ const mapPropsToDispatch = ({orders, users, products, orderProducts, auth, match
 
 const dispatchToProps = dispatch => {
   return ({
+    getUsers: async () => dispatch(setUsersThunk()),
+    getProducts: async () => dispatch(setProductsThunk()),
+    getOrders: async () => dispatch(setOrdersThunk()),
+    getOrderProdcuts: async () => dispatch(setOrderProductsThunk()),
     deleteItem: async (id) => dispatch(deleteOrderProductsThunk(id)),
     updateItem: async (item) => dispatch(updateOrderProductThunk(item))
   })

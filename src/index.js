@@ -48,7 +48,7 @@ class _App extends Component {
             <Route exact path="/products" component={Products} />
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
-            <Route exact path="/users/:id/cart" component={Cart} />
+            <Route exact path="/users/cart/:id" render={(props)=> <Cart {...props}/>} />
             <Route exact path="/orders" component={OrderHistory} />
             <Route exact path="/users/:id" component={User} />
             {loggedIn && <Redirect to="/" />}

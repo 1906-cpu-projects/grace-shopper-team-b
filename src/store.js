@@ -241,6 +241,7 @@ export {
   setOrdersThunk,
   setOrderProductsThunk,
   deleteOrderProductsThunk,
+  addOrderProductThunk,
   updateOrderProductThunk,
   attemptLogin,
   attemptSessionLogin,

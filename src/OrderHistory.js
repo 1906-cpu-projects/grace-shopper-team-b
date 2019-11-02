@@ -17,7 +17,7 @@ class _OrderHistory extends React.Component {
   }
   render(){
     const { orders , users, products, orderProducts, auth } = this.props;
-    // console.log('auth', auth)
+    console.log('auth', auth)
     // console.log('users', users)
     // console.log('orders',orders)
     const ordersHistory = orders.filter(order => order.userId === auth.id && order.status === "completed");
@@ -25,7 +25,7 @@ class _OrderHistory extends React.Component {
     // console.log('products', products)
     // console.log('orderProducts', orderProducts)
 
-    console.log("ORDERS HISTORY====", ordersHistory)
+    // console.log("ORDERS HISTORY====", ordersHistory)
 
     return (
       <div>
@@ -33,7 +33,7 @@ class _OrderHistory extends React.Component {
         <br/>
         <div id='order-history'>
           {ordersHistory.map(order =>
-          <div>
+          <div key={order.id}>
             <br/>
             Order # {order.id} <br/>
             Order Status: {order.status}<br/>
