@@ -94,9 +94,27 @@ app.get('/api/orderProducts', (req, res, next) => {
     .catch(next);
 });
 
-app.post('/api/orderProduct', async (req, res, next) => {
-  const item = await OrderProducts.create(req.body);
-  res.send(item);
+app.post('/api/orderProducts', async (req, res, next) => {
+  Order.findOne({
+    where: {
+      status: 'cart',
+      userId: req.body.userId
+    }
+  })
+    .then( async order => {
+      const item = await OrderProducts.create({...req.body, orderId: order.id})
+      // console.log('server item', item)
+      res.send(item);
+    })
+    .catch(err => next(err));
+
+  // console.log('server.body', req.body)
+
+  // const order = Order.findOne({where: { userId: req.body.userId, status: 'cart'}})
+  // console.log('order', order)
+  // const item = await OrderProducts.create({...req.body, orderId: order.id});
+  // console.log('server item', item)
+  // res.send(item);
 });
 
 app.delete('/api/orderProducts/:id', async (req, res, next) => {

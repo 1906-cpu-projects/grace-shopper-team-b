@@ -69,15 +69,14 @@ class _Cart extends React.Component {
                       Product Name: {product.productName} <br/>
                       Description: {product.description} <br/>
                       Price: ${product.price}<br/>
-                      {product.inventory < 6 ? `Only ${product.inventory} left in stock - order soon` : ''}<br/>
-                      Quantity {item.quantity}
+                      Quantity {item.quantity}<br/>
                       Change Quantity <select>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
                       </select><br/>
+                      {product.inventory < 6 ? `Only ${product.inventory} left in stock - order soon` : ''}<br/>
                       <button onClick={ () => this.deleteItem(item.id)}>Delete Item </button>
-                      Item id: {item.id}
                     </div>
                   </div>
                 )
