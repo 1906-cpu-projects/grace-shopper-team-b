@@ -17,9 +17,9 @@ class _OrderHistory extends React.Component {
   }
   render(){
     const { orders , users, products, orderProducts, auth } = this.props;
-    console.log('auth', auth)
+    // console.log('auth', auth)
     // console.log('users', users)
-    console.log('orders',orders)
+    // console.log('orders',orders)
     const ordersHistory = orders.filter(order => order.userId === auth.id && order.status === "completed");
     // console.log('cart', cart)
     // console.log('products', products)

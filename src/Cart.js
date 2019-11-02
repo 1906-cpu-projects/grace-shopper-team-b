@@ -12,12 +12,12 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
   }
-  async componentDidMount() {
-    await this.props.getUsers()
-    await this.props.getProducts()
-    await this.props.getOrders()
-    await this.props.getOrderProdcuts()
-  }
+  // async componentDidMount() {
+  //   await this.props.getUsers()
+  //   await this.props.getProducts()
+  //   await this.props.getOrders()
+  //   await this.props.getOrderProdcuts()
+  // }
   async deleteItem (id){
     await this.props.deleteItem(id)
   }
@@ -26,11 +26,14 @@ class _Cart extends React.Component {
   }
   render(){
     const { orders , products, orderProducts, auth, match } = this.props;
-    console.log('orders', orders)
+    // console.log('orders', orders)
     const cart = orders.find(order => order.userId === match.params.id && order.status ==='cart');
-    console.log('cart', cart)
-    console.log('match', match)
-    console.log('auth', auth)
+    if ( cart === undefined){
+      return('You have no cart at this time.')
+    }
+    // console.log('cart', cart)
+    // console.log('match', match)
+    // console.log('auth', auth)
     const cartItems = orderProducts.filter(item => item.orderId === cart.id);
     const totalItems = cartItems.reduce(((sum, item) => sum + Number(item.quantity)), 0);
     const items = (total) => {
@@ -43,7 +46,7 @@ class _Cart extends React.Component {
       else return '0 items'
     };
     const total = cartItems.reduce(((sum, item)=> sum + Number(item.subTotal)), 0)
-    return ( cart===undefined ? 'Cart is unavailable at this time.':
+    return ( cart === 'undefined' ? 'Cart is unavailable at this time.':
     (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>

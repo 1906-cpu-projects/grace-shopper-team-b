@@ -15,7 +15,7 @@ class _Products extends Component {
   }
   render() {
     const { products, auth } = this.props;
-    console.log('auth', auth)
+    // console.log('auth', auth)
     return (
       <div>
         <h1>Our Products</h1>
