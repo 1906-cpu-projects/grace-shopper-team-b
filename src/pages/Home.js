@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout } from './store';
+import { logout } from '../store';
 
 const _Home = ({ auth, logout }) => (
   <div className="container">

@@ -7,7 +7,7 @@ import {
   setOrdersThunk,
   setProductsThunk,
   setUsersThunk
-} from './store';
+} from '../store';
 
 class _Cart extends React.Component {
   constructor(props) {

@@ -4,13 +4,13 @@ import { render } from 'react-dom';
 import { HashRouter, Switch, Link, Route, Redirect } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 
-import Home from './Home';
-import Products from './Products';
-import Cart from './Cart';
+import Home from './pages/Home';
+import Products from './components/Products';
+import Cart from './components/Cart';
 import Nav from './Nav';
-import Login from './Login';
-import User from './User';
-import OrderHistory from './OrderHistory';
+import Login from './pages/Login';
+import User from './components/User';
+import OrderHistory from './components/OrderHistory';
 
 import store, {
   attemptSessionLogin,
