@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteOrderProductsThunk, updateOrderProductThunk } from './store';
-
+import { deleteOrderProductsThunk, updateOrderProductThunk, se } from './store';
+import { setOrderProductsThunk, setOrdersThunk, setProductsThunk, setUsersThunk} from './store'
 
 
 
@@ -25,8 +25,9 @@ class _Cart extends React.Component {
     await this.props.updateItem(item)
   }
   render(){
-    const { orders , products, orderProducts, auth, match } = this.props || {};
-    const cart = orders.find(order => order.userId === auth.id && order.status ==='cart');
+    const { orders , products, orderProducts, auth, match } = this.props;
+    console.log('orders', orders)
+    const cart = orders.find(order => order.userId === match.params.id && order.status ==='cart');
     console.log('cart', cart)
     console.log('match', match)
     console.log('auth', auth)
@@ -42,7 +43,8 @@ class _Cart extends React.Component {
       else return '0 items'
     };
     const total = cartItems.reduce(((sum, item)=> sum + Number(item.subTotal)), 0)
-    return (
+    return ( cart===undefined ? 'Cart is unavailable at this time.':
+    (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
         <br/>
@@ -92,18 +94,17 @@ class _Cart extends React.Component {
           <button className="btn btn-outline-success">Proceed to Checkout</button>
         </div>
       </div>
-    );
+    ));
   }
 }
 
-const mapPropsToDispatch = ({orders, users, products, orderProducts, auth, match}) => {
+const mapPropsToDispatch = ({orders, users, products, orderProducts, auth}) => {
   return ({
     orders,
     users,
     products,
     orderProducts,
-    auth,
-    match
+    auth
   })
 };
 

@@ -54,10 +54,27 @@ app.get('/api/users/:id', (req, res, next) => {
 
 app.put('/api/users/:id', (req, res, next) => {
   User.findByPk(req.params.id)
-    .then(_user => _user.update({ username: req.body.username, email: req.body.email, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, shippingAddress: req.body.shippingAddress, billingAddress: req.body.billingAddress, wishlist: req.body.wishlist }))
+    .then(_user =>
+      _user.update({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        streetAddress: req.body.streetAddress,
+        city: req.body.city,
+        state: req.body.state,
+        zipcode: req.body.zipcode,
+        billStreetAddress: req.body.billStreetAddress,
+        billCity: req.body.billCity,
+        billState: req.body.billState,
+        billZipcode: req.body.billZipcode,
+        wishlist: req.body.wishlist
+      })
+    )
     .then(() => res.sendStatus(201))
-    .catch(next)
-})
+    .catch(next);
+});
 
 app.get('/api/products', (req, res, next) => {
   Product.findAll()
@@ -79,19 +96,22 @@ app.get('/api/orderProducts', (req, res, next) => {
 
 app.post('/api/orderProduct', async (req, res, next) => {
   const item = await OrderProducts.create(req.body);
-  res.send(item)
-})
+  res.send(item);
+});
 
 app.delete('/api/orderProducts/:id', async (req, res, next) => {
-  await OrderProducts.destroy({where: {id: req.params.id}})
-  res.sendStatus(204)
+  await OrderProducts.destroy({ where: { id: req.params.id } });
+  res.sendStatus(204);
 });
 
 app.put('/api/orderProducts/:id', async (req, res, next) => {
-  const item = await OrderProducts.update({quantity: req.body.quantity}, {where: {id: req.body.id}});
-  console.log(item)
-  res.send( item );
-})
+  const item = await OrderProducts.update(
+    { quantity: req.body.quantity },
+    { where: { id: req.body.id } }
+  );
+  console.log(item);
+  res.send(item);
+});
 
 // Login
 
@@ -124,6 +144,14 @@ app.delete('/api/sessions', (req, res, next) => {
   req.session.destroy();
   req.session = null;
   res.sendStatus(204);
+});
+
+// Page Not Fount Route
+app.get('*', (req, res) => {
+  res.send(`
+    <h1>404 Page Not Found</h1>
+    <p>Sorry, that page doesn't exist, Doc. :(</p>
+  `);
 });
 
 db.syncAndSeed().then(() => {
