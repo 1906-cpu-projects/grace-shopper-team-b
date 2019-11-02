@@ -2,9 +2,9 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
-const db = require('./db');
-const { models } = require('./db');
-const { Product, User, Guest, Order, OrderProducts } = models;
+const db = require('./db/db');
+const { models } = require('./db/db');
+const { Product, User, Order, OrderProducts } = models;
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
