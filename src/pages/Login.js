@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import store, { attemptLogin } from './store';
+import { attemptLogin } from '../store';
 
 class _Login extends Component {
   constructor() {

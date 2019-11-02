@@ -5,7 +5,7 @@ import {
   setProductsThunk,
   setOrdersThunk,
   setOrderProductsThunk
-} from './store';
+} from '../store';
 
 class _OrderHistory extends React.Component {
   constructor(props) {
