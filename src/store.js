@@ -34,7 +34,7 @@ const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 const setUsersAction = users => ({ type: SET_USERS, users });
 const updateUserAction = (user) => {
   return {
-    type: UPDATE_USER, id: user.id, username: user.username, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName, streetAddress: user.streetAddress, city: user.city, state: user.state, zipcode: user.zipcode, billStreetAddress: user.billStreetAddress, billCity: user.billCity, billState: user.billState, billZipcode: user.billZipcode, wishlist: user.wishlist
+    type: UPDATE_USER, id: user.id, username: user.username, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName, streetAddress: user.streetAddress, city: user.city, state: user.state, zipcode: user.zipcode, billStreetAddress: user.billStreetAddress, billCity: user.billCity, billState: user.billState, billZipcode: user.billZipcode
   };
 }
 
@@ -92,7 +92,7 @@ const setUsersThunk = () => {
   };
 };
 
-const updateUserThunk = (id, username, email, password, firstName, lastName, streetAddress, city, state, zipcode, billStreetAddress, billCity, billState, billZipcode, wishlist) => {
+const updateUserThunk = (id, username, email, password, firstName, lastName, streetAddress, city, state, zipcode, billStreetAddress, billCity, billState, billZipcode) => {
   const user = {
     id: id,
     username: username,
@@ -107,8 +107,7 @@ const updateUserThunk = (id, username, email, password, firstName, lastName, str
     billStreetAddress: billStreetAddress,
     billCity: billCity,
     billState: billState,
-    billZipcode: billZipcode,
-    wishlist: wishlist
+    billZipcode: billZipcode
   }
   return async (dispatch) => {
     await axios.put(`/api/users/${user.id}`, {
@@ -124,10 +123,8 @@ const updateUserThunk = (id, username, email, password, firstName, lastName, str
       billStreetAddress: user.billStreetAddress,
       billCity: user.billCity,
       billState: user.billState,
-      billZipcode: user.billZipcode,
-      wishlist: user.wishlist
+      billZipcode: user.billZipcode
     }).data;
-    // console.log('THUNKS ', allUsers);
     dispatch(updateUserAction(user));
   };
 };
@@ -199,7 +196,7 @@ const userReducer = (state = [], action) => {
   }
   if (action.type === UPDATE_USER) {
     return state.map(user => action.id === user.id ? {
-      ...user, username: action.username, email: action.email, password: action.password, firstName: action.firstName, lastName: action.lastName, streetAddress: action.streetAddress, city: action.city, state: action.state, zipcode: action.zipcode, billStreetAddress: action.billStreetAddress, billCity: action.billCity, billState: action.billState, billZipcode: action.billZipcode, wishlist: action.wishlist
+      ...user, username: action.username, email: action.email, password: action.password, firstName: action.firstName, lastName: action.lastName, streetAddress: action.streetAddress, city: action.city, state: action.state, zipcode: action.zipcode, billStreetAddress: action.billStreetAddress, billCity: action.billCity, billState: action.billState, billZipcode: action.billZipcode
     } : user);
   }
   return state;

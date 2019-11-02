@@ -75,13 +75,6 @@ const User = conn.define('user', {
   },
   billZipcode: {
     type: INTEGER
-  },
-  cart: {
-    type: ARRAY(INTEGER),
-    defaultValue: []
-  },
-  wishlist: {
-    type: STRING
   }
 });
 
@@ -213,16 +206,14 @@ const syncAndSeed = async () => {
       billStreetAddress: '123 Some Street ',
       billCity: 'Some City',
       billState: 'California',
-      billZipcode: '12345',
-      wishlist: 'Boomerang, Rocket Sled'
+      billZipcode: '12345'
     },
     {
       firstName: 'Rob',
       lastName: 'Wise',
       username: 'rw',
       email: 'caster@gmail.com',
-      password: 'CASTER',
-      wishlist: 'Batman Outfit, Rocket Sled'
+      password: 'CASTER'
     },
     {
       firstName: 'Paul',
