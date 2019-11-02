@@ -1,6 +1,10 @@
 # grace-shopper-team-b
 
-pnbkn made an update
+ACME store for FSA Grace Shopper project
 
-James has touched ReadMe.
+Created and coded by:
+Dominique
+James
+Paul 
+Rob
 

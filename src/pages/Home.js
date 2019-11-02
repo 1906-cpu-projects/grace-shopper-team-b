@@ -5,8 +5,8 @@ import { logout } from '../store';
 const _Home = ({ auth, logout }) => (
   <div className="container">
     <h2>Home</h2>
-    <h4>Welcome {auth.firstName}!</h4>
-    <button
+    <h4>Welcome {auth.id ? auth.firstName : "Guest"}!</h4>
+      <button
       type="button"
       className="btn btn-outline-secondary"
       onClick={logout}
