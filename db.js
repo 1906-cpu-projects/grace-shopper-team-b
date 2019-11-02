@@ -1,7 +1,4 @@
-const pg = require('pg');
-
 const Sequelize = require('sequelize');
-
 const {
   TEXT,
   ARRAY,
@@ -17,8 +14,6 @@ const {
 const conn = new Sequelize(
   process.env.DATABASE_URL || 'postgres://localhost/teamb_graceshopperdb'
 );
-
-//USERS COMMENTED OUT UNTIL PRODUCTS WORKS
 
 const User = conn.define('user', {
   id: {
@@ -128,9 +123,6 @@ const Product = conn.define('product', {
   }
 });
 
-//==============================ORDERS?==============================
-//==============HOW TO HANDLE ORDERS? SEPERATE MODEL OR ARRAY ON USER?
-
 const Order = conn.define('order', {
   id: {
     type: UUID,
@@ -153,9 +145,6 @@ const Order = conn.define('order', {
   }
 });
 
-//==============================CART?==============================
-//==============HOW TO HANDLE CART? SEPERATE MODEL OR ARRAY ON USER?
-//==============SHOULD CART BY HANDLED BY STORE AND FRONT END? WILL THIS BE PERSISTENT?
 const OrderProducts = conn.define('orderproducts', {
   id: {
     type: UUID,
@@ -186,8 +175,6 @@ Order.hasMany(OrderProducts);
 
 OrderProducts.belongsTo(Order);
 OrderProducts.belongsTo(Product);
-
-//SYNC AND SEED COMING SOON...
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION

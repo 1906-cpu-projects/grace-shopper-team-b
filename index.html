@@ -1,98 +1,98 @@
 <!DOCTYPE html>
 
 <html>
+  <head>
+    <script defer src="assets/app.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lato', sans-serif;
+      }
 
-<head>
-  <script defer src="/assets/app.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: 'Lato', sans-serif;
-    }
+      body {
+        margin: 1rem;
+        padding: 1rem;
+      }
 
-    body {
-      margin: 1rem;
-      padding: 1rem;
-    }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #333;
+        height: 4rem;
+        flex: 1;
+        color: white;
+        padding: 0 4rem;
+        margin-bottom: 1rem;
+      }
 
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #333;
-      height: 4rem;
-      flex: 1;
-      color: white;
-      padding: 0 4rem;
-      margin-bottom: 1rem;
-    }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+      }
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-    }
+      li {
+        list-style: none;
+      }
 
-    li {
-      list-style: none;
-    }
+      .user {
+        width: 100%;
+        margin: 2rem 7.3rem;
+        text-align: left;
+        line-height: 1.3rem;
+        padding: 1rem;
+        border-radius: 0.3rem;
+      }
 
-    .user {
-      width: 100%;
-      margin: 2rem 7.3rem;
-      text-align: left;
-      line-height: 1.3rem;
-      padding: 1rem;
-      border-radius: 0.3rem;
-    }
+      #products {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-    #products {
-      display: flex;
-      flex-wrap: wrap;
-    }
+      #products > div {
+        border: solid black 1px;
+        margin: 1rem;
+        padding: 1rem;
+        border-radius: 5%;
+        width: calc(100 / 3 - 2) %;
+      }
 
-    #products>div {
-      border: solid black 1px;
-      margin: 1rem;
-      padding: 1rem;
-      border-radius: 5%;
-      width: calc(100/3 - 2)%
-    }
+      #cartProducts {
+        display: flex;
+        flex-direction: column;
+      }
 
-    #cartProducts {
-      display: flex;
-      flex-direction: column
-    }
+      #cartProducts > div {
+        border: solid black 1px;
+        margin: 1rem;
+        padding: 1rem;
+      }
 
-    #cartProducts>div {
-      border: solid black 1px;
-      margin: 1rem;
-      padding: 1rem;
-    }
+      #cartProduct {
+        display: flex;
+        justify-content: space-around;
+      }
 
-    #cartProduct {
-      display: flex;
-      justify-content: space-around;
-    }
+      #total {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
 
-    #total {
-      text-align: center;
-      display: flex;
-      flex-direction: column
-    }
-  </style>
-</head>
-
-</style>
-</head>
-
-<body>
-  <div id="root"></div>
-
-  <script type="text/babel"></script>
-</body>
-
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
