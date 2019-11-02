@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteOrderProductsThunk, updateOrderProductThunk } from './store';
-
+import { deleteOrderProductsThunk, updateOrderProductThunk, se } from './store';
+import { setOrderProductsThunk, setOrdersThunk, setProductsThunk, setUsersThunk} from './store'
 
 
 
@@ -12,6 +12,12 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
   }
+  // async componentDidMount() {
+  //   await this.props.getUsers()
+  //   await this.props.getProducts()
+  //   await this.props.getOrders()
+  //   await this.props.getOrderProdcuts()
+  // }
   async deleteItem (id){
     await this.props.deleteItem(id)
   }
@@ -19,15 +25,17 @@ class _Cart extends React.Component {
     await this.props.updateItem(item)
   }
   render(){
-    const { orders , users, products, orderProducts, auth, match } = this.props;
-    // console.log('props', this.props)
+    const { orders , products, orderProducts, auth, match } = this.props;
+    // console.log('orders', orders)
+    const cart = orders.find(order => order.userId === match.params.id && order.status ==='cart');
+    if ( cart === undefined){
+      return('You have no cart at this time.')
+    }
+    // console.log('cart', cart)
+    // console.log('match', match)
     // console.log('auth', auth)
-    // console.log('users', users)
-    // console.log('orders',orders)
-    const cart = orders.find(order => order.userId === auth.id && order.status ==='cart');
     const cartItems = orderProducts.filter(item => item.orderId === cart.id);
     const totalItems = cartItems.reduce(((sum, item) => sum + Number(item.quantity)), 0);
-    console.log('totalItems', totalItems)
     const items = (total) => {
       if (total === 1){
         return '1 item'
@@ -37,13 +45,9 @@ class _Cart extends React.Component {
       }
       else return '0 items'
     };
-    console.log('cartitems', cartItems)
     const total = cartItems.reduce(((sum, item)=> sum + Number(item.subTotal)), 0)
-    // console.log('total', total)
-    // console.log('products', products)
-    // console.log('orderProducts', orderProducts)
-
-    return (
+    return ( cart === 'undefined' ? 'Cart is unavailable at this time.':
+    (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
         <br/>
@@ -65,15 +69,14 @@ class _Cart extends React.Component {
                       Product Name: {product.productName} <br/>
                       Description: {product.description} <br/>
                       Price: ${product.price}<br/>
-                      {product.inventory < 6 ? `Only ${product.inventory} left in stock - order soon` : ''}<br/>
-                      Quantity {item.quantity}
+                      Quantity {item.quantity}<br/>
                       Change Quantity <select>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
                       </select><br/>
+                      {product.inventory < 6 ? `Only ${product.inventory} left in stock - order soon` : ''}<br/>
                       <button onClick={ () => this.deleteItem(item.id)}>Delete Item </button>
-                      Item id: {item.id}
                     </div>
                   </div>
                 )
@@ -93,23 +96,26 @@ class _Cart extends React.Component {
           <button className="btn btn-outline-success">Proceed to Checkout</button>
         </div>
       </div>
-    );
+    ));
   }
 }
 
-const mapPropsToDispatch = ({orders, users, products, orderProducts, auth, match}) => {
+const mapPropsToDispatch = ({orders, users, products, orderProducts, auth}) => {
   return ({
     orders,
     users,
     products,
     orderProducts,
-    auth,
-    match
+    auth
   })
 };
 
 const dispatchToProps = dispatch => {
   return ({
+    getUsers: async () => dispatch(setUsersThunk()),
+    getProducts: async () => dispatch(setProductsThunk()),
+    getOrders: async () => dispatch(setOrdersThunk()),
+    getOrderProdcuts: async () => dispatch(setOrderProductsThunk()),
     deleteItem: async (id) => dispatch(deleteOrderProductsThunk(id)),
     updateItem: async (item) => dispatch(updateOrderProductThunk(item))
   })

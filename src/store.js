@@ -162,9 +162,9 @@ const updateOrderProductThunk = (cartItem) => {
   }
 }
 
-const addOrderProductThunk = (cartItem) => {
+const addOrderProductThunk = (payload) => {
   return async dispatch => {
-    const item = (await axios.post('/api/orderProducts', cartItem)).data
+    const item = (await axios.post('/api/orderProducts', payload)).data
     dispatch(addOrderProduct(item))
   }
 }
@@ -255,6 +255,7 @@ export {
   setOrdersThunk,
   setOrderProductsThunk,
   deleteOrderProductsThunk,
+  addOrderProductThunk,
   updateOrderProductThunk,
   attemptLogin,
   attemptSessionLogin,

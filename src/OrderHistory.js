@@ -25,7 +25,7 @@ class _OrderHistory extends React.Component {
     // console.log('products', products)
     // console.log('orderProducts', orderProducts)
 
-    console.log("ORDERS HISTORY====", ordersHistory)
+    // console.log("ORDERS HISTORY====", ordersHistory)
 
     return (
       <div>
@@ -33,7 +33,7 @@ class _OrderHistory extends React.Component {
         <br/>
         <div id='order-history'>
           {ordersHistory.map(order =>
-          <div>
+          <div key={order.id}>
             <br/>
             Order # {order.id} <br/>
             Order Status: {order.status}<br/>
