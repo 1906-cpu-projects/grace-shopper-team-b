@@ -68,8 +68,7 @@ app.put('/api/users/:id', (req, res, next) => {
         billStreetAddress: req.body.billStreetAddress,
         billCity: req.body.billCity,
         billState: req.body.billState,
-        billZipcode: req.body.billZipcode,
-        wishlist: req.body.wishlist
+        billZipcode: req.body.billZipcode
       })
     )
     .then(() => res.sendStatus(201))
@@ -101,8 +100,8 @@ app.post('/api/orderProducts', async (req, res, next) => {
       userId: req.body.userId
     }
   })
-    .then( async order => {
-      const item = await OrderProducts.create({...req.body, orderId: order.id})
+    .then(async order => {
+      const item = await OrderProducts.create({ ...req.body, orderId: order.id })
       // console.log('server item', item)
       res.send(item);
     })
