@@ -88,7 +88,6 @@ app.get('/api/orderProducts', (req, res, next) => {
 });
 
 app.post('/api/orderProducts', async (req, res, next) => {
-  console.log('body', req.body)
   Order.findOne({
     where: {
       status: 'cart',
@@ -102,7 +101,6 @@ app.post('/api/orderProducts', async (req, res, next) => {
           status: 'cart'})
       }
       const item = await OrderProducts.create({...req.body, orderId: order.id})
-      console.log('server item', item)
       res.send(item);
     })
     .catch(err => next(err));

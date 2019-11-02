@@ -21,11 +21,11 @@ class _Cart extends React.Component {
   //   await this.props.getOrders()
   //   await this.props.getOrderProdcuts()
   // }
-  async deleteItem(id) {
-    await this.props.deleteItem(id);
+  deleteItem(id) {
+    this.props.deleteItem(id);
   }
-  async updateItem(item) {
-    await this.props.updateItem(item);
+  updateItem(item) {
+    this.props.updateItem(item);
   }
   render() {
     const { orders, products, orderProducts, auth, match } = this.props;
