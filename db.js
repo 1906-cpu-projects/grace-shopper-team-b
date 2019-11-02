@@ -52,11 +52,29 @@ const User = conn.define('user', {
   lastName: {
     type: STRING
   },
-  shippingAddress: {
+  streetAddress: {
     type: STRING
   },
-  billingAddress: {
+  city: {
     type: STRING
+  },
+  state: {
+    type: STRING
+  },
+  zipcode: {
+    type: INTEGER
+  },
+  billStreetAddress: {
+    type: STRING
+  },
+  billCity: {
+    type: STRING
+  },
+  billState: {
+    type: STRING
+  },
+  billZipcode: {
+    type: INTEGER
   },
   cart: {
     type: ARRAY(INTEGER),
@@ -188,6 +206,14 @@ const syncAndSeed = async () => {
       username: 'jf',
       email: 'archer@gmail.com',
       password: 'ARCHER',
+      streetAddress: '123 Some Street ',
+      city: 'Some City',
+      state: 'California',
+      zipcode: '12345',
+      billStreetAddress: '123 Some Street ',
+      billCity: 'Some City',
+      billState: 'California',
+      billZipcode: '12345',
       wishlist: 'Boomerang, Rocket Sled'
     },
     {

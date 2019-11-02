@@ -13,8 +13,14 @@ class _UpdateUserForm extends React.Component {
       password: '',
       firstName: '',
       lastName: '',
-      shippingAddress: '',
-      billingAddress: '',
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      billStreetAddress: '',
+      billCity: '',
+      billState: '',
+      billZipcode: '',
       wishlist: ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -29,8 +35,14 @@ class _UpdateUserForm extends React.Component {
       password: user[0].password,
       firstName: user[0].firstName,
       lastName: user[0].lastName,
-      shippingAddress: user[0].shippingAddress,
-      billingAddress: user[0].billingAddress,
+      streetAddress: user[0].streetAddress,
+      city: user[0].city,
+      state: user[0].state,
+      zipcode: user[0].zipcode,
+      billStreetAddress: user[0].billStreetAddress,
+      billCity: user[0].billCity,
+      billState: user[0].billState,
+      billZipcode: user[0].billZipcode,
       wishlist: user[0].wishlist
     });
   }
@@ -46,8 +58,14 @@ class _UpdateUserForm extends React.Component {
       password,
       firstName,
       lastName,
-      shippingAddress,
-      billingAddress,
+      streetAddress,
+      city,
+      state,
+      zipcode,
+      billStreetAddress,
+      billCity,
+      billState,
+      billZipcode,
       wishlist
     } = this.state;
     this.props.updateUser(
@@ -57,8 +75,14 @@ class _UpdateUserForm extends React.Component {
       password,
       firstName,
       lastName,
-      shippingAddress,
-      billingAddress,
+      streetAddress,
+      city,
+      state,
+      zipcode,
+      billStreetAddress,
+      billCity,
+      billState,
+      billZipcode,
       wishlist
     );
     this.setState({
@@ -67,8 +91,14 @@ class _UpdateUserForm extends React.Component {
       password: password,
       firstName: firstName,
       lastName: lastName,
-      shippingAddress: shippingAddress,
-      billingAddress: billingAddress,
+      streetAddress: streetAddress,
+      city: city,
+      state: state,
+      zipcode: zipcode,
+      billStreetAddress: billStreetAddress,
+      billCity: billCity,
+      billState: billState,
+      billZipcode: billZipcode,
       wishlist: wishlist
     });
   }
@@ -148,32 +178,6 @@ class _UpdateUserForm extends React.Component {
             <div className="form-group">
               {' '}
               <input
-                name="shippingAddress"
-                className="form-control"
-                type="text"
-                value={this.state.shippingAddress}
-                onChange={this.handleChange}
-                placeholder="Shipping Address"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              {' '}
-              <input
-                name="billingAddress"
-                className="form-control"
-                type="text"
-                value={this.state.billingAddress}
-                onChange={this.handleChange}
-                placeholder="Billing Address"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              {' '}
-              <input
                 name="wishlist"
                 className="form-control"
                 type="text"
@@ -182,7 +186,114 @@ class _UpdateUserForm extends React.Component {
                 placeholder="Wishlist"
               />
             </div>
+            <br /><br />
+            <h4>Shipping Address:</h4>
+            <div className="form-group">
+              {' '}
+              <input
+                name="streetAddress"
+                className="form-control"
+                type="text"
+                value={this.state.streetAddress}
+                onChange={this.handleChange}
+                placeholder="Street Address"
+                required
+              />
+            </div>
 
+            <div className="form-group">
+              {' '}
+              <input
+                name="city"
+                className="form-control"
+                type="text"
+                value={this.state.city}
+                onChange={this.handleChange}
+                placeholder="City"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              {' '}
+              <input
+                name="state"
+                className="form-control"
+                type="text"
+                value={this.state.state}
+                onChange={this.handleChange}
+                placeholder="State"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              {' '}
+              <input
+                name="zipcode"
+                className="form-control"
+                type="text"
+                value={this.state.zipcode}
+                onChange={this.handleChange}
+                placeholder="ZipCode"
+                required
+              />
+            </div>
+
+            <br /><br />
+            <h4>Billing Address:</h4>
+            <div className="form-group">
+              {' '}
+              <input
+                name="billStreetAddress"
+                className="form-control"
+                type="text"
+                value={this.state.billStreetAddress}
+                onChange={this.handleChange}
+                placeholder="Street Address"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              {' '}
+              <input
+                name="billCity"
+                className="form-control"
+                type="text"
+                value={this.state.billCity}
+                onChange={this.handleChange}
+                placeholder="City"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              {' '}
+              <input
+                name="billState"
+                className="form-control"
+                type="text"
+                value={this.state.billState}
+                onChange={this.handleChange}
+                placeholder="State"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              {' '}
+              <input
+                name="billZipcode"
+                className="form-control"
+                type="text"
+                value={this.state.billZipcode}
+                onChange={this.handleChange}
+                placeholder="ZipCode"
+                required
+              />
+            </div>
+            <br />
             <button type="submit" className="btn btn-outline-primary">
               Update Information
             </button>
@@ -192,14 +303,6 @@ class _UpdateUserForm extends React.Component {
     );
   }
 }
-
-// const UpdateUserForm = connect(({ users }) => {
-//   return {
-//     users
-//   }
-// })(_UpdateUserForm)
-
-// export default UpdateUserForm;
 
 const mapStateToProps = state => ({
   users: state.users
@@ -214,8 +317,14 @@ const mapDispatchToProps = dispatch => {
       password,
       firstName,
       lastName,
-      shippingAddress,
-      billingAddress,
+      streetAddress,
+      city,
+      state,
+      zipcode,
+      billStreetAddress,
+      billCity,
+      billState,
+      billZipcode,
       wishlist
     ) =>
       dispatch(
@@ -226,8 +335,14 @@ const mapDispatchToProps = dispatch => {
           password,
           firstName,
           lastName,
-          shippingAddress,
-          billingAddress,
+          streetAddress,
+          city,
+          state,
+          zipcode,
+          billStreetAddress,
+          billCity,
+          billState,
+          billZipcode,
           wishlist
         )
       )

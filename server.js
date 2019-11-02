@@ -61,8 +61,14 @@ app.put('/api/users/:id', (req, res, next) => {
         password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        shippingAddress: req.body.shippingAddress,
-        billingAddress: req.body.billingAddress,
+        streetAddress: req.body.streetAddress,
+        city: req.body.city,
+        state: req.body.state,
+        zipcode: req.body.zipcode,
+        billStreetAddress: req.body.billStreetAddress,
+        billCity: req.body.billCity,
+        billState: req.body.billState,
+        billZipcode: req.body.billZipcode,
         wishlist: req.body.wishlist
       })
     )
