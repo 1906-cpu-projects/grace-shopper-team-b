@@ -76,15 +76,53 @@ app.get('/api/products', (req, res, next) => {
 });
 
 app.get('/api/orders', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    include: [{
+      model: User
+    }],
+    include:[{
+      model: OrderProducts,
+      as: 'items',
+      include: [{
+        model: Product
+      }]
+    }]
+  })
     .then(orders => res.send(orders))
     .catch(next);
 });
 
-app.get('/api/orderProducts', (req, res, next) => {
-  OrderProducts.findAll()
-    .then(orders => res.send(orders))
+app.get('/api/orders/:id/cart', (req, res, next)=> {
+  Order.findOne({
+    where: {
+      userId: req.params.id,
+      status: 'cart'
+    }
+  })
+    .then(order => res.send(order))
     .catch(next);
+});
+
+app.get('/api/orderProducts', async (req, res, next) => {
+  try{
+    const orderProducts = await OrderProducts.findAll({
+      include: [{
+        model: Product
+      }]
+    });
+    res.send(orderProducts)
+  }
+  catch(er){
+    next(er)
+  }
+  // OrderProducts.findAll({
+  //   includes: [{
+  //     model: Product,
+  //     as: 'productInfo'
+  //   }]
+  // })
+  //   .then(orders => res.send(orders))
+  //   .catch(next);
 });
 
 app.post('/api/orderProducts', async (req, res, next) => {
