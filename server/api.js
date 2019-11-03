@@ -30,13 +30,13 @@ app.use(
 
 
 app.get('/users', (req, res, next) => {
-  User.findAll()
+  User.findAll({ attributes: { exclude: ["username", "email", "password"] } })
     .then(users => res.send(users))
     .catch(next);
 });
 
 app.get('/users/:id', (req, res, next) => {
-  User.findAll({ where: { id: req.params.id } })
+  User.findAll({ where: { id: req.params.id }, attributes: { exclude: ["username", "email", "password"] } })
     .then(users => res.send(users))
     .catch(next);
 });
