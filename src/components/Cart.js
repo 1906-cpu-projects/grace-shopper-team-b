@@ -121,17 +121,11 @@ class _Cart extends React.Component {
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
           </div>
-          <div id="total">
-            <div>
-              Total ({items(totalItems)}
-              ): ${total}
-            </div>
-            <button className="btn btn-outline-success">
+          <button className="btn btn-outline-success">
               Proceed to Checkout
-            </button>
-          </div>
+          </button>
         </div>
-        </div>
+      </div>
       );
   }
 }
