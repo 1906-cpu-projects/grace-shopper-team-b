@@ -111,6 +111,33 @@ app.put('/orderProducts/:id', async (req, res, next) => {
   res.send(item);
 });
 
+
+
+//===================COMPLETED ORDERS=========================
+
+app.get('/completedorders', (req, res, next) => {
+  Order.findAll({
+    include: [{
+      model: OrderProducts
+    }]
+  })
+  .then(orders => res.send(orders))
+  .catch(next)
+  });
+
+app.get('/completedOrders/:id', (req, res, next) => {
+  Order.findAll({
+    include: [{
+      model: OrderProducts,
+      where: {id: req.params.id}
+    }]
+  })
+  .then(orders => res.send(orders))
+  .catch(next)
+  });
+
+//===================END COMPLETED ORDERS=====================
+
 // Login
 
 app.post('/sessions', (req, res, next) => {

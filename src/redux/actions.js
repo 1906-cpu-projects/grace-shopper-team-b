@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_USERS, UPDATE_USER, SET_ORDERS, SET_ORDERPRODUCTS, DELETE_ORDERPRODUCT, UPDATE_ORDERPRODUCT, ADD_ORDERPRODUCT } from './constants';
+import { SET_PRODUCTS, SET_USERS, UPDATE_USER, SET_ORDERS, SET_ORDERPRODUCTS, DELETE_ORDERPRODUCT, UPDATE_ORDERPRODUCT, ADD_ORDERPRODUCT, SET_ORDER_HISTORY } from './constants';
 
 // ACTION CREATORS
 
@@ -31,3 +31,5 @@ export const setOrderProducts = orderProducts => ({ type: SET_ORDERPRODUCTS, ord
 export const deleteOrderProducts = id => ({ type: DELETE_ORDERPRODUCT, id });
 export const updateOrderProduct = orderProduct => ({ type: UPDATE_ORDERPRODUCT, orderProduct });
 export const addOrderProduct = orderProduct => ({ type: ADD_ORDERPRODUCT, orderProduct });
+
+export const setOrderHistoryAction = orderHistory => ({ type: SET_ORDER_HISTORY, orderHistory });

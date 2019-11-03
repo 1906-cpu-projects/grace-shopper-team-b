@@ -11,11 +11,12 @@ import {
   setOrderProductsThunk,
   deleteOrderProductsThunk,
   updateOrderProductThunk,
-  addOrderProductThunk
+  addOrderProductThunk,
+  setOrderHistoryThunk
 } from './thunks';
 
 import { reducer } from './reducer';
-import { setProductsAction, setUsersAction } from './actions'
+import { setProductsAction, setUsersAction, setOrderHistoryAction } from './actions'
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -26,7 +27,7 @@ import { setProductsAction, setUsersAction } from './actions'
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
-export { setProductsAction, setUsersAction };
+export { setProductsAction, setUsersAction, setOrderHistoryAction };
 export {
   setProductsThunk,
   setUsersThunk,
@@ -38,5 +39,6 @@ export {
   updateOrderProductThunk,
   attemptLogin,
   attemptSessionLogin,
-  logout
+  logout,
+  setOrderHistoryThunk
 };
