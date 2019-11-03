@@ -27,8 +27,6 @@ app.use(
   })
 );
 
-
-
 app.get('/users', (req, res, next) => {
   User.findAll()
     .then(users => res.send(users))

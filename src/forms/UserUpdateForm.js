@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateUserThunk } from '../redux/store';
-import axios from 'axios';
 
 class _UpdateUserForm extends React.Component {
   constructor(props) {
@@ -25,23 +24,23 @@ class _UpdateUserForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  async componentDidMount(props) {
-    const user = (await axios.get(`api/users/${this.props.match}`)).data;
+  componentDidMount() {
+    const user = this.props.auth;
     this.setState({
-      id: user[0].id,
-      username: user[0].username,
-      email: user[0].email,
-      password: user[0].password,
-      firstName: user[0].firstName,
-      lastName: user[0].lastName,
-      streetAddress: user[0].streetAddress,
-      city: user[0].city,
-      state: user[0].state,
-      zipcode: user[0].zipcode,
-      billStreetAddress: user[0].billStreetAddress,
-      billCity: user[0].billCity,
-      billState: user[0].billState,
-      billZipcode: user[0].billZipcode
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      streetAddress: user.streetAddress,
+      city: user.city,
+      state: user.state,
+      zipcode: user.zipcode,
+      billStreetAddress: user.billStreetAddress,
+      billCity: user.billCity,
+      billState: user.billState,
+      billZipcode: user.billZipcode
     });
   }
   handleChange(ev) {
@@ -98,7 +97,6 @@ class _UpdateUserForm extends React.Component {
     });
   }
   render() {
-    // console.log('PROPS ', this.props);
     return (
       <div className={'container'}>
         <h3>Update Your Information</h3>
