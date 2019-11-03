@@ -25,7 +25,17 @@ class _Cart extends React.Component {
   }
   async componentDidMount(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    // console.log('order', order)
+    this.setState({
+      id: order.id,
+      userId: order.userId,
+      status: order.status,
+      total: order.total,
+      items: order.items
+    });
+    // console.log(this.state)
+  }
+  async componentDidUpdate(props) {
+    const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -43,16 +53,11 @@ class _Cart extends React.Component {
   }
   render() {
     const { id, items } = this.state;
-    console.log('items', items)
-    const { products, orderProducts, auth } = this.props;
-    const cart = id;
+    const { auth } = this.props;
     if (id === undefined) {
       return 'You have no cart at this time.';
     }
-    const totalItems = items.reduce(
-      (sum, item) => sum + Number(item.quantity),
-      0
-    );
+    const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
     const itemsCount = total => {
       if (total === 1) {
         return '1 item';
@@ -64,7 +69,7 @@ class _Cart extends React.Component {
     const totalPrice = items
       .reduce((sum, item) => sum + Number(item.subTotal), 0)
       .toFixed(2);
-    return cart === 'undefined' ? (
+    return id === 'undefined' ? (
       'Cart is unavailable at this time.'
     ) : (
       <div>
@@ -72,7 +77,7 @@ class _Cart extends React.Component {
         <br />
         <div id="cart">
           <div>
-            Order # {cart} <br />
+            Order # {id} <br />
             Order Status: In Progress...
           </div>
           <div id="cartProducts">
