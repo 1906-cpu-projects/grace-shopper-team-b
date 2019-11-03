@@ -2,8 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
-const db = require('./db/db');
-const { models } = require('./db/db');
+const db = require('../db/db');
+const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 
 // Setups for express-sessions
@@ -13,7 +13,6 @@ const SESS_SECRET = 'BRAVO';
 const SESS_LIFETIME = TWO_HOURS;
 
 app.use(express.json());
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use(
   session({
@@ -28,25 +27,19 @@ app.use(
   })
 );
 
-const PORT = process.env.PORT || 3000;
-
-app.get('/', (req, res, next) => {
-  res.sendFile(path.join(__dirname, './index.html'));
-});
-
-app.get('/api/users', (req, res, next) => {
+app.get('/users', (req, res, next) => {
   User.findAll()
     .then(users => res.send(users))
     .catch(next);
 });
 
-app.get('/api/users/:id', (req, res, next) => {
+app.get('/users/:id', (req, res, next) => {
   User.findAll({ where: { id: req.params.id } })
     .then(users => res.send(users))
     .catch(next);
 });
 
-app.put('/api/users/:id', (req, res, next) => {
+app.put('/users/:id', (req, res, next) => {
   User.findByPk(req.params.id)
     .then(_user =>
       _user.update({
@@ -69,13 +62,13 @@ app.put('/api/users/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/products', (req, res, next) => {
+app.get('/products', (req, res, next) => {
   Product.findAll()
     .then(products => res.send(products))
     .catch(next);
 });
 
-app.get('/api/orders', (req, res, next) => {
+app.get('/orders', (req, res, next) => {
   Order.findAll({
     include: [{
       model: User
@@ -92,7 +85,7 @@ app.get('/api/orders', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/orders/:id/cart', (req, res, next)=> {
+app.get('/orders/:id/cart', (req, res, next)=> {
   Order.findOne({
     where: {
       userId: req.params.id,
@@ -113,29 +106,17 @@ app.get('/api/orders/:id/cart', (req, res, next)=> {
     .catch(next);
 });
 
-app.get('/api/orderProducts', async (req, res, next) => {
-  try{
-    const orderProducts = await OrderProducts.findAll({
-      include: [{
-        model: Product
-      }]
-    });
-    res.send(orderProducts)
-  }
-  catch(er){
-    next(er)
-  }
-  // OrderProducts.findAll({
-  //   includes: [{
-  //     model: Product,
-  //     as: 'productInfo'
-  //   }]
-  // })
-  //   .then(orders => res.send(orders))
-  //   .catch(next);
+app.get('/orderProducts', (req, res, next) => {
+  OrderProducts.findAll({
+    includes: [{
+      model: Product
+    }]
+  })
+    .then(orders => res.send(orders))
+    .catch(next);
 });
 
-app.post('/api/orderProducts', async (req, res, next) => {
+app.post('/orderProducts', async (req, res, next) => {
   Order.findOne({
     where: {
       status: 'cart',
@@ -154,12 +135,12 @@ app.post('/api/orderProducts', async (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.delete('/api/orderProducts/:id', async (req, res, next) => {
+app.delete('/orderProducts/:id', async (req, res, next) => {
   await OrderProducts.destroy({ where: { id: req.params.id } });
   res.sendStatus(204);
 });
 
-app.put('/api/orderProducts/:id', async (req, res, next) => {
+app.put('/orderProducts/:id', async (req, res, next) => {
   const item = await OrderProducts.update(
     { quantity: req.body.quantity },
     { where: { id: req.body.id } }
@@ -168,9 +149,36 @@ app.put('/api/orderProducts/:id', async (req, res, next) => {
   res.send(item);
 });
 
+
+
+//===================COMPLETED ORDERS=========================
+
+app.get('/completedorders', (req, res, next) => {
+  Order.findAll({
+    include: [{
+      model: OrderProducts
+    }]
+  })
+  .then(orders => res.send(orders))
+  .catch(next)
+  });
+
+app.get('/completedOrders/:id', (req, res, next) => {
+  Order.findAll({
+    include: [{
+      model: OrderProducts,
+      where: {id: req.params.id}
+    }]
+  })
+  .then(orders => res.send(orders))
+  .catch(next)
+  });
+
+//===================END COMPLETED ORDERS=====================
+
 // Login
 
-app.post('/api/sessions', (req, res, next) => {
+app.post('/sessions', (req, res, next) => {
   User.findOne({
     where: {
       email: req.body.email,
@@ -187,7 +195,7 @@ app.post('/api/sessions', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/sessions', (req, res, next) => {
+app.get('/sessions', (req, res, next) => {
   const user = req.session.user;
   if (user) {
     return res.send(user);
@@ -195,7 +203,7 @@ app.get('/api/sessions', (req, res, next) => {
   next({ status: 401 });
 });
 
-app.delete('/api/sessions', (req, res, next) => {
+app.delete('/sessions', (req, res, next) => {
   req.session.destroy();
   req.session = null;
   res.sendStatus(204);
@@ -207,10 +215,6 @@ app.get('*', (req, res) => {
     <h1>404 Page Not Found</h1>
     <p>Sorry, that page doesn't exist, Doc. :(</p>
   `);
-});
-
-db.syncAndSeed().then(() => {
-  app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 });
 
 module.exports = app;

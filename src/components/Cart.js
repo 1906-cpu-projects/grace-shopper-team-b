@@ -7,7 +7,7 @@ import {
   setOrdersThunk,
   setProductsThunk,
   setUsersThunk
-} from '../store';
+} from '../redux/store';
 import axios from 'axios';
 
 class _Cart extends React.Component {
@@ -72,8 +72,8 @@ class _Cart extends React.Component {
       .reduce((sum, item) => sum + Number(item.subTotal), 0)
       .toFixed(2);
     return id === 'undefined' ? (
-      'Cart is unavailable at this time.'
-    ) : (
+      'Cart is unavailable at this time.')
+    : (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
         <br />
@@ -121,12 +121,18 @@ class _Cart extends React.Component {
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
           </div>
-          <button className="btn btn-outline-success">
-            Proceed to Checkout
-          </button>
+          <div id="total">
+            <div>
+              Total ({items(totalItems)}
+              ): ${total}
+            </div>
+            <button className="btn btn-outline-success">
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
-      </div>
-    );
+        </div>
+      );
   }
 }
 

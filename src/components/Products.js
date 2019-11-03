@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { addOrderProductThunk } from '../store';
+import { addOrderProductThunk } from '../redux/store';
 
 class _Products extends Component {
   constructor() {
