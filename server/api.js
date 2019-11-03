@@ -36,7 +36,12 @@ app.get('/users', (req, res, next) => {
 });
 
 app.get('/users/:id', (req, res, next) => {
-  User.findAll({ where: { id: req.params.id }, attributes: { exclude: ["username", "email", "password"] } })
+  User.findAll({
+    where: {
+      id: req.params.id
+    },
+    attributes: { exclude: ["username", "email", "password"] }
+  })
     .then(users => res.send(users))
     .catch(next);
 });
