@@ -97,7 +97,17 @@ app.get('/api/orders/:id/cart', (req, res, next)=> {
     where: {
       userId: req.params.id,
       status: 'cart'
-    }
+    },
+    include: [{
+      model: User
+    }],
+    include:[{
+      model: OrderProducts,
+      as: 'items',
+      include: [{
+        model: Product
+      }]
+    }]
   })
     .then(order => res.send(order))
     .catch(next);

@@ -17,20 +17,23 @@ class _Cart extends React.Component {
       id: '',
       userId: '',
       status:'',
-      total:''
+      total:'',
+      items:[]
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
   }
   async componentDidMount(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
+    // console.log('order', order)
     this.setState({
       id: order.id,
       userId: order.userId,
       status: order.status,
-      total: order.total
+      total: order.total,
+      items: order.items
     });
-
+    // console.log(this.state)
   }
   deleteItem(id) {
     this.props.deleteItem(id);
@@ -39,21 +42,18 @@ class _Cart extends React.Component {
     this.props.updateItem(item);
   }
   render() {
-    const { id } = this.state;
+    const { id, items } = this.state;
+    console.log('items', items)
     const { products, orderProducts, auth } = this.props;
     const cart = id;
-    if (cart === undefined) {
+    if (id === undefined) {
       return 'You have no cart at this time.';
     }
-    // console.log('cart', cart)
-    // console.log('match', match)
-    // console.log('auth', auth)
-    const cartItems = orderProducts.filter(item => item.orderId === cart);
-    const totalItems = cartItems.reduce(
+    const totalItems = items.reduce(
       (sum, item) => sum + Number(item.quantity),
       0
     );
-    const items = total => {
+    const itemsCount = total => {
       if (total === 1) {
         return '1 item';
       }
@@ -61,7 +61,7 @@ class _Cart extends React.Component {
         return `${total} items`;
       } else return '0 items';
     };
-    const totalPrice = cartItems
+    const totalPrice = items
       .reduce((sum, item) => sum + Number(item.subTotal), 0)
       .toFixed(2);
     return cart === 'undefined' ? (
@@ -76,33 +76,28 @@ class _Cart extends React.Component {
             Order Status: In Progress...
           </div>
           <div id="cartProducts">
-            {orderProducts
-              .filter(item => item.orderId === cart)
-              .map(item => {
-                const product = products.find(
-                  product => product.id === item.productId
-                );
+            {items.map(item => {
                 return (
                   <div key={item.id} id="cartProduct">
                     <div>
-                      <img height="150" width="150" src={product.imageURL} />
+                      <img height="150" width="150" src={item.product.imageURL} />
                     </div>
                     <div>
-                      Product Name: {product.productName} <br />
-                      Description: {product.description} <br />
-                      Price: ${product.price}
+                      Product Name: {item.product.productName} <br />
+                      Description: {item.product.description} <br />
+                      Price: ${item.product.price}
                       <br />
                       Quantity {item.quantity}
                       <br />
-                      Change Quantity{' '}
+                      {/* Change Quantity{' '}
                       <select>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
                       </select>
-                      <br />
-                      {product.inventory < 6
-                        ? `Only ${product.inventory} left in stock - order soon`
+                      <br /> */}
+                      {item.product.inventory < 6
+                        ? `Only ${item.product.inventory} left in stock - order soon`
                         : ''}
                       <br />
                       <button className="btn btn-outline-success" onClick={() => this.deleteItem(item.id)}>
@@ -116,7 +111,7 @@ class _Cart extends React.Component {
         </div>
         <div id="total">
           <div>
-            Total ({items(totalItems)}
+            Total ({itemsCount(totalItems)}
             ): ${totalPrice}
           </div>
           <button className="btn btn-outline-success">
@@ -128,22 +123,14 @@ class _Cart extends React.Component {
   }
 }
 
-const mapStateToProps = ({ orders, users, products, orderProducts, auth }) => {
+const mapStateToProps = ({ auth }) => {
   return {
-    orders,
-    users,
-    products,
-    orderProducts,
     auth
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUsers: async () => dispatch(setUsersThunk()),
-    getProducts: async () => dispatch(setProductsThunk()),
-    getOrders: async () => dispatch(setOrdersThunk()),
-    getOrderProdcuts: async () => dispatch(setOrderProductsThunk()),
     deleteItem: async id => dispatch(deleteOrderProductsThunk(id)),
     updateItem: async item => dispatch(updateOrderProductThunk(item))
   };
