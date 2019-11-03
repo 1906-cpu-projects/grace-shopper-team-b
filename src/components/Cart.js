@@ -33,19 +33,22 @@ class _Cart extends React.Component {
       items: order.items
     });
   }
-  async componentDidUpdate(props) {
-    const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    this.setState({
-      id: order.id,
-      userId: order.userId,
-      status: order.status,
-      total: order.total,
-      items: order.items
-    });
-    // console.log(this.state)
-  }
+  // async componentDidUpdate(props) {
+  //   const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
+  //   this.setState({
+  //     id: order.id,
+  //     userId: order.userId,
+  //     status: order.status,
+  //     total: order.total,
+  //     items: order.items
+  //   });
+  //   // console.log(this.state)
+  // }
   deleteItem(id) {
     this.props.deleteItem(id);
+    this.setState({
+      items: this.state.items.filter(item => item.id !== id)
+    })
   }
   updateItem(item) {
     this.props.updateItem(item);
