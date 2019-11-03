@@ -7,7 +7,7 @@ import {
   setOrdersThunk,
   setProductsThunk,
   setUsersThunk
-} from '../store';
+} from '../redux/store';
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -57,64 +57,64 @@ class _Cart extends React.Component {
     return cart === 'undefined' ? (
       'Cart is unavailable at this time.'
     ) : (
-      <div>
-        <h1>{auth.firstName}'s Shopping Cart</h1>
-        <br />
-        <div id="cart">
-          <div>
-            Order # {cart.id} <br />
-            Order Status: In Progress...
+        <div>
+          <h1>{auth.firstName}'s Shopping Cart</h1>
+          <br />
+          <div id="cart">
+            <div>
+              Order # {cart.id} <br />
+              Order Status: In Progress...
           </div>
-          <div id="cartProducts">
-            {orderProducts
-              .filter(item => item.orderId === cart.id)
-              .map(item => {
-                const product = products.find(
-                  product => product.id === item.productId
-                );
-                return (
-                  <div key={item.id} id="cartProduct">
-                    <div>
-                      <img height="100" width="100" src={product.imageURL} />
+            <div id="cartProducts">
+              {orderProducts
+                .filter(item => item.orderId === cart.id)
+                .map(item => {
+                  const product = products.find(
+                    product => product.id === item.productId
+                  );
+                  return (
+                    <div key={item.id} id="cartProduct">
+                      <div>
+                        <img height="100" width="100" src={product.imageURL} />
+                      </div>
+                      <div>
+                        Product Name: {product.productName} <br />
+                        Description: {product.description} <br />
+                        Price: ${product.price}
+                        <br />
+                        Quantity {item.quantity}
+                        <br />
+                        Change Quantity{' '}
+                        <select>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                        </select>
+                        <br />
+                        {product.inventory < 6
+                          ? `Only ${product.inventory} left in stock - order soon`
+                          : ''}
+                        <br />
+                        <button onClick={() => this.deleteItem(item.id)}>
+                          Delete Item{' '}
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      Product Name: {product.productName} <br />
-                      Description: {product.description} <br />
-                      Price: ${product.price}
-                      <br />
-                      Quantity {item.quantity}
-                      <br />
-                      Change Quantity{' '}
-                      <select>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                      </select>
-                      <br />
-                      {product.inventory < 6
-                        ? `Only ${product.inventory} left in stock - order soon`
-                        : ''}
-                      <br />
-                      <button onClick={() => this.deleteItem(item.id)}>
-                        Delete Item{' '}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
           </div>
-        </div>
-        <div id="total">
-          <div>
-            Total ({items(totalItems)}
-            ): ${total}
-          </div>
-          <button className="btn btn-outline-success">
-            Proceed to Checkout
+          <div id="total">
+            <div>
+              Total ({items(totalItems)}
+              ): ${total}
+            </div>
+            <button className="btn btn-outline-success">
+              Proceed to Checkout
           </button>
+          </div>
         </div>
-      </div>
-    );
+      );
   }
 }
 

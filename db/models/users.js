@@ -1,6 +1,7 @@
 
 
 const Sequelize = require('sequelize');
+
 const {
   TEXT,
   ARRAY,
@@ -10,7 +11,8 @@ const {
   UUID,
   UUIDV4,
   DATE,
-  ENUM
+  ENUM,
+  BOOLEAN
 } = Sequelize;
 
 const conn = require('../conn')
@@ -72,5 +74,6 @@ const User = conn.define('user', {
     type: INTEGER
   }
 });
+
 
 module.exports = User;
