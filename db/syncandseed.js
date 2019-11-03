@@ -7,13 +7,7 @@ const Product = require('./models/products')
 
 const Order = require('./models/orders')
 
-<<<<<<< HEAD:db.js
-User.hasMany(Order);
-Order.belongsTo(User);
-Order.hasMany(OrderProducts, {as: 'items'} );
-=======
 const OrderProducts = require('./models/orderproducts')
->>>>>>> c76d256c2d73ee53cacc39d120a77f5ec7313354:db/syncandseed.js
 
 
 const syncAndSeed = async () => {

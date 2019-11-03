@@ -7,7 +7,7 @@ import {
   setOrdersThunk,
   setProductsThunk,
   setUsersThunk
-} from './store';
+} from '../store';
 import axios from 'axios';
 
 class _Cart extends React.Component {
@@ -131,8 +131,8 @@ const mapStateToProps = ({ auth }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteItem: async id => dispatch(deleteOrderProductsThunk(id)),
-    updateItem: async item => dispatch(updateOrderProductThunk(item))
+    deleteItem: id => dispatch(deleteOrderProductsThunk(id)),
+    updateItem:  item => dispatch(updateOrderProductThunk(item))
   };
 };
 

@@ -29,7 +29,7 @@ const OrderProducts = require('./models/orderproducts')
 
 User.hasMany(Order);
 Order.belongsTo(User);
-Order.hasMany(OrderProducts);
+Order.hasMany(OrderProducts, { as: 'items'});
 
 OrderProducts.belongsTo(Order);
 OrderProducts.belongsTo(Product);
