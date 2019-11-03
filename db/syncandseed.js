@@ -1,180 +1,20 @@
-const Sequelize = require('sequelize');
-const {
-  TEXT,
-  ARRAY,
-  STRING,
-  DECIMAL,
-  INTEGER,
-  UUID,
-  UUIDV4,
-  DATE,
-  ENUM
-} = Sequelize;
 
-const conn = new Sequelize(
-  process.env.DATABASE_URL || 'postgres://localhost/teamb_graceshopperdb'
-);
+const conn = require('./conn')
 
-const User = conn.define('user', {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4
-  },
-  username: {
-    type: STRING,
-    notEmpty: true,
-    notNull: true,
-    unique: true
-  },
-  password: {
-    type: STRING,
-    notNull: true,
-    notEmpty: true
-  },
-  email: {
-    type: STRING,
-    notEmpty: true,
-    notNull: true,
-    unique: true,
-    validate: {
-      isEmail: true
-    }
-  },
-  firstName: {
-    type: STRING
-  },
-  lastName: {
-    type: STRING
-  },
-  streetAddress: {
-    type: STRING
-  },
-  city: {
-    type: STRING
-  },
-  state: {
-    type: STRING
-  },
-  zipcode: {
-    type: INTEGER
-  },
-  billStreetAddress: {
-    type: STRING
-  },
-  billCity: {
-    type: STRING
-  },
-  billState: {
-    type: STRING
-  },
-  billZipcode: {
-    type: INTEGER
-  }
-});
+const User = require('./models/users')
 
-const Guest = conn.define('guest', {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4
-  },
-  cart: {
-    type: ARRAY(INTEGER),
-    defaultValue: []
-  },
-  wishlist: {
-    type: ARRAY(INTEGER),
-    defaultValue: []
-  }
-});
+const Product = require('./models/products')
 
-const Product = conn.define('product', {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4
-  },
-  productName: {
-    type: STRING,
-    notNull: true,
-    notEmpty: true
-  },
-  description: {
-    type: TEXT,
-    defaultValue: 'Please contact us for more details...'
-  },
-  price: {
-    type: DECIMAL,
-    notEmpty: true,
-    defaultValue: 99.99
-  },
-  imageURL: {
-    //STRING FOR NOW BUT COULD BE AN ARRAY IF MULTIPLE PHOTOS
-    type: STRING,
-    defaultValue: 'https://live.staticflickr.com/15/89773667_f91cdd7c11.jpg'
-  },
-  inventory: {
-    type: INTEGER,
-    defaultValue: 1,
-    validate: {
-      min: 0
-    }
-  }
-});
+const Order = require('./models/orders')
 
-const Order = conn.define('order', {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4
-  },
-  status: {
-    type: ENUM('cart', 'completed'),
-    defaultValue: 'cart'
-  },
-  orderDate: {
-    type: DATE
-  },
-  shippingAddress: {
-    type: TEXT
-  },
-  total: {
-    type: DECIMAL,
-    defaultValue: 0.0
-  }
-});
-
-const OrderProducts = conn.define('orderproducts', {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4
-  },
-  quantity: {
-    type: INTEGER,
-    validate: {
-      min: 1
-    }
-  },
-  price: {
-    type: DECIMAL,
-    notEmpty: true
-  },
-  subTotal: {
-    type: DECIMAL,
-    notEmpty: true
-  }
-});
-
-//==============================RELATIONSHIPS==============================
-
+<<<<<<< HEAD:db.js
 User.hasMany(Order);
 Order.belongsTo(User);
 Order.hasMany(OrderProducts, {as: 'items'} );
+=======
+const OrderProducts = require('./models/orderproducts')
+>>>>>>> c76d256c2d73ee53cacc39d120a77f5ec7313354:db/syncandseed.js
 
-OrderProducts.belongsTo(Order);
-OrderProducts.belongsTo(Product);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
@@ -494,13 +334,5 @@ const syncAndSeed = async () => {
   );
 };
 
-module.exports = {
-  syncAndSeed,
-  models: {
-    Product,
-    Guest,
-    Order,
-    OrderProducts,
-    User
-  }
-};
+
+module.exports = syncAndSeed;
