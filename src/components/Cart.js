@@ -32,7 +32,6 @@ class _Cart extends React.Component {
       total: order.total,
       items: order.items
     });
-    // console.log(this.state)
   }
   async componentDidUpdate(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
