@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateUserThunk } from '../store';
+import { updateUserThunk } from '../redux/store';
 import axios from 'axios';
 
 class _UpdateUserForm extends React.Component {

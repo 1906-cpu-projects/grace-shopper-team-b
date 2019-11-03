@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "npm run webpack:dev & nodemon server.js --ignore assets/",
+    "start:dev": "npm run webpack:dev & nodemon ./server/server.js --ignore assets/",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack -- --watch --mode=development",
     "start": "node server.js",

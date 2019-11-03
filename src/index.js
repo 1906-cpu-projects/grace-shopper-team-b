@@ -18,7 +18,7 @@ import store, {
   setUsersThunk,
   setOrdersThunk,
   setOrderProductsThunk
-} from './store';
+} from './redux/store';
 
 const root = document.querySelector('#root');
 
