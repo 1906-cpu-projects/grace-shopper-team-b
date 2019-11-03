@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_AUTH, SET_PRODUCTS, SET_USERS, UPDATE_USER, SET_ORDERS,
-  SET_ORDERPRODUCTS, DELETE_ORDERPRODUCT, UPDATE_ORDERPRODUCT, ADD_ORDERPRODUCT
+  SET_ORDERPRODUCTS, DELETE_ORDERPRODUCT, UPDATE_ORDERPRODUCT, ADD_ORDERPRODUCT, SET_ORDER_HISTORY
 } from './constants';
 
 const authReducer = (state = {}, action) => {
@@ -73,11 +73,23 @@ const orderProdutsReducer = (state = [], action) => {
   return state;
 };
 
+
+////////////////////////   REDUX - ORDER HISTORY REDUCER   ////////////////////
+
+const orderHistoryReducer = (state = [], action) => {
+  if (action.type === SET_ORDER_HISTORY) {
+    state = action.orderHistory;
+    console.log("ORDER HISTORY REDUCER STATE", state)
+  }
+  return state;
+};
+
 ////////////////////////   REDUX - COMBINE REDUCERS    ////////////////////
 export const reducer = combineReducers({
   auth: authReducer,
   products: productReducer,
   users: userReducer,
   orders: orderReducer,
-  orderProducts: orderProdutsReducer
+  orderProducts: orderProdutsReducer,
+  orderHistory: orderHistoryReducer
 });

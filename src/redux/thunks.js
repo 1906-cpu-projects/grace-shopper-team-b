@@ -8,7 +8,8 @@ import {
   setOrderProducts,
   deleteOrderProducts,
   updateOrderProduct,
-  addOrderProduct
+  addOrderProduct,
+  setOrderHistoryAction
 } from './actions';
 
 ////////////////////////     REDUX - THUNKS    ////////////////////////////
@@ -130,3 +131,18 @@ export const addOrderProductThunk = (payload) => {
     dispatch(addOrderProduct(item))
   }
 }
+
+
+export const setOrderHistoryThunk = () => {
+  return async dispatch => {
+    const allOrderHistory = (await axios.get('/api/completedorders/')).data;
+    dispatch(setOrderHistoryAction(allOrderHistory));
+  };
+};
+
+export const setUserOrderHistoryThunk = () => {
+  return async dispatch => {
+    const allOrderHistory = (await axios.get('/api/completedorders/')).data;
+    dispatch(setOrderHistoryAction(allOrderHistory));
+  };
+};

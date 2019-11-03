@@ -17,7 +17,8 @@ import store, {
   setProductsThunk,
   setUsersThunk,
   setOrdersThunk,
-  setOrderProductsThunk
+  setOrderProductsThunk,
+  setOrderHistoryThunk
 } from './redux/store';
 
 const root = document.querySelector('#root');
@@ -33,6 +34,7 @@ class _App extends Component {
     store.dispatch(setUsersThunk());
     store.dispatch(setOrdersThunk());
     store.dispatch(setOrderProductsThunk());
+    store.dispatch(setOrderHistoryThunk());
   }
 
   render() {
@@ -49,7 +51,7 @@ class _App extends Component {
               path="/users/cart/:id"
               render={props => <Cart {...props} />}
             />
-            <Route exact path="/orders" component={OrderHistory} />
+            <Route exact path="/orders/:id" component={OrderHistory} />
             <Route exact path="/users/:id" component={User} />
             {loggedIn && <Redirect to="/" />}
             <Route path="/login" component={Login} exact />
