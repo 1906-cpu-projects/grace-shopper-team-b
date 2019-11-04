@@ -53,10 +53,17 @@ class _Cart extends React.Component {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
     console.log('orders', orders)
+    console.log('auth', auth)
+    if (!auth) {
+      return (
+        <div>
+          If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
+        </div>);
+    }
     if (id === undefined) {
       return (
         <div>
-          {/* You have cheched out your previous order and have no active cart at this time.  */}
+          You have cheched out your previous order and have no active cart at this time.
           If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
         </div>);
     }
@@ -72,9 +79,7 @@ class _Cart extends React.Component {
     const totalPrice = items
       .reduce((sum, item) => sum + Number(item.subTotal), 0)
       .toFixed(2);
-    return id === 'undefined' ? (
-      'Cart is unavailable at this time.')
-    : (
+    return (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
         <br />

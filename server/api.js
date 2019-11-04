@@ -211,7 +211,8 @@ app.get('/completedorders', (req, res, next) => {
   Order.findAll({
     include: [
       {
-        model: OrderProducts
+        model: OrderProducts,
+        as: 'items'
       }
     ]
   })
@@ -224,6 +225,7 @@ app.get('/completedOrders/:id', (req, res, next) => {
     include: [
       {
         model: OrderProducts,
+        as: 'items',
         where: { id: req.params.id }
       }
     ]
