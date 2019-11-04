@@ -1,14 +1,12 @@
+const conn = require('./conn');
 
-const conn = require('./conn')
+const User = require('./models/users');
 
-const User = require('./models/users')
+const Product = require('./models/products');
 
-const Product = require('./models/products')
+const Order = require('./models/orders');
 
-const Order = require('./models/orders')
-
-const OrderProducts = require('./models/orderproducts')
-
+const OrderProducts = require('./models/orderproducts');
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
@@ -27,14 +25,16 @@ const syncAndSeed = async () => {
       billStreetAddress: '123 Some Street ',
       billCity: 'Some City',
       billState: 'California',
-      billZipcode: '12345'
+      billZipcode: '12345',
+      isAdmin: false
     },
     {
       firstName: 'Rob',
       lastName: 'Wise',
       username: 'rw',
       email: 'caster@gmail.com',
-      password: 'CASTER'
+      password: 'CASTER',
+      isAdmin: true
     },
     {
       firstName: 'Paul',
@@ -327,6 +327,5 @@ const syncAndSeed = async () => {
     orderProducts.map(orderProduct => OrderProducts.create(orderProduct))
   );
 };
-
 
 module.exports = syncAndSeed;

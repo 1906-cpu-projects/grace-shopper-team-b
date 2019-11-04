@@ -28,9 +28,20 @@ app.use(
 );
 
 app.get('/users', (req, res, next) => {
-  User.findAll()
-    .then(users => res.send(users))
-    .catch(next);
+  const activeUser = req.session.user;
+  if (!activeUser) {
+    res.send(`
+    <h1>401 Unauthorized Visitor</h1>
+    <p>Sorry Doc, the ACME personnel only beyond these doors.</p>
+  `);
+  }
+  if (activeUser && activeUser.isAdmin === true) {
+    User.findAll({
+      attributes: ['username', 'email', 'firstName', 'lastName']
+    })
+      .then(users => res.send(users))
+      .catch(next);
+  }
 });
 
 app.get('/users/:id', (req, res, next) => {
@@ -70,16 +81,22 @@ app.get('/products', (req, res, next) => {
 
 app.get('/orders', (req, res, next) => {
   Order.findAll({
-    include: [{
-      model: User
-    }],
-    include:[{
-      model: OrderProducts,
-      as: 'items',
-      include: [{
-        model: Product
-      }]
-    }]
+    include: [
+      {
+        model: User
+      }
+    ],
+    include: [
+      {
+        model: OrderProducts,
+        as: 'items',
+        include: [
+          {
+            model: Product
+          }
+        ]
+      }
+    ]
   })
     .then(orders => res.send(orders))
     .catch(next);
@@ -92,8 +109,8 @@ app.get('/orders/:id', (req, res, next) => {
 });
 
 app.put('/orders/:id', (req, res, next) => {
-  console.log('req.body', req.body)
-  console.log('req.paras', req.params)
+  console.log('req.body', req.body);
+  console.log('req.paras', req.params);
   Order.findByPk(req.body.id)
     .then(order =>
       order.update({
@@ -105,22 +122,28 @@ app.put('/orders/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/orders/:id/cart', (req, res, next)=> {
+app.get('/orders/:id/cart', (req, res, next) => {
   Order.findOne({
     where: {
       userId: req.params.id,
       status: 'cart'
     },
-    include: [{
-      model: User
-    }],
-    include:[{
-      model: OrderProducts,
-      as: 'items',
-      include: [{
-        model: Product
-      }]
-    }]
+    include: [
+      {
+        model: User
+      }
+    ],
+    include: [
+      {
+        model: OrderProducts,
+        as: 'items',
+        include: [
+          {
+            model: Product
+          }
+        ]
+      }
+    ]
   })
     .then(order => res.send(order))
     .catch(next);
@@ -128,9 +151,11 @@ app.get('/orders/:id/cart', (req, res, next)=> {
 
 app.get('/orderProducts', (req, res, next) => {
   OrderProducts.findAll({
-    includes: [{
-      model: Product
-    }]
+    includes: [
+      {
+        model: Product
+      }
+    ]
   })
     .then(orders => res.send(orders))
     .catch(next);
@@ -143,13 +168,17 @@ app.post('/orderProducts', async (req, res, next) => {
       userId: req.body.userId
     }
   })
-    .then( async order => {
-      if(!order){
+    .then(async order => {
+      if (!order) {
         order = await Order.create({
           userId: req.body.userId,
-          status: 'cart'})
+          status: 'cart'
+        });
       }
-      const item = await OrderProducts.create({...req.body, orderId: order.id})
+      const item = await OrderProducts.create({
+        ...req.body,
+        orderId: order.id
+      });
       res.send(item);
     })
     .catch(err => next(err));
@@ -169,30 +198,32 @@ app.put('/orderProducts/:id', async (req, res, next) => {
   res.send(item);
 });
 
-
-
 //===================COMPLETED ORDERS=========================
 
 app.get('/completedorders', (req, res, next) => {
   Order.findAll({
-    include: [{
-      model: OrderProducts
-    }]
+    include: [
+      {
+        model: OrderProducts
+      }
+    ]
   })
-  .then(orders => res.send(orders))
-  .catch(next)
-  });
+    .then(orders => res.send(orders))
+    .catch(next);
+});
 
 app.get('/completedOrders/:id', (req, res, next) => {
   Order.findAll({
-    include: [{
-      model: OrderProducts,
-      where: {id: req.params.id}
-    }]
+    include: [
+      {
+        model: OrderProducts,
+        where: { id: req.params.id }
+      }
+    ]
   })
-  .then(orders => res.send(orders))
-  .catch(next)
-  });
+    .then(orders => res.send(orders))
+    .catch(next);
+});
 
 //===================END COMPLETED ORDERS=====================
 

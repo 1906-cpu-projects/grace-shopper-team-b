@@ -1,5 +1,3 @@
-
-
 const Sequelize = require('sequelize');
 
 const {
@@ -15,7 +13,7 @@ const {
   BOOLEAN
 } = Sequelize;
 
-const conn = require('../conn')
+const conn = require('../conn');
 
 const User = conn.define('user', {
   id: {
@@ -72,8 +70,11 @@ const User = conn.define('user', {
   },
   billZipcode: {
     type: INTEGER
+  },
+  isAdmin: {
+    type: BOOLEAN,
+    defaultValue: false
   }
 });
-
 
 module.exports = User;
