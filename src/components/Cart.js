@@ -124,9 +124,11 @@ class _Cart extends React.Component {
           </div>
           <button
             className="btn btn-outline-success"
-            onClick={()=> this.completeOrder(totalPrice)}
+            onClick={()=> {
+              this.completeOrder(totalPrice)
+            }}
           >
-            Proceed to Checkout
+            {<Link to={`/users/${auth.id}/checkout`}>Proceed to Checkout</Link>}
           </button>
         </div>
       </div>
