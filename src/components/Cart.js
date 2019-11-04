@@ -91,7 +91,7 @@ class _Cart extends React.Component {
           <div id="cartProducts">
             {items.map(item => {
                 return (
-                  <div key={item.id} id="cartProduct">
+                  <div key={item.id} id="orderProducts">
                     <div>
                       <img height="150" width="150" src={item.product.imageURL} />
                     </div>
@@ -123,10 +123,11 @@ class _Cart extends React.Component {
           </div>
         </div>
         <div id="total">
-          <div>
+          <h5>
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
-          </div>
+          </h5>
+          <br/>
           <button
             className="btn btn-outline-success"
             onClick={()=> {
