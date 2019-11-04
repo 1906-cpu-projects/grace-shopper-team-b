@@ -109,8 +109,6 @@ app.get('/orders/:id', (req, res, next) => {
 });
 
 app.put('/orders/:id', (req, res, next) => {
-  console.log('req.body', req.body);
-  console.log('req.paras', req.params);
   Order.findByPk(req.body.id)
     .then(order =>
       order.update({

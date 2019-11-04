@@ -56,7 +56,8 @@ class _Cart extends React.Component {
     if (id === undefined) {
       return (
         <div>
-          You have no active cart at this time. If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
+          {/* You have cheched out your previous order and have no active cart at this time.  */}
+          If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
         </div>);
     }
     const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
@@ -121,8 +122,11 @@ class _Cart extends React.Component {
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
           </div>
-          <button className="btn btn-outline-success" onClick={()=> this.completeOrder(totalPrice)}>
-              Proceed to Checkout
+          <button
+            className="btn btn-outline-success"
+            onClick={()=> this.completeOrder(totalPrice)}
+          >
+            Proceed to Checkout
           </button>
         </div>
       </div>
