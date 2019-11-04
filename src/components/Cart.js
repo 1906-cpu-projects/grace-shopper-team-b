@@ -10,6 +10,7 @@ import {
 } from '../redux/store';
 import axios from 'axios';
 import { updateOrderThunk } from '../redux/thunks';
+import { Link } from 'react-router-dom'
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -53,7 +54,10 @@ class _Cart extends React.Component {
     const { auth, orders } = this.props;
     console.log('orders', orders)
     if (id === undefined) {
-      return 'You have no cart at this time.';
+      return (
+        <div>
+          You have no active cart at this time. If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
+        </div>);
     }
     const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
     const itemsCount = total => {
