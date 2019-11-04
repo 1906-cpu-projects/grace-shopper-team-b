@@ -90,6 +90,7 @@ class _Cart extends React.Component {
           </div>
           <div id="cartProducts">
             {items.map(item => {
+              console.log(item)
                 return (
                   <div key={item.id} id="orderProducts">
                     <div>
