@@ -50,20 +50,23 @@ class _OrderHistory extends React.Component {
 
                <strong>Products Ordered:</strong>
               {order.items.map(item => {
-                console.log("ITEM IN MAP====", item)
+                // console.log("ITEM IN MAP====", item)
                   const product = products.find(
                     product => product.id === item.productId
                   );
-                  console.log("PRODUCT IN MAP====", product)
+                  // console.log("PRODUCT IN MAP====", product)
                     return(
-                      <div>
-                    <p>Product Name: {product.productName}<br />
-                    Individual Price: ${item.price}<br />
-                    Quantity Ordered: {item.quantity}<br />
-                    Price of all Units: ${item.subTotal} <br />
-                    </p>
-                    <img height="100" width="100" src={product.imageURL} /><br />
-                    <br />
+                      <div id='orderProducts'>
+                        <div>
+                          <img height="100" width="100" src={product.imageURL} />
+                        </div>
+                        <div>
+                          Product Name: {product.productName}<br />
+                          Individual Price: ${item.price}<br/>
+                          Quantity Ordered: {item.quantity}<br/>
+                          Price of all Units: ${item.subTotal}
+                        </div>
+
                       </div>
                     )
                   } )}

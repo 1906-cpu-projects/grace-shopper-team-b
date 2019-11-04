@@ -63,9 +63,13 @@
         padding: 1rem;
       }
 
-      #cartProduct {
+      #orderProducts {
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
+        padding: 1rem;
+      }
+      #orderProducts > div {
+        padding: 1rem;
       }
 
       #total {
@@ -77,4 +81,5 @@
       .pastorder {
         border: black solid 2px;
         margin: 1rem;
+        padding: 1rem;
       }
