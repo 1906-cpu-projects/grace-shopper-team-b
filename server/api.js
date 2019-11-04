@@ -85,6 +85,26 @@ app.get('/orders', (req, res, next) => {
     .catch(next);
 });
 
+app.get('/orders/:id', (req, res, next) => {
+  Order.findAll({ where: { id: req.params.id } })
+    .then(order => res.send(order))
+    .catch(next);
+});
+
+app.put('/orders/:id', (req, res, next) => {
+  console.log('req.body', req.body)
+  console.log('req.paras', req.params)
+  Order.findByPk(req.body.id)
+    .then(order =>
+      order.update({
+        status: req.body.status,
+        total: req.body.total
+      })
+    )
+    .then(() => res.sendStatus(201))
+    .catch(next);
+});
+
 app.get('/orders/:id/cart', (req, res, next)=> {
   Order.findOne({
     where: {

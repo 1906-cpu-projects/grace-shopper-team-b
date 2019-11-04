@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import {
-  SET_AUTH, SET_PRODUCTS, SET_USERS, UPDATE_USER, SET_ORDERS,
+  SET_AUTH, SET_PRODUCTS, SET_USERS, UPDATE_USER, SET_ORDERS, UPDATE_ORDER,
   SET_ORDERPRODUCTS, DELETE_ORDERPRODUCT, UPDATE_ORDERPRODUCT, ADD_ORDERPRODUCT, SET_ORDER_HISTORY
 } from './constants';
 
@@ -53,6 +53,9 @@ const userReducer = (state = [], action) => {
 const orderReducer = (state = [], action) => {
   if (action.type === SET_ORDERS) {
     state = action.orders;
+  }
+  if(action.type === UPDATE_ORDER){
+    state = state.map(order => order.id === action.order.id ? action.order : order)
   }
   return state;
 };

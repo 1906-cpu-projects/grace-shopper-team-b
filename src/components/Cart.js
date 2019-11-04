@@ -9,6 +9,7 @@ import {
   setUsersThunk
 } from '../redux/store';
 import axios from 'axios';
+import { updateOrderThunk } from '../redux/thunks';
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class _Cart extends React.Component {
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
+    // this.updateOrder = this.updateOrder.bind(this);
   }
   async componentDidMount(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
@@ -33,17 +35,6 @@ class _Cart extends React.Component {
       items: order.items
     });
   }
-  // async componentDidUpdate(props) {
-  //   const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-  //   this.setState({
-  //     id: order.id,
-  //     userId: order.userId,
-  //     status: order.status,
-  //     total: order.total,
-  //     items: order.items
-  //   });
-  //   // console.log(this.state)
-  // }
   deleteItem(id) {
     this.props.deleteItem(id);
     this.setState({
@@ -53,9 +44,14 @@ class _Cart extends React.Component {
   updateItem(item) {
     this.props.updateItem(item);
   }
+  completeOrder(total){
+
+    this.props.completeOrder({...this.state, total: total, status: 'completed'})
+  }
   render() {
     const { id, items } = this.state;
-    const { auth } = this.props;
+    const { auth, orders } = this.props;
+    console.log('orders', orders)
     if (id === undefined) {
       return 'You have no cart at this time.';
     }
@@ -121,7 +117,7 @@ class _Cart extends React.Component {
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
           </div>
-          <button className="btn btn-outline-success">
+          <button className="btn btn-outline-success" onClick={()=> this.completeOrder(totalPrice)}>
               Proceed to Checkout
           </button>
         </div>
@@ -130,16 +126,18 @@ class _Cart extends React.Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, orders }) => {
   return {
-    auth
+    auth,
+    orders
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     deleteItem: id => dispatch(deleteOrderProductsThunk(id)),
-    updateItem:  item => dispatch(updateOrderProductThunk(item))
+    updateItem:  item => dispatch(updateOrderProductThunk(item)),
+    completeOrder: (order) => dispatch(updateOrderThunk(order))
   };
 };
 
