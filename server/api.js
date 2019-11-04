@@ -28,20 +28,20 @@ app.use(
 );
 
 app.get('/users', (req, res, next) => {
-  const activeUser = req.session.user;
-  if (!activeUser) {
-    res.send(`
-    <h1>401 Unauthorized Visitor</h1>
-    <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
-  `);
-  }
-  if (activeUser && activeUser.isAdmin === true) {
-    User.findAll({
-      attributes: ['username', 'email', 'firstName', 'lastName']
-    })
-      .then(users => res.send(users))
-      .catch(next);
-  }
+  // const activeUser = req.session.user;
+  // if (!activeUser) {
+  //   res.send(`
+  //   <h1>401 Unauthorized Visitor</h1>
+  //   <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
+  // `);
+  // }
+  // if (activeUser && activeUser.isAdmin === true) {
+  User.findAll({
+    attributes: ['username', 'email', 'firstName', 'lastName']
+  })
+    .then(users => res.send(users))
+    .catch(next);
+  // }
 });
 
 app.get('/users/:id', (req, res, next) => {
@@ -80,35 +80,35 @@ app.get('/products', (req, res, next) => {
 });
 
 app.get('/orders', (req, res, next) => {
-  const activeUser = req.session.user;
-  if (!activeUser) {
-    res.send(`
-    <h1>401 Unauthorized Visitor</h1>
-    <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
-  `);
-  }
-  if (activeUser && activeUser.isAdmin === true) {
-    Order.findAll({
-      include: [
-        {
-          model: User
-        }
-      ],
-      include: [
-        {
-          model: OrderProducts,
-          as: 'items',
-          include: [
-            {
-              model: Product
-            }
-          ]
-        }
-      ]
-    })
-      .then(orders => res.send(orders))
-      .catch(next);
-  }
+  // const activeUser = req.session.user;
+  // if (!activeUser) {
+  //   res.send(`
+  //   <h1>401 Unauthorized Visitor</h1>
+  //   <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
+  // `);
+  // }
+  // if (activeUser && activeUser.isAdmin === true) {
+  Order.findAll({
+    include: [
+      {
+        model: User
+      }
+    ],
+    include: [
+      {
+        model: OrderProducts,
+        as: 'items',
+        include: [
+          {
+            model: Product
+          }
+        ]
+      }
+    ]
+  })
+    .then(orders => res.send(orders))
+    .catch(next);
+  // }
 });
 
 app.get('/orders/:id', (req, res, next) => {
