@@ -5,6 +5,7 @@ import {
   setUsersAction,
   updateUserAction,
   setOrdersAction,
+  updateOrder,
   setOrderProducts,
   deleteOrderProducts,
   updateOrderProduct,
@@ -103,6 +104,13 @@ export const setOrdersThunk = () => {
     dispatch(setOrdersAction(allOrders));
   };
 };
+
+export const updateOrderThunk = (order) => {
+  return async dispatch => {
+    const updated = ( await axios.put(`/api/orders/${order.id}`, order)).data
+    dispatch(updateOrder(updated))
+  }
+}
 
 export const setOrderProductsThunk = () => {
   return async dispatch => {

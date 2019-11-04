@@ -69,13 +69,69 @@ app.get('/products', (req, res, next) => {
 });
 
 app.get('/orders', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    include: [{
+      model: User
+    }],
+    include:[{
+      model: OrderProducts,
+      as: 'items',
+      include: [{
+        model: Product
+      }]
+    }]
+  })
     .then(orders => res.send(orders))
     .catch(next);
 });
 
+app.get('/orders/:id', (req, res, next) => {
+  Order.findAll({ where: { id: req.params.id } })
+    .then(order => res.send(order))
+    .catch(next);
+});
+
+app.put('/orders/:id', (req, res, next) => {
+  console.log('req.body', req.body)
+  console.log('req.paras', req.params)
+  Order.findByPk(req.body.id)
+    .then(order =>
+      order.update({
+        status: req.body.status,
+        total: req.body.total
+      })
+    )
+    .then(() => res.sendStatus(201))
+    .catch(next);
+});
+
+app.get('/orders/:id/cart', (req, res, next)=> {
+  Order.findOne({
+    where: {
+      userId: req.params.id,
+      status: 'cart'
+    },
+    include: [{
+      model: User
+    }],
+    include:[{
+      model: OrderProducts,
+      as: 'items',
+      include: [{
+        model: Product
+      }]
+    }]
+  })
+    .then(order => res.send(order))
+    .catch(next);
+});
+
 app.get('/orderProducts', (req, res, next) => {
-  OrderProducts.findAll()
+  OrderProducts.findAll({
+    includes: [{
+      model: Product
+    }]
+  })
     .then(orders => res.send(orders))
     .catch(next);
 });
@@ -87,11 +143,13 @@ app.post('/orderProducts', async (req, res, next) => {
       userId: req.body.userId
     }
   })
-    .then(async order => {
-      const item = await OrderProducts.create({
-        ...req.body,
-        orderId: order.id
-      });
+    .then( async order => {
+      if(!order){
+        order = await Order.create({
+          userId: req.body.userId,
+          status: 'cart'})
+      }
+      const item = await OrderProducts.create({...req.body, orderId: order.id})
       res.send(item);
     })
     .catch(err => next(err));
