@@ -13,6 +13,8 @@ import Login from './pages/Login';
 import User from './components/User';
 import OrderHistory from './components/OrderHistory';
 
+
+
 import store, {
   attemptSessionLogin,
   setProductsThunk,
@@ -22,6 +24,8 @@ import store, {
   setOrderHistoryThunk
 } from './redux/store';
 import CheckOut from './components/CheckOut';
+
+
 
 const root = document.querySelector('#root');
 
