@@ -27,22 +27,22 @@ app.use(
   })
 );
 
-app.get('/users', (req, res, next) => {
-  // const activeUser = req.session.user;
-  // if (!activeUser) {
-  //   res.send(`
-  //   <h1>401 Unauthorized Visitor</h1>
-  //   <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
-  // `);
-  // }
-  // if (activeUser && activeUser.isAdmin === true) {
-  User.findAll({
-    attributes: ['username', 'email', 'firstName', 'lastName']
-  })
-    .then(users => res.send(users))
-    .catch(next);
-  // }
-});
+// app.get('/users', (req, res, next) => {
+//   const activeUser = req.session.user;
+//   if (!activeUser) {
+//     res.send(`
+//       <h1>401 Unauthorized Visitor</h1>
+//       <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
+//     `);
+//   }
+//   if (activeUser) {
+//     User.findAll({
+//       //attributes: ['username', 'email', 'firstName', 'lastName']
+//     })
+//       .then(users => res.send(users))
+//       .catch(next);
+//   }
+// });
 
 app.get('/users/:id', (req, res, next) => {
   User.findAll({ where: { id: req.params.id } })
@@ -91,7 +91,8 @@ app.get('/orders', (req, res, next) => {
   Order.findAll({
     include: [
       {
-        model: User
+        model: User,
+        where: { id: req.params.id }
       }
     ],
     include: [
