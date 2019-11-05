@@ -26,6 +26,7 @@ class _UpdateUserForm extends React.Component {
   }
   componentDidMount() {
     const user = this.props.auth;
+    console.log(user);
     this.setState({
       id: user.id,
       username: user.username,

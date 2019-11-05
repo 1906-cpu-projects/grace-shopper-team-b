@@ -27,25 +27,25 @@ app.use(
   })
 );
 
-// app.get('/users', (req, res, next) => {
-//   const activeUser = req.session.user;
-//   if (!activeUser) {
-//     res.send(`
-//       <h1>401 Unauthorized Visitor</h1>
-//       <p>Sorry Doc, only ACME personnel are allowed beyond these doors.</p>
-//     `);
-//   }
-//   if (activeUser) {
-//     User.findAll({
-//       //attributes: ['username', 'email', 'firstName', 'lastName']
-//     })
-//       .then(users => res.send(users))
-//       .catch(next);
-//   }
-// });
+app.get('/users', (req, res, next) => {
+  const activeUser = req.session.user;
+  if (!activeUser) {
+    return res.status(401).json({
+      message: 'Auth Failed'
+    });
+  }
+  return User.findAll({
+    attributes: ['username', 'email', 'firstName', 'lastName', 'id']
+  })
+    .then(users => res.send(users))
+    .catch(next);
+});
 
 app.get('/users/:id', (req, res, next) => {
-  User.findAll({ where: { id: req.params.id } })
+  User.findAll({
+    attributes: ['username', 'email', 'firstName', 'lastName', 'id'],
+    where: { id: req.params.id }
+  })
     .then(users => res.send(users))
     .catch(next);
 });
@@ -214,7 +214,8 @@ app.get('/completedorders', (req, res, next) => {
   Order.findAll({
     include: [
       {
-        model: OrderProducts
+        model: OrderProducts,
+        as: 'items'
       }
     ]
   })
@@ -227,7 +228,8 @@ app.get('/completedOrders/:id', (req, res, next) => {
     include: [
       {
         model: OrderProducts,
-        where: { id: req.params.id }
+        as: 'items',
+        where: { userId: req.params.id }
       }
     ]
   })
