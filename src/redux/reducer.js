@@ -1,10 +1,23 @@
 import { combineReducers } from 'redux';
 
 import {
-  SET_AUTH, SET_PRODUCTS, SET_USERS, SET_ORDERPRODUCTS, SET_ORDER_HISTORY, SET_ORDERS,
-  ADD_ORDERPRODUCT, ADD_PRODUCT,
-  UPDATE_USER, UPDATE_ORDER, UPDATE_ORDERPRODUCT, UPDATE_PRODUCT,
-  DELETE_ORDERPRODUCT, DELETE_USER, DELETE_PRODUCT, DELETE_ORDER
+  SET_AUTH,
+  SET_PRODUCTS,
+  SET_USERS,
+  SET_ORDERPRODUCTS,
+  SET_ORDER_HISTORY,
+  SET_ORDERS,
+  ADD_ORDERPRODUCT,
+  ADD_PRODUCT,
+  ADD_USER,
+  UPDATE_USER,
+  UPDATE_ORDER,
+  UPDATE_ORDERPRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_ORDERPRODUCT,
+  DELETE_USER,
+  DELETE_PRODUCT,
+  DELETE_ORDER
 } from './constants';
 
 const authReducer = (state = {}, action) => {
@@ -38,23 +51,32 @@ const userReducer = (state = [], action) => {
   if (action.type === SET_USERS) {
     state = action.users;
   }
+
+  if (action.type === ADD_USER) {
+    return [...state, action.user];
+  }
+
   if (action.type === UPDATE_USER) {
-    return state.map(user => action.id === user.id ? {
-      ...user,
-      username: action.username,
-      email: action.email,
-      password: action.password,
-      firstName: action.firstName,
-      lastName: action.lastName,
-      streetAddress: action.streetAddress,
-      city: action.city,
-      state: action.state,
-      zipcode: action.zipcode,
-      billStreetAddress: action.billStreetAddress,
-      billCity: action.billCity,
-      billState: action.billState,
-      billZipcode: action.billZipcode
-    } : user);
+    return state.map(user =>
+      action.id === user.id
+        ? {
+            ...user,
+            username: action.username,
+            email: action.email,
+            password: action.password,
+            firstName: action.firstName,
+            lastName: action.lastName,
+            streetAddress: action.streetAddress,
+            city: action.city,
+            state: action.state,
+            zipcode: action.zipcode,
+            billStreetAddress: action.billStreetAddress,
+            billCity: action.billCity,
+            billState: action.billState,
+            billZipcode: action.billZipcode
+          }
+        : user
+    );
   }
   if (action.type === DELETE_USER) {
     // Remove user
@@ -69,7 +91,9 @@ const orderReducer = (state = [], action) => {
     state = action.orders;
   }
   if (action.type === UPDATE_ORDER) {
-    state = state.map(order => order.id === action.order.id ? action.order : order)
+    state = state.map(order =>
+      order.id === action.order.id ? action.order : order
+    );
   }
   if (action.type === DELETE_ORDER) {
     // remove order
@@ -82,24 +106,25 @@ const orderProdutsReducer = (state = [], action) => {
     state = action.orderProducts;
   }
   if (action.type === DELETE_ORDERPRODUCT) {
-    state = state.filter(item => item.id !== action.id)
+    state = state.filter(item => item.id !== action.id);
   }
   if (action.type === UPDATE_ORDERPRODUCT) {
-    state = state.map(item => item.id === action.orderProduct.id ? action.orderProduct: item)
+    state = state.map(item =>
+      item.id === action.item.id ? action.item : item
+    );
   }
   if (action.type === ADD_ORDERPRODUCT) {
-    state = [...state, action.orderProduct]
+    state = [...state, action.orderProduct];
   }
   return state;
 };
-
 
 ////////////////////////   REDUX - ORDER HISTORY REDUCER   ////////////////////
 
 const orderHistoryReducer = (state = [], action) => {
   if (action.type === SET_ORDER_HISTORY) {
     state = action.orderHistory;
-    console.log("ORDER HISTORY REDUCER STATE", state)
+    console.log('ORDER HISTORY REDUCER STATE', state);
   }
   return state;
 };

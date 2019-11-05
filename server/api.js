@@ -7,6 +7,7 @@ const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 const stripeLoader = require('stripe');
 const stripeSecretKey = require('../env');
+const hash = require('../src/utilities/hash');
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -189,7 +190,7 @@ app.post('/orderProducts', async (req, res, next) => {
           productId: req.body.productId,
           orderId: order.id
         }
-      })
+      });
       // console.log('item in cart', itemAlreadyInCart)
       // console.log('req body', req.body)
       if (!itemAlreadyInCart) {
@@ -197,14 +198,14 @@ app.post('/orderProducts', async (req, res, next) => {
           ...req.body,
           orderId: order.id
         });
-      }
-      else {
+      } else {
         item = await OrderProducts.update(
           {
             quantity: itemAlreadyInCart.quantity + 1,
             subTotal: itemAlreadyInCart.price * (itemAlreadyInCart.quantity + 1)
           },
-          { where: { id: itemAlreadyInCart.id } })
+          { where: { id: itemAlreadyInCart.id } }
+        );
       }
       res.send(item);
     })
@@ -224,8 +225,8 @@ app.put('/orderProducts/:id', async (req, res, next) => {
         subTotal: req.body.subTotal
       })
     )
-    .then(()=> res.sendStatus(201))
-    .catch(next)
+    .then(() => res.sendStatus(201))
+    .catch(next);
 });
 
 //===================COMPLETED ORDERS=========================
@@ -259,13 +260,38 @@ app.get('/completedOrders/:id', (req, res, next) => {
 
 //===================END COMPLETED ORDERS=====================
 
+// Signup
+
+app.post('/signup', (req, res, next) => {
+  if (!req.body.email || !req.body.password) {
+    console.log('Missing requested information.');
+    res.sendStatus(400);
+  } else {
+    const { email, password } = req.body;
+    User.create({
+      email,
+      password: hash(password, process.env.SALT)
+    })
+      .then(() => {
+        res.send({
+          message: 'User created successfully!'
+        });
+      })
+      .catch(ev => {
+        res.status(500).send({
+          message: ev.message
+        });
+      });
+  }
+});
+
 // Login
 
 app.post('/sessions', (req, res, next) => {
   User.findOne({
     where: {
       email: req.body.email,
-      password: req.body.password
+      password: hash(req.body.password, process.env.SALT)
     }
   })
     .then(user => {
@@ -292,34 +318,30 @@ app.delete('/sessions', (req, res, next) => {
   res.sendStatus(204);
 });
 
-
 /// Stripe ////
 
 const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
-    amount: amt *100,
+    amount: amt * 100,
     currency: 'usd',
     source: token,
     description: 'Statement Description'
   });
-}
-
+};
 
 app.post('/donate', async (req, res, next) => {
-  try{
+  try {
     let data = await charge(req.body.token.id, req.body.amount);
     console.log(data);
-    res.send("Charged!")
-  }
-  catch(er){
+    res.send('Charged!');
+  } catch (er) {
     console.log(er);
-    res.sendStatus(500)
+    res.sendStatus(500);
   }
-})
+});
 ////////////
-
 
 // Page Not Fount Route
 app.get('*', (req, res) => {

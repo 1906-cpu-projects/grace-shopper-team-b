@@ -8,6 +8,8 @@ const Order = require('./models/orders');
 
 const OrderProducts = require('./models/orderproducts');
 
+const hash = require('../src/utilities/hash');
+
 const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
 
@@ -17,7 +19,7 @@ const syncAndSeed = async () => {
       lastName: 'Fuller',
       username: 'jf',
       email: 'archer@gmail.com',
-      password: 'ARCHER',
+      password: hash('ARCHER'),
       streetAddress: '123 Some Street ',
       city: 'Some City',
       state: 'California',
@@ -33,7 +35,7 @@ const syncAndSeed = async () => {
       lastName: 'Wise',
       username: 'rw',
       email: 'caster@gmail.com',
-      password: 'CASTER',
+      password: hash('CASTER'),
       isAdmin: true
     },
     {
@@ -41,14 +43,14 @@ const syncAndSeed = async () => {
       lastName: 'Blackburn',
       username: 'pb',
       email: 'saber@gmail.com',
-      password: 'SABER'
+      password: hash('SABER')
     },
     {
       firstName: 'Dominique',
       lastName: 'Boyer',
       username: 'db',
       email: 'dom@gmail.com',
-      password: 'DOM'
+      password: hash('DOM')
     }
   ];
 

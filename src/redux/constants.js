@@ -9,6 +9,7 @@ export const SET_ORDER_HISTORY = 'SET_ORDER_HISTORY';
 //ADD
 export const ADD_ORDERPRODUCT = 'ADD_ORDERPRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const ADD_USER = 'ADD_USER';
 //UPDATE
 export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_ORDER = 'UPDATE_ORDER';
