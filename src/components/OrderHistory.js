@@ -13,16 +13,23 @@ class _OrderHistory extends React.Component {
     super();
   }
 
-
   render() {
-    const { orders, users, products, orderProducts, auth, orderHistory, match } = this.props;
+    const {
+      orders,
+      users,
+      products,
+      orderProducts,
+      auth,
+      orderHistory,
+      match
+    } = this.props;
     // console.log('auth', auth)
     // console.log('users', users)
     // console.log('orders',orders)
 
-    console.log("MATCH PARAMS ID", match.params.id)
-    console.log("ORDERS======", orders)
-    console.log("ORDER HISTORY======", orderHistory)
+    console.log('MATCH PARAMS ID', match.params.id);
+    console.log('ORDERS======', orders);
+    console.log('ORDER HISTORY======', orderHistory);
 
     const userOrders = orderHistory.filter(
       order => order.userId === auth.id && order.status === 'completed'
@@ -31,8 +38,8 @@ class _OrderHistory extends React.Component {
     // console.log('products', products)
     // console.log('orderProducts', orderProducts)
 
-    console.log("ORDER HISTORY====", orderHistory)
-    console.log("USER ORDERS====", userOrders)
+    console.log('ORDER HISTORY====', orderHistory);
+    console.log('USER ORDERS====', userOrders);
 
     return (
       <div>
@@ -42,8 +49,10 @@ class _OrderHistory extends React.Component {
           {userOrders.map(order => (
             <div key={order.id} className="pastorder">
               <br />
-              <h5>Order Number: #{order.id}</h5><br />
-              <h5>Order Total: ${order.total} </h5><br />
+              <h5>Order Number: #{order.id}</h5>
+              <br />
+              <h5>Order Total: ${order.total} </h5>
+              <br />
               <strong>Order Status:</strong> {order.status}
               <br />
               <br />
@@ -74,18 +83,19 @@ class _OrderHistory extends React.Component {
             </div>
           ))}
         </div>
-
-
-
       </div>
     );
   }
 }
 
-
-
-
-const mapStateToProps = ({ orders, users, products, orderProducts, auth, orderHistory }) => {
+const mapStateToProps = ({
+  orders,
+  users,
+  products,
+  orderProducts,
+  auth,
+  orderHistory
+}) => {
   return {
     orders,
     users,
@@ -105,7 +115,6 @@ const mapDispatchToProps = dispatch => {
     getOrderHistory: async () => dispatch(setOrderHistoryThunk())
   };
 };
-
 
 const OrderHistory = connect(
   mapStateToProps,

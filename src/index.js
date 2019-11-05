@@ -33,7 +33,7 @@ class _App extends Component {
   async componentDidMount() {
     store.dispatch(setProductsThunk());
     store.dispatch(attemptSessionLogin());
-    store.dispatch(setUsersThunk());
+    // store.dispatch(setUsersThunk());
     store.dispatch(setOrdersThunk());
     store.dispatch(setOrderProductsThunk());
     store.dispatch(setOrderHistoryThunk());
@@ -55,10 +55,14 @@ class _App extends Component {
             />
             <Route exact path="/users/:id/checkout" component={CheckOut}/>
             <Route exact path="/orders/:id" component={OrderHistory} />
-            <Route exact path="/users/:id" component={User} />
+            <Route
+              exact
+              path="/users/:id"
+              render={props => <User {...props} />}
+            />
+            <Route exact path="/admin" component={Admin} />
             {loggedIn && <Redirect to="/" />}
             <Route path="/login" component={Login} exact />
-            <Route exact path="/admin" component={Admin} />
           </Switch>
         </HashRouter>
       </Provider>
