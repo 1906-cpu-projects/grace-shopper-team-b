@@ -28,6 +28,7 @@ class _Cart extends React.Component {
   }
   async componentDidMount(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
+    console.log('order', order)
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -53,10 +54,18 @@ class _Cart extends React.Component {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
     console.log('orders', orders)
+    console.log('auth', auth)
+    if (!auth) {
+      return (
+        <div>
+          If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
+        </div>);
+    }
     if (id === undefined) {
       return (
         <div>
-          You have no active cart at this time. If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
+          You have cheched out your previous order and have no active cart at this time.
+          If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
         </div>);
     }
     const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
@@ -71,9 +80,7 @@ class _Cart extends React.Component {
     const totalPrice = items
       .reduce((sum, item) => sum + Number(item.subTotal), 0)
       .toFixed(2);
-    return id === 'undefined' ? (
-      'Cart is unavailable at this time.')
-    : (
+    return (
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
         <br />
@@ -84,8 +91,9 @@ class _Cart extends React.Component {
           </div>
           <div id="cartProducts">
             {items.map(item => {
+              console.log(item)
                 return (
-                  <div key={item.id} id="cartProduct">
+                  <div key={item.id} id="orderProducts">
                     <div>
                       <img height="150" width="150" src={item.product.imageURL} />
                     </div>
@@ -117,12 +125,18 @@ class _Cart extends React.Component {
           </div>
         </div>
         <div id="total">
-          <div>
+          <h5>
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
-          </div>
-          <button className="btn btn-outline-success" onClick={()=> this.completeOrder(totalPrice)}>
-              Proceed to Checkout
+          </h5>
+          <br/>
+          <button
+            className="btn btn-outline-success"
+            onClick={()=> {
+              this.completeOrder(totalPrice)
+            }}
+          >
+            {<Link to={`/users/${auth.id}/checkout`}>Proceed to Checkout</Link>}
           </button>
         </div>
       </div>

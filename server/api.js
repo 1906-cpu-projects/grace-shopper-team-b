@@ -119,8 +119,6 @@ app.get('/orders/:id', (req, res, next) => {
 });
 
 app.put('/orders/:id', (req, res, next) => {
-  console.log('req.body', req.body);
-  console.log('req.paras', req.params);
   Order.findByPk(req.body.id)
     .then(order =>
       order.update({
@@ -185,10 +183,26 @@ app.post('/orderProducts', async (req, res, next) => {
           status: 'cart'
         });
       }
-      const item = await OrderProducts.create({
+      const itemAlreadyInCart = await OrderProducts.findOne({
+        where: {
+          productId: req.body.productId,
+          orderId: order.id
+        }
+      })
+      // console.log('item in cart', itemAlreadyInCart)
+      // console.log('req body', req.body)
+      if(!itemAlreadyInCart){
+        let item = await OrderProducts.create({
         ...req.body,
         orderId: order.id
-      });
+        });
+      }
+      else{
+        item = await OrderProducts.update(
+          {quantity: itemAlreadyInCart.quantity+1,
+          subTotal: itemAlreadyInCart.price*(itemAlreadyInCart.quantity+1)},
+          {where: {id: itemAlreadyInCart.id}})
+      }
       res.send(item);
     })
     .catch(err => next(err));

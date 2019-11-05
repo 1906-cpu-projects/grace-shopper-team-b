@@ -43,7 +43,7 @@ class _OrderHistory extends React.Component {
 
     return (
       <div>
-        <h1>{auth.firstName}'s Previous Orders</h1>
+        <h1>{auth.firstName}'s Previous Orders ({userOrders.length})</h1>
         <br />
         <div id="order-history">
           {userOrders.map(order => (
@@ -56,30 +56,30 @@ class _OrderHistory extends React.Component {
               <strong>Order Status:</strong> {order.status}
               <br />
               <br />
-              <strong>Products Ordered:</strong>
+
+               <strong>Products Ordered:</strong>
               {order.items.map(item => {
-                console.log('ITEM IN MAP====', item);
-                const product = products.find(
-                  product => product.id === item.productId
-                );
-                console.log('PRODUCT IN MAP====', product);
-                return (
-                  <div>
-                    <p>
-                      Product Name: {product.productName}
-                      <br />
-                      Individual Price: ${item.price}
-                      <br />
-                      Quantity Ordered: {item.quantity}
-                      <br />
-                      Price of all Units: ${item.subTotal} <br />
-                    </p>
-                    <img height="100" width="100" src={product.imageURL} />
-                    <br />
-                    <br />
-                  </div>
-                );
-              })}
+                // console.log("ITEM IN MAP====", item)
+                  const product = products.find(
+                    product => product.id === item.productId
+                  );
+                  // console.log("PRODUCT IN MAP====", product)
+                    return(
+                      <div id='orderProducts'>
+                        <div>
+                          <img height="100" width="100" src={product.imageURL} />
+                        </div>
+                        <div>
+                          Product Name: {product.productName}<br />
+                          Individual Price: ${item.price}<br/>
+                          Quantity Ordered: {item.quantity}<br/>
+                          Price of all Units: ${item.subTotal}
+                        </div>
+
+                      </div>
+                    )
+                  } )}
+
             </div>
           ))}
         </div>

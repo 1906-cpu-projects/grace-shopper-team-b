@@ -21,6 +21,7 @@ import store, {
   setOrderProductsThunk,
   setOrderHistoryThunk
 } from './redux/store';
+import CheckOut from './components/CheckOut';
 
 const root = document.querySelector('#root');
 
@@ -49,9 +50,10 @@ class _App extends Component {
             <Route exact path="/products" component={Products} />
             <Route
               exact
-              path="/users/cart/:id"
+              path="/users/:id/cart"
               render={props => <Cart {...props} />}
             />
+            <Route exact path="/users/:id/checkout" component={CheckOut}/>
             <Route exact path="/orders/:id" component={OrderHistory} />
             <Route
               exact
