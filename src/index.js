@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Products from './components/Products';
 import Cart from './components/Cart';
 import Nav from './Nav';
+import Admin from './components/Admin';
 import Login from './pages/Login';
 import User from './components/User';
 import OrderHistory from './components/OrderHistory';
@@ -55,6 +56,7 @@ class _App extends Component {
             <Route exact path="/users/:id" component={User} />
             {loggedIn && <Redirect to="/" />}
             <Route path="/login" component={Login} exact />
+            <Route exact path="/admin" component={Admin} />
           </Switch>
         </HashRouter>
       </Provider>
