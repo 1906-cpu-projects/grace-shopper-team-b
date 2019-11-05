@@ -28,6 +28,7 @@ class _Cart extends React.Component {
   }
   async componentDidMount(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
+    console.log('order', order)
     this.setState({
       id: order.id,
       userId: order.userId,

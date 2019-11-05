@@ -189,8 +189,8 @@ app.post('/orderProducts', async (req, res, next) => {
           orderId: order.id
         }
       })
-      console.log('item in cart', itemAlreadyInCart)
-      console.log('req body', req.body)
+      // console.log('item in cart', itemAlreadyInCart)
+      // console.log('req body', req.body)
       if(!itemAlreadyInCart){
         let item = await OrderProducts.create({
         ...req.body,
