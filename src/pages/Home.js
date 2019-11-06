@@ -15,11 +15,6 @@ class _Home extends React.Component {
     this.routeChange = this.routeChange.bind(this);
   }
 
-  routeChange() {
-    let path = `/login`;
-    this.props.history.push(path);
-  }
-
   handleAddUser = userToAdd => {
     this.props.addUser(userToAdd);
     this.hideSignUpModal();
