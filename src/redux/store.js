@@ -6,13 +6,19 @@ import {
   logout,
   setProductsThunk,
   setUsersThunk,
-  updateUserThunk,
   setOrdersThunk,
   setOrderProductsThunk,
-  deleteOrderProductsThunk,
-  updateOrderProductThunk,
+  setOrderHistoryThunk,
   addOrderProductThunk,
-  setOrderHistoryThunk
+  addProductThunk,
+  updateUserThunk,
+  updateProductThunk,
+  updateOrderProductThunk,
+  deleteOrderProductsThunk,
+  deleteProductThunk,
+  deleteUserThunk,
+  deleteOrderThunk
+
 } from './thunks';
 
 import { reducer } from './reducer';
@@ -29,16 +35,21 @@ const store = createStore(reducer, applyMiddleware(thunk));
 export default store;
 export { setProductsAction, setUsersAction, setOrderHistoryAction };
 export {
-  setProductsThunk,
-  setUsersThunk,
-  updateUserThunk,
-  setOrdersThunk,
-  setOrderProductsThunk,
-  deleteOrderProductsThunk,
-  addOrderProductThunk,
-  updateOrderProductThunk,
   attemptLogin,
   attemptSessionLogin,
   logout,
-  setOrderHistoryThunk
+  setProductsThunk,
+  setOrdersThunk,
+  setUsersThunk,
+  setOrderHistoryThunk,
+  setOrderProductsThunk,
+  addProductThunk,
+  addOrderProductThunk,
+  updateUserThunk,
+  updateProductThunk,
+  updateOrderProductThunk,
+  deleteOrderProductsThunk,
+  deleteOrderThunk,
+  deleteUserThunk,
+  deleteProductThunk
 };

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
 import {
-  SET_AUTH, SET_PRODUCTS, SET_USERS, UPDATE_USER, SET_ORDERS, UPDATE_ORDER,
-  SET_ORDERPRODUCTS, DELETE_ORDERPRODUCT, UPDATE_ORDERPRODUCT, ADD_ORDERPRODUCT, SET_ORDER_HISTORY
+  SET_AUTH, SET_PRODUCTS, SET_USERS, SET_ORDERPRODUCTS, SET_ORDER_HISTORY, SET_ORDERS,
+  ADD_ORDERPRODUCT, ADD_PRODUCT,
+  UPDATE_USER, UPDATE_ORDER, UPDATE_ORDERPRODUCT, UPDATE_PRODUCT,
+  DELETE_ORDERPRODUCT, DELETE_USER, DELETE_PRODUCT, DELETE_ORDER
 } from './constants';
 
 const authReducer = (state = {}, action) => {
@@ -17,6 +19,15 @@ const authReducer = (state = {}, action) => {
 const productReducer = (state = [], action) => {
   if (action.type === SET_PRODUCTS) {
     state = action.products;
+  }
+  if (action.type === ADD_PRODUCT) {
+    // Add Product
+  }
+  if (action.type === UPDATE_PRODUCT) {
+    // Update product
+  }
+  if (action.type === DELETE_PRODUCT) {
+    //Delete Product
   }
   return state;
 };
@@ -45,6 +56,9 @@ const userReducer = (state = [], action) => {
       billZipcode: action.billZipcode
     } : user);
   }
+  if (action.type === DELETE_USER) {
+    // Remove user
+  }
   return state;
 };
 
@@ -54,8 +68,11 @@ const orderReducer = (state = [], action) => {
   if (action.type === SET_ORDERS) {
     state = action.orders;
   }
-  if(action.type === UPDATE_ORDER){
+  if (action.type === UPDATE_ORDER) {
     state = state.map(order => order.id === action.order.id ? action.order : order)
+  }
+  if (action.type === DELETE_ORDER) {
+    // remove order
   }
   return state;
 };
