@@ -9,15 +9,15 @@ import PaymentForm from '../forms/PaymentForm';
 
 
 class PaymentPage extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
   render() {
     return (
-      <StripeProvider apiKey="pk_test_LxcyyDJDaxKtP8uy5xDO4xHr00zLPYZtPy">
+      <StripeProvider apiKey="pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT">
         <Elements>
-          <PaymentForm />
+          <PaymentForm  name={this.props.name} total={this.props.total}/>
         </Elements>
 
       </StripeProvider>

@@ -6,6 +6,7 @@ const db = require('../db/db');
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 const stripeLoader = require('stripe');
+const stripeSecretKey = require('../env');
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -291,7 +292,7 @@ app.delete('/sessions', (req, res, next) => {
 
 /// Stripe ////
 
-const stripe = new stripeLoader('secret key here');
+const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
@@ -303,9 +304,9 @@ const charge = (token, amt) => {
 }
 
 
-app.post('/api/donate', async (req, res, next) => {
+app.post('/donate', async (req, res, next) => {
   try{
-    let data = await charge(req.body.toekn.id, req.body.amount);
+    let data = await charge(req.body.token.id, req.body.amount);
     console.log(data);
     res.send("Charged!")
   }

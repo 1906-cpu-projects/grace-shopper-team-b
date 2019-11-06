@@ -2,16 +2,17 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import { CardElement, injectStripe, ReactStripeElements } from 'react-stripe-elements'
 import Axios from 'axios';
 
 class PaymentForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state ={
-      name: '',
-      amount: ''
+      name: this.props.name,
+      amount: this.props.total
     }
   }
  async  handleSubmit(ev){
@@ -21,7 +22,7 @@ class PaymentForm extends Component {
       let {token} = await this.props.stripe.createToken({name: this.state.name})
       let amount = this.state.amount
       console.log(token)
-      await axios.post('/api/donate', {body, amount})
+      await axios.post('/api/donate', {token, amount})
     } catch(er){
       throw er;
     }
