@@ -1,11 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { CardElement, injectStripe, ReactStripeElements } from 'react-stripe-elements'
-import Axios from 'axios';
 
 class PaymentForm extends Component {
   constructor(props) {

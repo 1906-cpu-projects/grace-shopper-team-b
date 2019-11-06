@@ -11,7 +11,7 @@ const _CheckOut = ({ auth }) => (
     <p>Yay, for spending money!</p>
     <p>Click here, if you wish to see your <Link to={`/orders/${auth.id}`}>Order History</Link></p>
     <hr/>
-    <PaymentPage  name={auth.firstName} total={150}/>
+    <PaymentPage  name={auth.firstName} total={'...'}/>
     <hr/>
   </div>
 );
