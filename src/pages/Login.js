@@ -82,7 +82,6 @@ class _Login extends Component {
 }
 
 _Login.defaultProps = {
-  //onAddUser: () => {},
   onCloseLoginClick: () => {}
 };
 

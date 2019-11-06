@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logout } from '../src/redux/store';
 
 const _Nav = ({ products, auth }) => {
   let userPath = `/users/${auth.id}`;
-  let orderPath = `/orders/${auth.id}`
-  let cartPath = `/users/${auth.id}/cart`
+  let orderPath = `/orders/${auth.id}`;
+  let cartPath = `/users/${auth.id}/cart`;
 
   if (auth.id === undefined) {
     userPath = '/login';
-    orderPath = '/login'
-    cartPath = '/login'
+    orderPath = '/login';
+    cartPath = '/login';
   }
-
 
   return (
     <nav>
@@ -45,6 +45,15 @@ const mapStateToProps = ({ products, auth }) => {
   };
 };
 
-const Nav = connect(mapStateToProps)(_Nav);
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(logout())
+  };
+};
+
+const Nav = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(_Nav);
 
 export default Nav;
