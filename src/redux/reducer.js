@@ -85,7 +85,7 @@ const orderProdutsReducer = (state = [], action) => {
     state = state.filter(item => item.id !== action.id)
   }
   if (action.type === UPDATE_ORDERPRODUCT) {
-    state = state.map(item => item.id === action.item.id ? action.item : item)
+    state = state.map(item => item.id === action.orderProduct.id ? action.orderProduct: item)
   }
   if (action.type === ADD_ORDERPRODUCT) {
     state = [...state, action.orderProduct]
