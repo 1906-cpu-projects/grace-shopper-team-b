@@ -42,9 +42,8 @@ app.get('/users', (req, res, next) => {
 });
 
 app.get('/users/:id', (req, res, next) => {
-  User.findAll({
-    attributes: ['username', 'email', 'firstName', 'lastName', 'id'],
-    where: { id: req.params.id }
+  User.findByPk(req.params.id, {
+    attributes: ['username', 'email', 'firstName', 'lastName', 'id']
   })
     .then(users => res.send(users))
     .catch(next);
@@ -191,17 +190,19 @@ app.post('/orderProducts', async (req, res, next) => {
       })
       // console.log('item in cart', itemAlreadyInCart)
       // console.log('req body', req.body)
-      if(!itemAlreadyInCart){
+      if (!itemAlreadyInCart) {
         let item = await OrderProducts.create({
-        ...req.body,
-        orderId: order.id
+          ...req.body,
+          orderId: order.id
         });
       }
-      else{
+      else {
         item = await OrderProducts.update(
-          {quantity: itemAlreadyInCart.quantity+1,
-          subTotal: itemAlreadyInCart.price*(itemAlreadyInCart.quantity+1)},
-          {where: {id: itemAlreadyInCart.id}})
+          {
+            quantity: itemAlreadyInCart.quantity + 1,
+            subTotal: itemAlreadyInCart.price * (itemAlreadyInCart.quantity + 1)
+          },
+          { where: { id: itemAlreadyInCart.id } })
       }
       res.send(item);
     })
