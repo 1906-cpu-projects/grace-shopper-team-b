@@ -153,8 +153,10 @@ export const addOrderProductThunk = (payload) => {
 }
 
 export const updateOrderProductThunk = (cartItem) => {
+  console.log('cart', cartItem)
   return async dispatch => {
     const updated = (await axios.put(`/api/orderProducts/${cartItem.id}`, cartItem)).data
+    console.log('updated', updated)
     dispatch(updateOrderProduct(updated))
   }
 }

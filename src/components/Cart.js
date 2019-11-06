@@ -45,6 +45,9 @@ class _Cart extends React.Component {
   }
   updateItem(item) {
     this.props.updateItem(item);
+    this.setState({
+      items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
+    })
   }
   completeOrder(total){
 
@@ -106,10 +109,10 @@ class _Cart extends React.Component {
                       Price: ${item.product.price}
                       <br />
                       Quantity
-                      <select onChange={(ev)=> console.log(ev.target.value)}>
+                      <select onChange={(ev)=> this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})}>
                         {
                           inventoryNumber.map(number => (
-                            <option key={number} value={item.quantity} selected={item.quantity=== number}>{number}</option>
+                            <option key={number} value={number} selected={item.quantity=== number}>{number}</option>
                           ))
                         }
                       </select>

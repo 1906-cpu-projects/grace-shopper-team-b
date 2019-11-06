@@ -217,12 +217,22 @@ app.delete('/orderProducts/:id', async (req, res, next) => {
 });
 
 app.put('/orderProducts/:id', async (req, res, next) => {
-  const item = await OrderProducts.update(
-    { quantity: req.body.quantity },
-    { where: { id: req.body.id } }
-  );
-  console.log(item);
-  res.send(item);
+  OrderProducts.findByPk(req.body.id)
+    .then(item =>
+      item.update({
+        quantity: req.body.quantity,
+        subTotal: req.body.subTotal
+      })
+    )
+    .then(()=> res.sendStatus(201))
+    .catch(next)
+
+  // const item = await OrderProducts.update(
+  //   { quantity: req.body.quantity },
+  //   { where: { id: req.body.id } }
+  // );
+  // console.log('item', item);
+  // res.send(item);
 });
 
 //===================COMPLETED ORDERS=========================
