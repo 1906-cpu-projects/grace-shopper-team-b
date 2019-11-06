@@ -5,6 +5,7 @@ const app = express();
 const db = require('../db/db');
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
+const stripeLoader = require('stripe');
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -286,6 +287,35 @@ app.delete('/sessions', (req, res, next) => {
   req.session = null;
   res.sendStatus(204);
 });
+
+
+/// Stripe ////
+
+const stripe = new stripeLoader('secret key here');
+
+const charge = (token, amt) => {
+  return stripe.charges.create({
+    amount: amt *100,
+    currency: 'usd',
+    source: token,
+    description: 'Statement Description'
+  });
+}
+
+
+app.post('/api/donate', async (req, res, next) => {
+  try{
+    let data = await charge(req.body.toekn.id, req.body.amount);
+    console.log(data);
+    res.send("Charged!")
+  }
+  catch(er){
+    console.log(er);
+    res.sendStatus(500)
+  }
+})
+////////////
+
 
 // Page Not Fount Route
 app.get('*', (req, res) => {
