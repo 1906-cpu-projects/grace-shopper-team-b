@@ -9,7 +9,7 @@ import PaymentForm from '../forms/PaymentForm';
 
 
 class PaymentPage extends Component {
-  constuctor() {
+  constructor() {
     super()
   }
 

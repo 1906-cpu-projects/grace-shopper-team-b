@@ -53,8 +53,7 @@ class _App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={Products} />
             <Route
-              exact
-              path="/users/:id/cart"
+              exact path="/users/:id/cart"
               render={props => <Cart {...props} />}
             />
             <Route exact path="/users/:id/checkout" component={CheckOut}/>
