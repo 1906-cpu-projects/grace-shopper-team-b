@@ -6,7 +6,7 @@ const db = require('../db/db');
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 const stripeLoader = require('stripe');
-const stripeSecretKey = require('../env');
+//const stripeSecretKey = require('../env');
 const hash = require('../src/utilities/hash');
 
 // Setups for express-sessions
@@ -120,6 +120,13 @@ app.get('/orders/:id', (req, res, next) => {
     .catch(next);
 });
 
+app.delete('/orders/:id', (req, res, next) => {
+  Order.findByPk(req.params.id)
+    .then(_order => _order.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})
+
 app.put('/orders/:id', (req, res, next) => {
   Order.findByPk(req.body.id)
     .then(order =>
@@ -229,6 +236,8 @@ app.put('/orderProducts/:id', async (req, res, next) => {
     .catch(next);
 });
 
+
+
 //===================COMPLETED ORDERS=========================
 
 app.get('/completedorders', (req, res, next) => {
@@ -319,8 +328,8 @@ app.delete('/sessions', (req, res, next) => {
 });
 
 /// Stripe ////
-
-const stripe = new stripeLoader(stripeSecretKey);
+const stripe = "hgdggd";
+// const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({

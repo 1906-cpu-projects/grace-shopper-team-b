@@ -60,21 +60,21 @@ const userReducer = (state = [], action) => {
     return state.map(user =>
       action.id === user.id
         ? {
-            ...user,
-            username: action.username,
-            email: action.email,
-            password: action.password,
-            firstName: action.firstName,
-            lastName: action.lastName,
-            streetAddress: action.streetAddress,
-            city: action.city,
-            state: action.state,
-            zipcode: action.zipcode,
-            billStreetAddress: action.billStreetAddress,
-            billCity: action.billCity,
-            billState: action.billState,
-            billZipcode: action.billZipcode
-          }
+          ...user,
+          username: action.username,
+          email: action.email,
+          password: action.password,
+          firstName: action.firstName,
+          lastName: action.lastName,
+          streetAddress: action.streetAddress,
+          city: action.city,
+          state: action.state,
+          zipcode: action.zipcode,
+          billStreetAddress: action.billStreetAddress,
+          billCity: action.billCity,
+          billState: action.billState,
+          billZipcode: action.billZipcode
+        }
         : user
     );
   }
@@ -96,7 +96,7 @@ const orderReducer = (state = [], action) => {
     );
   }
   if (action.type === DELETE_ORDER) {
-    // remove order
+    return state.filter(order => order.id !== action.order.id)
   }
   return state;
 };

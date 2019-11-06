@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { deleteOrderThunk } from '../redux/thunks';
 
 // Display users
 // Delete a user
@@ -25,7 +26,7 @@ class Admin extends React.Component {
                 Order Total: ${order.total}<br />
                 Order placed on {order.orderDate}<br />
                 Shipping Address: {order.shippingAddress}<br />
-                <button>Delete Button</button>
+                <button onClick={(ev) => this.props.deleteOrder(order)}> Delete</button>
                 <br /> <br />
               </li>)
           }
@@ -50,7 +51,12 @@ class Admin extends React.Component {
 }
 
 const mapStateToProps = state => ({ users: state.users, orders: state.orders, products: state.products });
-export default connect(mapStateToProps)(Admin);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteOrder: (order) => dispatch(deleteOrderThunk(order))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);
 
 
 

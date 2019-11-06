@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout, addNewUser } from '../redux/store';
+import { logout, addNewUserThunk } from '../redux/store';
 import NewUser from '../forms/NewUser';
 
 const initialState = {

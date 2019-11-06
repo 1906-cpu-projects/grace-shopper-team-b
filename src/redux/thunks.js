@@ -77,7 +77,7 @@ export const setUsersThunk = () => {
   };
 };
 
-export const addNewUser = newUser => {
+export const addNewUserThunk = newUser => {
   return async dispatch => {
     const user = (await axios.post('/api/users', newUser)).data;
     dispatch(addUserAction(user));
@@ -156,8 +156,11 @@ export const updateOrderThunk = order => {
   };
 };
 
-export const deleteOrderThunk = () => {
-  //Delete Order
+export const deleteOrderThunk = (order) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/orders/${order.id}`);
+    dispatch(deleteOrderAction(order));
+  }
 };
 
 ////////////////////////     ORDERED PRODUCTS - THUNKS    //////////////////////////

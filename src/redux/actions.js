@@ -41,6 +41,9 @@ export const addOrderProduct = orderProduct => ({
   orderProduct
 });
 export const addProductAction = product => ({ type: ADD_PRODUCT, product });
+export const addUserAction = user => ({
+  type: ADD_USER, user
+})
 
 //UPDATE
 export const updateOrder = order => ({ type: UPDATE_ORDER, order });
@@ -74,9 +77,6 @@ export const updateUserAction = user => {
 
 //DELETE
 export const deleteUserAction = user => ({ type: DELETE_USER, user });
-export const deleteProductAction = product => ({
-  type: DELETE_PRODUCT,
-  product
-});
-export const deleteOrderAction = order => ({ type: DELETE_ORDER, order });
+export const deleteProductAction = product => ({ type: DELETE_PRODUCT, product });
+export const deleteOrderAction = order => ({ type: DELETE_ORDER, order: order });
 export const deleteOrderProducts = id => ({ type: DELETE_ORDERPRODUCT, id });
