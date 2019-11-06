@@ -28,7 +28,7 @@ class _Cart extends React.Component {
   }
   async componentDidMount(props) {
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    console.log('order', order)
+    // console.log('order', order)
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -53,8 +53,8 @@ class _Cart extends React.Component {
   render() {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
-    console.log('orders', orders)
-    console.log('auth', auth)
+    // console.log('', items)
+    // console.log('auth', auth)
     if (!auth) {
       return (
         <div>
@@ -64,7 +64,7 @@ class _Cart extends React.Component {
     if (id === undefined) {
       return (
         <div>
-          You have cheched out your previous order and have no active cart at this time.
+          You have gone through the chekout process for your previous order and have no active cart at this time. <br/>
           If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
         </div>);
     }
@@ -91,7 +91,10 @@ class _Cart extends React.Component {
           </div>
           <div id="cartProducts">
             {items.map(item => {
-              console.log(item)
+              const inventoryNumber = [];
+              for(let i=1; i<=item.product.inventory; i++){
+                inventoryNumber.push(i)
+              }
                 return (
                   <div key={item.id} id="orderProducts">
                     <div>
@@ -102,15 +105,14 @@ class _Cart extends React.Component {
                       Description: {item.product.description} <br />
                       Price: ${item.product.price}
                       <br />
-                      Quantity {item.quantity}
-                      <br />
-                      {/* Change Quantity{' '}
-                      <select>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
+                      Quantity
+                      <select onChange={(ev)=> console.log(ev.target.value)}>
+                        {
+                          inventoryNumber.map(number => (
+                            <option key={number} value={item.quantity} selected={item.quantity=== number}>{number}</option>
+                          ))
+                        }
                       </select>
-                      <br /> */}
                       {item.product.inventory < 6
                         ? `Only ${item.product.inventory} left in stock - order soon`
                         : ''}
