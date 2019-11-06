@@ -51,19 +51,19 @@ class _App extends Component {
           <Route component={Nav} />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/admin" component={Admin} />
             <Route exact path="/products" component={Products} />
             <Route
               exact path="/users/:id/cart"
               render={props => <Cart {...props} />}
             />
-            <Route exact path="/users/:id/checkout" component={CheckOut}/>
+            <Route exact path="/users/:id/checkout" component={CheckOut} />
             <Route exact path="/orders/:id" component={OrderHistory} />
             <Route
               exact
               path="/users/:id"
               render={props => <User {...props} />}
             />
-            <Route exact path="/admin" component={Admin} />
             {loggedIn && <Redirect to="/" />}
             <Route path="/login" component={Login} exact />
           </Switch>
