@@ -62,5 +62,7 @@ typings/
 # next.js build output
 .next
 
-
+# key lists
+configs/
+configs/key.js
 env.js
