@@ -77,6 +77,6 @@ export const updateUserAction = user => {
 
 //DELETE
 export const deleteUserAction = user => ({ type: DELETE_USER, user });
-export const deleteProductAction = product => ({ type: DELETE_PRODUCT, product });
+export const deleteProductAction = product => ({ type: DELETE_PRODUCT, product: product });
 export const deleteOrderAction = order => ({ type: DELETE_ORDER, order: order });
 export const deleteOrderProducts = id => ({ type: DELETE_ORDERPRODUCT, id });

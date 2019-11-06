@@ -63,8 +63,12 @@ export const updateProductThunk = () => {
   //Update Product Thunk
 };
 
-export const deleteProductThunk = () => {
-  //Delete Product Thunk
+export const deleteProductThunk = (product) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/products/${product.id}`);
+    dispatch(deleteProductAction(product));
+
+  }
 };
 
 ////////////////////////     USERS - THUNKS    //////////////////////////

@@ -81,6 +81,13 @@ app.get('/products', (req, res, next) => {
     .catch(next);
 });
 
+app.delete('/products/:id', (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then(_product => _product.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})
+
 app.get('/orders', (req, res, next) => {
   // const activeUser = req.session.user;
   // if (!activeUser) {

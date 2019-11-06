@@ -40,7 +40,7 @@ const productReducer = (state = [], action) => {
     // Update product
   }
   if (action.type === DELETE_PRODUCT) {
-    //Delete Product
+    return state.filter(product => product.id !== action.product.id)
   }
   return state;
 };
