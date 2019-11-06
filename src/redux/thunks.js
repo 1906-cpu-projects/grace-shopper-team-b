@@ -8,6 +8,7 @@ import {
   setOrderHistoryAction,
   addOrderProduct,
   addProductAction,
+  addUserAction,
   updateUserAction,
   updateOrderProduct,
   updateOrder,
@@ -76,7 +77,29 @@ export const setUsersThunk = () => {
   };
 };
 
-export const updateUserThunk = (id, username, email, password, firstName, lastName, streetAddress, city, state, zipcode, billStreetAddress, billCity, billState, billZipcode) => {
+export const addNewUser = newUser => {
+  return async dispatch => {
+    const user = (await axios.post('/api/users', newUser)).data;
+    dispatch(addUserAction(user));
+  };
+};
+
+export const updateUserThunk = (
+  id,
+  username,
+  email,
+  password,
+  firstName,
+  lastName,
+  streetAddress,
+  city,
+  state,
+  zipcode,
+  billStreetAddress,
+  billCity,
+  billState,
+  billZipcode
+) => {
   const user = {
     id: id,
     username: username,
@@ -92,8 +115,8 @@ export const updateUserThunk = (id, username, email, password, firstName, lastNa
     billCity: billCity,
     billState: billState,
     billZipcode: billZipcode
-  }
-  return async (dispatch) => {
+  };
+  return async dispatch => {
     await axios.put(`/api/users/${user.id}`, {
       username: user.username,
       email: user.email,
@@ -126,49 +149,50 @@ export const setOrdersThunk = () => {
   };
 };
 
-export const updateOrderThunk = (order) => {
+export const updateOrderThunk = order => {
   return async dispatch => {
-    const updated = (await axios.put(`/api/orders/${order.id}`, order)).data
-    dispatch(updateOrder(updated))
-  }
-}
+    const updated = (await axios.put(`/api/orders/${order.id}`, order)).data;
+    dispatch(updateOrder(updated));
+  };
+};
 
 export const deleteOrderThunk = () => {
   //Delete Order
-}
+};
 
 ////////////////////////     ORDERED PRODUCTS - THUNKS    //////////////////////////
 export const setOrderProductsThunk = () => {
   return async dispatch => {
     const allOrderProducts = (await axios.get('/api/orderProducts')).data;
-    dispatch(setOrderProducts(allOrderProducts))
-  }
-}
+    dispatch(setOrderProducts(allOrderProducts));
+  };
+};
 
-export const addOrderProductThunk = (payload) => {
+export const addOrderProductThunk = payload => {
   return async dispatch => {
-    const item = (await axios.post('/api/orderProducts', payload)).data
-    dispatch(addOrderProduct(item))
-  }
-}
+    const item = (await axios.post('/api/orderProducts', payload)).data;
+    dispatch(addOrderProduct(item));
+  };
+};
 
-export const updateOrderProductThunk = (cartItem) => {
-  console.log('cart', cartItem)
+export const updateOrderProductThunk = cartItem => {
+  console.log('cart', cartItem);
   return async dispatch => {
-    const updated = (await axios.put(`/api/orderProducts/${cartItem.id}`, cartItem)).data
-    console.log('updated', updated)
-    dispatch(updateOrderProduct(updated))
-  }
-}
+    const updated = (await axios.put(
+      `/api/orderProducts/${cartItem.id}`,
+      cartItem
+    )).data;
+    console.log('updated', updated);
+    dispatch(updateOrderProduct(updated));
+  };
+};
 
-export const deleteOrderProductsThunk = (id) => {
+export const deleteOrderProductsThunk = id => {
   return async dispatch => {
     await axios.delete(`/api/orderProducts/${id}`);
-    dispatch(deleteOrderProducts(id))
-  }
-}
-
-
+    dispatch(deleteOrderProducts(id));
+  };
+};
 
 ////////////////////////     ORDER HISTORY - THUNKS    //////////////////////////
 export const setOrderHistoryThunk = () => {

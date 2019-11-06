@@ -30,51 +30,60 @@ class _Login extends Component {
   }
   render() {
     const { error, email, password } = this.state;
-    const { onChange, attemptLogin } = this;
+    const { onChange, onCloseLoginClick, attemptLogin } = this;
     return (
-      <div className="container">
-        <h4>
-          Welcome to the grace shopper California, you can login anytime but you
-          can never leave. Please login...
-        </h4>
-        <form>
-          {error && (
-            <div className="error alert alert-danger" role="alert">
-              {error}
+      <div className="modalBody">
+        <button onClick={onCloseLoginClick} className="modalCloseButton">
+          x
+        </button>
+        <div className="container">
+          <h4>
+            Welcome to the grace shopper California, you can login anytime but
+            you can never leave. Please login...
+          </h4>
+          <form>
+            {error && (
+              <div className="error alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                name="email"
+                type="email"
+                className="form-control"
+                value={email}
+                onChange={onChange}
+              />
             </div>
-          )}
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              name="email"
-              type="email"
-              className="form-control"
-              value={email}
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              value={password}
-              onChange={onChange}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn btn-outline-primary"
-            onClick={attemptLogin}
-          >
-            Login
-          </button>
-        </form>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                value={password}
+                onChange={onChange}
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn btn-outline-primary"
+              onClick={attemptLogin}
+            >
+              Login
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
 }
+
+_Login.defaultProps = {
+  onCloseLoginClick: () => {}
+};
 
 const Login = connect(
   () => {
