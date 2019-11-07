@@ -24,6 +24,7 @@ import store, {
   setOrderHistoryThunk
 } from './redux/store';
 import CheckOut from './components/CheckOut';
+import PaymentPage from './components/PaymentPage';
 
 
 
@@ -53,11 +54,11 @@ class _App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/products" component={Products} />
-            <Route
-              exact path="/users/:id/cart"
+            <Route exact path="/users/:id/checkout" component={CheckOut} />
+            <Route exact path="/users/:id/payment" component={PaymentPage} />
+            <Route exact path="/users/:id/cart"
               render={props => <Cart {...props} />}
             />
-            <Route exact path="/users/:id/checkout" component={CheckOut} />
             <Route exact path="/orders/:id" component={OrderHistory} />
             <Route
               exact

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import {
   deleteOrderProductsThunk,
   updateOrderProductThunk,
@@ -10,7 +11,8 @@ import {
 } from '../redux/store';
 import axios from 'axios';
 import { updateOrderThunk } from '../redux/thunks';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -56,8 +58,6 @@ class _Cart extends React.Component {
   render() {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
-    // console.log('', items)
-    // console.log('auth', auth)
     if (!auth) {
       return (
         <div>
@@ -141,9 +141,10 @@ class _Cart extends React.Component {
               this.completeOrder(totalPrice)
             }}
           >
-            {<Link to={`/users/${auth.id}/checkout`}>Proceed to Checkout</Link>}
+            {<Link to={`/users/${auth.id}/payment`}>Proceed to Payment</Link>}
           </button>
         </div>
+        <Route path='/users/:id/payment' render={() => <Product total={totalPrice}/>} />
       </div>
       );
   }

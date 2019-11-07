@@ -8,12 +8,16 @@ import {StripeProvider, Elements} from 'react-stripe-elements';
 import PaymentForm from '../forms/PaymentForm';
 
 
+
+
 class PaymentPage extends Component {
   constructor(props) {
     super(props)
   }
 
   render() {
+    console.log(this.props)
+    console.log(total)
     return (
       <StripeProvider
       apiKey="pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT"

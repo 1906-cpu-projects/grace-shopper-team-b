@@ -338,7 +338,8 @@ const charge = (token, amt) => {
   });
 };
 
-app.post('/donate', async (req, res, next) => {
+app.post('/checkout', async (req, res, next) => {
+  console.log('request: ', req.body)
   try {
     let data = await charge(req.body.token.id, req.body.amount);
     console.log('data', data);

@@ -19,7 +19,8 @@ class PaymentForm extends Component {
       let {token} = await this.props.stripe.createToken({name: this.state.name})
       let amount = this.state.amount
       console.log(token)
-      await axios.post('/api/donate', {token, amount})
+      await axios.post('/api/checkout', {token, amount})
+
     } catch(er){
       throw er;
     }
@@ -29,8 +30,12 @@ class PaymentForm extends Component {
 
     return (
       <div>
+        <h2>Payment</h2>
         <form
-          onSubmit={ev => this.handleSubmit(ev)}
+          onSubmit={ev => {
+            this.handleSubmit(ev)
+
+          }}
         >
           <label>Name</label>
           <input
