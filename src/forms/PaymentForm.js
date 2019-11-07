@@ -52,6 +52,7 @@ class PaymentForm extends Component {
           />
           <label>CC Number -- Exp. Date -- CVC</label>
           <CardElement />
+          <br/>
           <button className='btn btn-outline-success'>Charge It!</button>
         </form>
       </div>

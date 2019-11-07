@@ -16,8 +16,8 @@ class PaymentPage extends Component {
   }
 
   render() {
-    console.log(this.props)
-    console.log(total)
+    console.log('props', this.props)
+    // console.log(total)
     return (
       <StripeProvider
       apiKey="pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT"

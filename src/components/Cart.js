@@ -51,9 +51,9 @@ class _Cart extends React.Component {
       items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
     })
   }
-  completeOrder(total){
+  updateOrder(total){
 
-    this.props.completeOrder({...this.state, total: total, status: 'completed'})
+    this.props.updateOrder({...this.state, total: total })
   }
   render() {
     const { id, items } = this.state;
@@ -138,13 +138,13 @@ class _Cart extends React.Component {
           <button
             className="btn btn-outline-success"
             onClick={()=> {
-              this.completeOrder(totalPrice)
+              this.updateOrder(totalPrice)
             }}
           >
-            {<Link to={`/users/${auth.id}/payment`}>Proceed to Payment</Link>}
+            {<Link to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
           </button>
         </div>
-        <Route path='/users/:id/payment' render={() => <Product total={totalPrice}/>} />
+        {/* <Route path='/users/:id/payment' render={() => <Product total={totalPrice}/>} /> */}
       </div>
       );
   }
@@ -161,7 +161,7 @@ const mapDispatchToProps = dispatch => {
   return {
     deleteItem: id => dispatch(deleteOrderProductsThunk(id)),
     updateItem:  item => dispatch(updateOrderProductThunk(item)),
-    completeOrder: (order) => dispatch(updateOrderThunk(order))
+    updateOrder: (order) => dispatch(updateOrderThunk(order))
   };
 };
 
