@@ -5,9 +5,16 @@ const app = express();
 const db = require('../db/db');
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
+
+const dotenv = require('dotenv')
+
+dotenv.config()
+
+const stripeSecretKey = process.env.stripeSecretKey;
 const stripeLoader = require('stripe');
-const stripeSecretKey = require('../env');
+
 const hash = require('../src/utilities/hash');
+
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -334,7 +341,7 @@ const charge = (token, amt) => {
 app.post('/donate', async (req, res, next) => {
   try {
     let data = await charge(req.body.token.id, req.body.amount);
-    console.log(data);
+    console.log('data', data);
     res.send('Charged!');
   } catch (er) {
     console.log(er);

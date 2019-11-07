@@ -10,9 +10,11 @@ const initialState = {
 };
 
 class _Home extends React.Component {
-  state = initialState;
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
+  // state = initialState;
+  constructor() {
+    super()
+    this.state = initialState
+    // this.routeChange = this.routeChange.bind(this);
   }
 
   handleAddUser = userToAdd => {
