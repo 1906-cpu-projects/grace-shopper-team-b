@@ -1,18 +1,18 @@
-const express = require('express');
-const session = require('express-session');
-const path = require('path');
+const express = require("express");
+const session = require("express-session");
+const path = require("path");
 const app = express();
-const db = require('../db/db');
+const db = require("../db/db");
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
-const stripeLoader = require('stripe');
+const stripeLoader = require("stripe");
 //const stripeSecretKey = require('../env');
-const hash = require('../src/utilities/hash');
+const hash = require("../src/utilities/hash");
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
-const SESS_NAME = 'sid';
-const SESS_SECRET = 'BRAVO';
+const SESS_NAME = "sid";
+const SESS_SECRET = "BRAVO";
 const SESS_LIFETIME = TWO_HOURS;
 
 app.use(express.json());
@@ -30,29 +30,29 @@ app.use(
   })
 );
 
-app.get('/users', (req, res, next) => {
+app.get("/users", (req, res, next) => {
   const activeUser = req.session.user;
   if (!activeUser) {
     return res.status(401).json({
-      message: 'Auth Failed'
+      message: "Auth Failed"
     });
   }
   return User.findAll({
-    attributes: ['username', 'email', 'firstName', 'lastName', 'id']
+    attributes: ["username", "email", "firstName", "lastName", "id"]
   })
     .then(users => res.send(users))
     .catch(next);
 });
 
-app.get('/users/:id', (req, res, next) => {
+app.get("/users/:id", (req, res, next) => {
   User.findByPk(req.params.id, {
-    attributes: ['username', 'email', 'firstName', 'lastName', 'id']
+    attributes: ["username", "email", "firstName", "lastName", "id"]
   })
     .then(users => res.send(users))
     .catch(next);
 });
 
-app.put('/users/:id', (req, res, next) => {
+app.put("/users/:id", (req, res, next) => {
   User.findByPk(req.params.id)
     .then(_user =>
       _user.update({
@@ -75,20 +75,41 @@ app.put('/users/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/products', (req, res, next) => {
+app.get("/products", (req, res, next) => {
   Product.findAll()
     .then(products => res.send(products))
     .catch(next);
 });
 
-app.delete('/products/:id', (req, res, next) => {
+app.get("/products/:id", (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then(products => res.send(products))
+    .catch(next);
+});
+
+app.put("/products/:id", (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then(_product =>
+      _product.update({
+        productName: req.body.productName,
+        description: req.body.description,
+        price: req.body.price,
+        imageURL: req.body.imageURL,
+        inventory: req.body.inventory
+      })
+    )
+    .then(() => res.sendStatus(201))
+    .catch(next);
+});
+
+app.delete("/products/:id", (req, res, next) => {
   Product.findByPk(req.params.id)
     .then(_product => _product.destroy())
     .then(() => res.sendStatus(204))
-    .catch(next)
-})
+    .catch(next);
+});
 
-app.get('/orders', (req, res, next) => {
+app.get("/orders", (req, res, next) => {
   // const activeUser = req.session.user;
   // if (!activeUser) {
   //   res.send(`
@@ -107,7 +128,7 @@ app.get('/orders', (req, res, next) => {
     include: [
       {
         model: OrderProducts,
-        as: 'items',
+        as: "items",
         include: [
           {
             model: Product
@@ -121,20 +142,20 @@ app.get('/orders', (req, res, next) => {
   // }
 });
 
-app.get('/orders/:id', (req, res, next) => {
+app.get("/orders/:id", (req, res, next) => {
   Order.findAll({ where: { id: req.params.id } })
     .then(order => res.send(order))
     .catch(next);
 });
 
-app.delete('/orders/:id', (req, res, next) => {
+app.delete("/orders/:id", (req, res, next) => {
   Order.findByPk(req.params.id)
     .then(_order => _order.destroy())
     .then(() => res.sendStatus(204))
-    .catch(next)
-})
+    .catch(next);
+});
 
-app.put('/orders/:id', (req, res, next) => {
+app.put("/orders/:id", (req, res, next) => {
   Order.findByPk(req.body.id)
     .then(order =>
       order.update({
@@ -146,11 +167,11 @@ app.put('/orders/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/orders/:id/cart', (req, res, next) => {
+app.get("/orders/:id/cart", (req, res, next) => {
   Order.findOne({
     where: {
       userId: req.params.id,
-      status: 'cart'
+      status: "cart"
     },
     include: [
       {
@@ -160,7 +181,7 @@ app.get('/orders/:id/cart', (req, res, next) => {
     include: [
       {
         model: OrderProducts,
-        as: 'items',
+        as: "items",
         include: [
           {
             model: Product
@@ -173,7 +194,7 @@ app.get('/orders/:id/cart', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/orderProducts', (req, res, next) => {
+app.get("/orderProducts", (req, res, next) => {
   OrderProducts.findAll({
     includes: [
       {
@@ -185,10 +206,10 @@ app.get('/orderProducts', (req, res, next) => {
     .catch(next);
 });
 
-app.post('/orderProducts', async (req, res, next) => {
+app.post("/orderProducts", async (req, res, next) => {
   Order.findOne({
     where: {
-      status: 'cart',
+      status: "cart",
       userId: req.body.userId
     }
   })
@@ -196,7 +217,7 @@ app.post('/orderProducts', async (req, res, next) => {
       if (!order) {
         order = await Order.create({
           userId: req.body.userId,
-          status: 'cart'
+          status: "cart"
         });
       }
       const itemAlreadyInCart = await OrderProducts.findOne({
@@ -226,12 +247,12 @@ app.post('/orderProducts', async (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.delete('/orderProducts/:id', async (req, res, next) => {
+app.delete("/orderProducts/:id", async (req, res, next) => {
   await OrderProducts.destroy({ where: { id: req.params.id } });
   res.sendStatus(204);
 });
 
-app.put('/orderProducts/:id', async (req, res, next) => {
+app.put("/orderProducts/:id", async (req, res, next) => {
   OrderProducts.findByPk(req.body.id)
     .then(item =>
       item.update({
@@ -243,16 +264,14 @@ app.put('/orderProducts/:id', async (req, res, next) => {
     .catch(next);
 });
 
-
-
 //===================COMPLETED ORDERS=========================
 
-app.get('/completedorders', (req, res, next) => {
+app.get("/completedorders", (req, res, next) => {
   Order.findAll({
     include: [
       {
         model: OrderProducts,
-        as: 'items'
+        as: "items"
       }
     ]
   })
@@ -260,12 +279,12 @@ app.get('/completedorders', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/completedOrders/:id', (req, res, next) => {
+app.get("/completedOrders/:id", (req, res, next) => {
   Order.findAll({
     include: [
       {
         model: OrderProducts,
-        as: 'items',
+        as: "items",
         where: { userId: req.params.id }
       }
     ]
@@ -278,9 +297,9 @@ app.get('/completedOrders/:id', (req, res, next) => {
 
 // Signup
 
-app.post('/signup', (req, res, next) => {
+app.post("/signup", (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    console.log('Missing requested information.');
+    console.log("Missing requested information.");
     res.sendStatus(400);
   } else {
     const { email, password } = req.body;
@@ -290,7 +309,7 @@ app.post('/signup', (req, res, next) => {
     })
       .then(() => {
         res.send({
-          message: 'User created successfully!'
+          message: "User created successfully!"
         });
       })
       .catch(ev => {
@@ -303,7 +322,7 @@ app.post('/signup', (req, res, next) => {
 
 // Login
 
-app.post('/sessions', (req, res, next) => {
+app.post("/sessions", (req, res, next) => {
   User.findOne({
     where: {
       email: req.body.email,
@@ -320,7 +339,7 @@ app.post('/sessions', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/sessions', (req, res, next) => {
+app.get("/sessions", (req, res, next) => {
   const user = req.session.user;
   if (user) {
     return res.send(user);
@@ -328,7 +347,7 @@ app.get('/sessions', (req, res, next) => {
   next({ status: 401 });
 });
 
-app.delete('/sessions', (req, res, next) => {
+app.delete("/sessions", (req, res, next) => {
   req.session.destroy();
   req.session = null;
   res.sendStatus(204);
@@ -336,22 +355,22 @@ app.delete('/sessions', (req, res, next) => {
 
 /// Stripe ////
 const stripe = "hgdggd";
-// const stripe = new stripeLoader(stripeSecretKey);
+//const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
     amount: amt * 100,
-    currency: 'usd',
+    currency: "usd",
     source: token,
-    description: 'Statement Description'
+    description: "Statement Description"
   });
 };
 
-app.post('/donate', async (req, res, next) => {
+app.post("/donate", async (req, res, next) => {
   try {
     let data = await charge(req.body.token.id, req.body.amount);
     console.log(data);
-    res.send('Charged!');
+    res.send("Charged!");
   } catch (er) {
     console.log(er);
     res.sendStatus(500);
@@ -360,7 +379,7 @@ app.post('/donate', async (req, res, next) => {
 ////////////
 
 // Page Not Fount Route
-app.get('*', (req, res) => {
+app.get("*", (req, res) => {
   res.send(`
     <h1>404 Page Not Found</h1>
     <p>Sorry, that page doesn't exist, Doc. :(</p>

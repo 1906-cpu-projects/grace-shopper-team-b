@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 const {
   TEXT,
   ARRAY,
@@ -11,9 +11,9 @@ const {
   ENUM
 } = Sequelize;
 
-const conn = require('../conn')
+const conn = require("../conn");
 
-const Product = conn.define('product', {
+const Product = conn.define("product", {
   id: {
     type: UUID,
     primaryKey: true,
@@ -26,7 +26,7 @@ const Product = conn.define('product', {
   },
   description: {
     type: TEXT,
-    defaultValue: 'Please contact us for more details...'
+    defaultValue: "Please contact us for more details..."
   },
   price: {
     type: DECIMAL,
@@ -36,7 +36,7 @@ const Product = conn.define('product', {
   imageURL: {
     //STRING FOR NOW BUT COULD BE AN ARRAY IF MULTIPLE PHOTOS
     type: STRING,
-    defaultValue: 'https://live.staticflickr.com/15/89773667_f91cdd7c11.jpg'
+    defaultValue: "https://live.staticflickr.com/15/89773667_f91cdd7c11.jpg"
   },
   inventory: {
     type: INTEGER,
@@ -47,4 +47,4 @@ const Product = conn.define('product', {
   }
 });
 
-module.exports = Product
+module.exports = Product;

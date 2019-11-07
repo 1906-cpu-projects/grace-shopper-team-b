@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   box-sizing: border-box;
 }
 
@@ -39,13 +39,24 @@ li {
   padding: 1rem;
   border-radius: 0.3rem;
 }
+
 .admin {
   display: flex;
+  align-items: stretch;
   justify-content: flex-start;
-  margin: 1rem;
+  flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
 }
-
+.admin > li {
+  display: flex;
+  flex: 1 1 25%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 33%;
+  height: 50%;
+}
 #products {
   display: flex;
   flex-wrap: wrap;

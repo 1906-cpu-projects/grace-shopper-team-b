@@ -15,7 +15,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_ORDER,
   ADD_PRODUCT
-} from './constants';
+} from "./constants";
 
 // ACTION CREATORS
 
@@ -42,8 +42,9 @@ export const addOrderProduct = orderProduct => ({
 });
 export const addProductAction = product => ({ type: ADD_PRODUCT, product });
 export const addUserAction = user => ({
-  type: ADD_USER, user
-})
+  type: ADD_USER,
+  user
+});
 
 //UPDATE
 export const updateOrder = order => ({ type: UPDATE_ORDER, order });
@@ -51,10 +52,19 @@ export const updateOrderProduct = orderProduct => ({
   type: UPDATE_ORDERPRODUCT,
   orderProduct
 });
-export const updateProductAction = product => ({
-  type: UPDATE_PRODUCT,
-  product
-});
+export const updateProductAction = product => {
+  console.log("ACTION ", product);
+  return {
+    type: UPDATE_PRODUCT,
+    id: product.id,
+    productName: product.productName,
+    description: product.description,
+    price: product.price,
+    imageURL: product.imageURL,
+    inventory: product.inventory
+  };
+};
+
 export const updateUserAction = user => {
   return {
     type: UPDATE_USER,
@@ -77,6 +87,12 @@ export const updateUserAction = user => {
 
 //DELETE
 export const deleteUserAction = user => ({ type: DELETE_USER, user });
-export const deleteProductAction = product => ({ type: DELETE_PRODUCT, product: product });
-export const deleteOrderAction = order => ({ type: DELETE_ORDER, order: order });
+export const deleteProductAction = product => ({
+  type: DELETE_PRODUCT,
+  product: product
+});
+export const deleteOrderAction = order => ({
+  type: DELETE_ORDER,
+  order: order
+});
 export const deleteOrderProducts = id => ({ type: DELETE_ORDERPRODUCT, id });

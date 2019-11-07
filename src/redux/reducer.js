@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   SET_AUTH,
@@ -18,7 +18,7 @@ import {
   DELETE_USER,
   DELETE_PRODUCT,
   DELETE_ORDER
-} from './constants';
+} from "./constants";
 
 const authReducer = (state = {}, action) => {
   if (action.type === SET_AUTH) {
@@ -37,10 +37,23 @@ const productReducer = (state = [], action) => {
     // Add Product
   }
   if (action.type === UPDATE_PRODUCT) {
-    // Update product
+    console.log("REDUCER ", action);
+    console.log("STATE ", state);
+    return state.map(product =>
+      action.id === product.id
+        ? {
+            ...product,
+            productName: action.productName,
+            description: action.description,
+            price: action.price,
+            imageURL: action.imageURL,
+            inventory: action.inventory
+          }
+        : product
+    );
   }
   if (action.type === DELETE_PRODUCT) {
-    return state.filter(product => product.id !== action.product.id)
+    return state.filter(product => product.id !== action.product.id);
   }
   return state;
 };
@@ -60,21 +73,21 @@ const userReducer = (state = [], action) => {
     return state.map(user =>
       action.id === user.id
         ? {
-          ...user,
-          username: action.username,
-          email: action.email,
-          password: action.password,
-          firstName: action.firstName,
-          lastName: action.lastName,
-          streetAddress: action.streetAddress,
-          city: action.city,
-          state: action.state,
-          zipcode: action.zipcode,
-          billStreetAddress: action.billStreetAddress,
-          billCity: action.billCity,
-          billState: action.billState,
-          billZipcode: action.billZipcode
-        }
+            ...user,
+            username: action.username,
+            email: action.email,
+            password: action.password,
+            firstName: action.firstName,
+            lastName: action.lastName,
+            streetAddress: action.streetAddress,
+            city: action.city,
+            state: action.state,
+            zipcode: action.zipcode,
+            billStreetAddress: action.billStreetAddress,
+            billCity: action.billCity,
+            billState: action.billState,
+            billZipcode: action.billZipcode
+          }
         : user
     );
   }
@@ -96,7 +109,7 @@ const orderReducer = (state = [], action) => {
     );
   }
   if (action.type === DELETE_ORDER) {
-    return state.filter(order => order.id !== action.order.id)
+    return state.filter(order => order.id !== action.order.id);
   }
   return state;
 };
@@ -124,7 +137,7 @@ const orderProdutsReducer = (state = [], action) => {
 const orderHistoryReducer = (state = [], action) => {
   if (action.type === SET_ORDER_HISTORY) {
     state = action.orderHistory;
-    console.log('ORDER HISTORY REDUCER STATE', state);
+    console.log("ORDER HISTORY REDUCER STATE", state);
   }
   return state;
 };
