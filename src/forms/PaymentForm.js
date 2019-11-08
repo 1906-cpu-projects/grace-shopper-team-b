@@ -43,6 +43,7 @@ class PaymentForm extends Component {
               className='input-group'
               value={this.state.name}
               onChange={ev => this.setState({name: ev.target.value})}/>
+          <br/>
           <label>Amount</label>
           <input
             type='text'
@@ -50,6 +51,7 @@ class PaymentForm extends Component {
             value={this.state.amount}
             onChange={ev => this.setState({amount: ev.target.value})}
           />
+          <br/>
           <label>CC Number -- Exp. Date -- CVC</label>
           <CardElement />
           <br/>
