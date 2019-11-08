@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import UserUpdateForm from '../forms/UserUpdateForm';
-import store, { setUsersThunk } from '../redux/store';
+import React from "react";
+import { connect } from "react-redux";
+import UserUpdateForm from "../forms/UserUpdateForm";
+import store, { setUsersThunk } from "../redux/store";
 
 // const _User = ({ users, auth, match }) => {
 //   store.dispatch(setUsersThunk());
@@ -49,13 +49,14 @@ class User extends React.Component {
     store.dispatch(setUsersThunk());
   }
   render() {
+    console.log("USER INFO ", this.props);
     const _user =
       this.props.users.find(_user => _user.id === this.props.match.params.id) ||
       {};
     return (
       <div>
         <ul>
-          <li className={'user'} key={_user.id}>
+          <li className={"user"} key={_user.id}>
             <h3>User Info</h3>
             Name: {_user.firstName} {_user.lastName}
             <br />
@@ -63,7 +64,7 @@ class User extends React.Component {
             Email: {_user.email}
             <br />
             <br />
-            <h3>Shipping Address</h3>Street Address: {_user.streetAddress}{' '}
+            <h3>Shipping Address</h3>Street Address: {_user.streetAddress}{" "}
             <br />
             City: {_user.city} <br />
             State: {_user.state} <br />
