@@ -28,7 +28,7 @@ const syncAndSeed = async () => {
       billCity: "Some City",
       billState: "California",
       billZipcode: "12345",
-      isAdmin: false
+      isAdmin: true
     },
     {
       firstName: "Rob",
@@ -43,7 +43,8 @@ const syncAndSeed = async () => {
       lastName: "Blackburn",
       username: "pb",
       email: "saber@gmail.com",
-      password: hash("SABER")
+      password: hash("SABER"),
+      isAdmin: false
     },
     {
       firstName: "Dominique",

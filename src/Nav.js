@@ -1,17 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { logout } from '../src/redux/store';
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../src/redux/store";
 
 const _Nav = ({ products, auth }) => {
   let userPath = `/users/${auth.id}`;
   let orderPath = `/orders/${auth.id}`;
   let cartPath = `/users/${auth.id}/cart`;
+  let adminPath = `/admin/${auth.id}`;
+  console.log("AUTH", auth);
 
   if (auth.id === undefined) {
-    userPath = '/login';
-    orderPath = '/login';
-    cartPath = '/login';
+    userPath = "/login";
+    orderPath = "/login";
+    cartPath = "/login";
+    adminPath = "/login";
+  }
+  if (auth.isAdmin === false) {
+    adminPath = "/";
   }
 
   return (
@@ -33,6 +39,9 @@ const _Nav = ({ products, auth }) => {
       </Link>
       <Link className="nav-link" to={cartPath}>
         Cart
+      </Link>
+      <Link className="nav-link" to={adminPath}>
+        Admin
       </Link>
     </nav>
   );

@@ -45,7 +45,13 @@ app.get("/users", (req, res, next) => {
 });
 
 app.get("/users/:id", (req, res, next) => {
-  User.findByPk(req.params.id, {
+  const activeUser = req.session.user;
+  if (!activeUser) {
+    return res.status(401).json({
+      message: "Auth Failed"
+    });
+  }
+  return User.findByPk(req.params.id, {
     attributes: ["username", "email", "firstName", "lastName", "id"]
   })
     .then(users => res.send(users))

@@ -48,7 +48,11 @@ class _App extends Component {
           <Route component={Nav} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/admin" component={Admin} />
+            <Route
+              exact
+              path="/admin/:id"
+              render={props => <Admin {...props} />}
+            />
             <Route exact path="/products" component={Products} />
             <Route
               exact
