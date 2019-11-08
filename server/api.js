@@ -86,6 +86,13 @@ app.put("/users/:id", (req, res, next) => {
     .catch(next);
 });
 
+app.delete("/users/:id", (req, res, next) => {
+  User.findByPk(req.params.id)
+    .then(_user => _user.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});
+
 app.get("/products", (req, res, next) => {
   Product.findAll()
     .then(products => res.send(products))

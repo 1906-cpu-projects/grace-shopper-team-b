@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteOrderThunk, deleteProductThunk } from "../redux/thunks";
+import {
+  deleteOrderThunk,
+  deleteProductThunk,
+  deleteUserThunk
+} from "../redux/thunks";
 import AdminProductUpdate from "../forms/AdminProductUpdate";
 
 // Display users
@@ -99,11 +103,46 @@ class Admin extends React.Component {
           ))}
         </ul>
         <br />
-        <h3>Users</h3>
+        <h3>Manage Users</h3>
         <ul>
           {this.props.users.map(user => (
             <li key={user.id}>
+              <h4>User</h4>
               Name: {user.firstName} {user.lastName}
+              <br />
+              Email: {user.email}
+              <br />
+              username: {user.username}
+              <br />
+              <br />
+              <h6>Shipping Address</h6>
+              Street: {user.streetAddress}
+              <br />
+              City: {user.city}
+              <br />
+              State: {user.state}
+              <br />
+              ZipCode: {user.zipcode}
+              <br />
+              <br />
+              <h6>Billing Address</h6>
+              Street: {user.billStreetAddress}
+              <br />
+              City: {user.billCity}
+              <br />
+              State: {user.billState}
+              <br />
+              ZipCode: {user.billZipcode}
+              <br /> <br />
+              <button
+                className="btn btn-outline-danger"
+                onClick={ev => this.props.deleteUser(user)}
+              >
+                Delete User
+              </button>
+              <br />
+              <br />
+              <br />
             </li>
           ))}
         </ul>
@@ -120,7 +159,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     deleteOrder: order => dispatch(deleteOrderThunk(order)),
-    deleteProduct: product => dispatch(deleteProductThunk(product))
+    deleteProduct: product => dispatch(deleteProductThunk(product)),
+    deleteUser: user => dispatch(deleteUserThunk(user))
   };
 };
 export default connect(

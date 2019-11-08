@@ -150,8 +150,12 @@ export const updateUserThunk = (
   };
 };
 
-export const deleteUserThunk = () => {
-  //Delete User Thunk
+export const deleteUserThunk = user => {
+  console.log("DELETE USER THUNK ", user);
+  return async dispatch => {
+    await axios.delete(`/api/users/${user.id}`);
+    dispatch(deleteUserAction(user));
+  };
 };
 
 ////////////////////////     ORDERS - THUNKS    //////////////////////////
