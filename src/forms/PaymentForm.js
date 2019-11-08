@@ -12,7 +12,8 @@ class PaymentForm extends Component {
       amount: this.props.total
     }
   }
- async handleSubmit(ev){
+
+  async handleSubmit(ev){
     ev.preventDefault();
     console.log('test');
     try{

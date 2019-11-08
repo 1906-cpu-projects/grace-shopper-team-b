@@ -46,16 +46,24 @@ class _Cart extends React.Component {
     this.setState({
       items: this.state.items.filter(item => item.id !== id)
     })
+    // location.relaod()
   }
+
   updateItem(item) {
     this.props.updateItem(item);
     this.setState({
       items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
     })
+
   }
   updateOrder(cartTotal){
-    console.log('total', cartTotal)
+    // console.log('total', cartTotal)
     this.props.updateOrder({...this.state, total: cartTotal })
+    // location.reload()
+  }
+  routeChange(){
+    let path=`/users/${auth.id}/checkout`;
+    this.props.history.push(path)
   }
   render() {
     const { id, items } = this.state;
@@ -112,7 +120,10 @@ class _Cart extends React.Component {
                       Price: ${item.product.price}
                       <br />
                       Quantity
-                      <select onChange={(ev)=> this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})}>
+                      <select onChange={(ev)=> {
+                        this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
+                        this.updateOrder(Number(totalPrice))
+                        }}>
                         {
                           inventoryNumber.map(number => (
                             <option key={number} value={number} selected={item.quantity=== number}>{number}</option>
@@ -143,10 +154,11 @@ class _Cart extends React.Component {
             className="btn btn-outline-success"
             onClick={()=> {
               this.updateOrder(Number(totalPrice))
-              location.reload()
+              // location.reload()
+              // this.routeChange
             }}
           >
-            {<Link to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
+            {<Link  to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
           </button>
         </div>
         {/* <Route path='/users/:id/payment' render={() => <Product total={totalPrice}/>} /> */}
