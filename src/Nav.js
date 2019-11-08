@@ -8,7 +8,6 @@ const _Nav = ({ products, auth }) => {
   let orderPath = `/orders/${auth.id}`;
   let cartPath = `/users/${auth.id}/cart`;
   let adminPath = `/admin/${auth.id}`;
-  console.log("AUTH", auth);
 
   if (auth.id === undefined) {
     userPath = "/login";

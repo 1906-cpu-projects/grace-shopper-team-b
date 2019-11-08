@@ -40,7 +40,13 @@ export const addOrderProduct = orderProduct => ({
   type: ADD_ORDERPRODUCT,
   orderProduct
 });
-export const addProductAction = product => ({ type: ADD_PRODUCT, product });
+export const addProductAction = product => (
+  console.log("ACTION ", product),
+  {
+    type: ADD_PRODUCT,
+    product: product
+  }
+);
 export const addUserAction = user => ({
   type: ADD_USER,
   user
@@ -53,7 +59,6 @@ export const updateOrderProduct = orderProduct => ({
   orderProduct
 });
 export const updateProductAction = product => {
-  console.log("ACTION ", product);
   return {
     type: UPDATE_PRODUCT,
     id: product.id,

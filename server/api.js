@@ -31,7 +31,6 @@ app.use(
 );
 
 app.get("/users", (req, res, next) => {
-  console.log("ACTIVE ", req.session.user);
   const activeUser = req.session.user;
   if (!activeUser) {
     return res.status(401).json({
@@ -103,6 +102,10 @@ app.get("/products/:id", (req, res, next) => {
   Product.findByPk(req.params.id)
     .then(products => res.send(products))
     .catch(next);
+});
+
+app.post("/products", (req, res, next) => {
+  Product.create(req.body).then(_product => res.status(201).send(_product));
 });
 
 app.put("/products/:id", (req, res, next) => {
