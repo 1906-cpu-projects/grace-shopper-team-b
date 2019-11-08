@@ -37,6 +37,7 @@ const productReducer = (state = [], action) => {
     // Add Product
   }
   if (action.type === UPDATE_PRODUCT) {
+    state = state.filter(product => product.id===action.product.id ? action.product : product)
     // Update product
   }
   if (action.type === DELETE_PRODUCT) {

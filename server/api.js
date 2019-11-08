@@ -88,6 +88,21 @@ app.get('/products', (req, res, next) => {
     .catch(next);
 });
 
+app.get('/products/:id', (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then(product => res.send(product))
+    .catch(next);
+});
+
+app.put('/product/:id', async (req, res, next) => {
+  Product.findByPk(req.body.id)
+    .then(product => product.update({
+        inventory: req.body.inventory
+      }))
+    .then(()=> res.sendStatus(201))
+    .catch(next);
+})
+
 app.get('/orders', (req, res, next) => {
   // const activeUser = req.session.user;
   // if (!activeUser) {

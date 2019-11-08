@@ -46,7 +46,6 @@ class _Cart extends React.Component {
     this.setState({
       items: this.state.items.filter(item => item.id !== id)
     })
-    // location.relaod()
   }
 
   updateItem(item) {
@@ -59,11 +58,6 @@ class _Cart extends React.Component {
   updateOrder(cartTotal){
     // console.log('total', cartTotal)
     this.props.updateOrder({...this.state, total: cartTotal })
-    // location.reload()
-  }
-  routeChange(){
-    let path=`/users/${auth.id}/checkout`;
-    this.props.history.push(path)
   }
   render() {
     const { id, items } = this.state;
@@ -130,6 +124,7 @@ class _Cart extends React.Component {
                           ))
                         }
                       </select>
+                      <br/>
                       {item.product.inventory < 6
                         ? `Only ${item.product.inventory} left in stock - order soon`
                         : ''}
@@ -154,8 +149,6 @@ class _Cart extends React.Component {
             className="btn btn-outline-success"
             onClick={()=> {
               this.updateOrder(Number(totalPrice))
-              // location.reload()
-              // this.routeChange
             }}
           >
             {<Link  to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
