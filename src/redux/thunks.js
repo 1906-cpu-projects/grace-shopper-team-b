@@ -60,6 +60,7 @@ export const addProductThunk = () => {
 };
 
 export const updateProductThunk = (product) => {
+  console.log('product', product)
   return async dispatch => {
     const updated = (await axios.put(`/api/products/${product.id}`, product)).data
     dispatch(updateProductAction(updated))

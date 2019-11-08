@@ -10,7 +10,7 @@ import {
   setUsersThunk
 } from '../redux/store';
 import axios from 'axios';
-import { updateOrderThunk } from '../redux/thunks';
+import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
 import { Link } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 
@@ -27,6 +27,7 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.updateOrder = this.updateOrder.bind(this);
+    this.updateInventory = this.updateInventory.bind(this);
   }
   async componentDidMount(props) {
     // const order = orders.find( _order => _order.userId=== auth.id && _order.status ==='cart')
@@ -53,7 +54,13 @@ class _Cart extends React.Component {
     this.setState({
       items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
     })
-
+  }
+  updateInventory(product, number){
+    // console.log('product', product)
+    console.log('number', number)
+    const updated = {...product, inventory: (product.inventory + number)}
+    console.log(updated)
+    this.props.updateInventory(updated)
   }
   updateOrder(cartTotal){
     // console.log('total', cartTotal)
@@ -129,7 +136,10 @@ class _Cart extends React.Component {
                         ? `Only ${item.product.inventory} left in stock - order soon`
                         : ''}
                       <br />
-                      <button className="btn btn-outline-success" onClick={() => this.deleteItem(item.id)}>
+                      <button className="btn btn-outline-success" onClick={() => {
+                        this.deleteItem(item.id)
+                        this.updateInventory(item.product, item.quantity)
+                      }}>
                         Delete Item{' '}
                       </button>
                     </div>
@@ -171,7 +181,8 @@ const mapDispatchToProps = dispatch => {
   return {
     deleteItem: id => dispatch(deleteOrderProductsThunk(id)),
     updateItem:  item => dispatch(updateOrderProductThunk(item)),
-    updateOrder: (order) => dispatch(updateOrderThunk(order))
+    updateOrder: (order) => dispatch(updateOrderThunk(order)),
+    updateInventory: product => dispatch(updateProductThunk(product))
   };
 };
 

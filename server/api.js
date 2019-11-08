@@ -94,7 +94,8 @@ app.get('/products/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.put('/product/:id', async (req, res, next) => {
+app.put('/products/:id', async (req, res, next) => {
+  console.log(req.body)
   Product.findByPk(req.body.id)
     .then(product => product.update({
         inventory: req.body.inventory
