@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { deleteOrderThunk, deleteProductThunk } from "../redux/thunks";
 import AdminProductUpdate from "../forms/AdminProductUpdate";
 
@@ -43,6 +42,9 @@ class Admin extends React.Component {
     ev.preventDefault();
   }
   render() {
+    console.log("USERS PROP", this.props);
+    const _users = this.props.users.map(user => user);
+    console.log("USERS ", _users);
     return (
       <div>
         <div className={"container-admin"}>
@@ -98,6 +100,13 @@ class Admin extends React.Component {
         </ul>
         <br />
         <h3>Users</h3>
+        <ul>
+          {this.props.users.map(user => (
+            <li key={user.id}>
+              Name: {user.firstName} {user.lastName}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }

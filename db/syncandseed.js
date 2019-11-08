@@ -44,6 +44,14 @@ const syncAndSeed = async () => {
       username: "pb",
       email: "saber@gmail.com",
       password: hash("SABER"),
+      streetAddress: "888 New Street ",
+      city: "New Town",
+      state: "California",
+      zipcode: "78787",
+      billStreetAddress: "888 New Street ",
+      billCity: "New Town",
+      billState: "California",
+      billZipcode: "78787",
       isAdmin: false
     },
     {

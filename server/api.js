@@ -31,17 +31,24 @@ app.use(
 );
 
 app.get("/users", (req, res, next) => {
+  console.log("ACTIVE ", req.session.user);
   const activeUser = req.session.user;
   if (!activeUser) {
     return res.status(401).json({
       message: "Auth Failed"
     });
   }
-  return User.findAll({
-    attributes: ["username", "email", "firstName", "lastName", "id"]
-  })
-    .then(users => res.send(users))
-    .catch(next);
+  if (req.session.user.isAdmin === true) {
+    return User.findAll()
+      .then(users => res.send(users))
+      .catch(next);
+  } else {
+    return User.findAll({
+      attributes: ["username", "email", "firstName", "lastName", "id"]
+    })
+      .then(users => res.send(users))
+      .catch(next);
+  }
 });
 
 app.get("/users/:id", (req, res, next) => {
@@ -51,9 +58,7 @@ app.get("/users/:id", (req, res, next) => {
       message: "Auth Failed"
     });
   }
-  return User.findByPk(req.params.id, {
-    attributes: ["username", "email", "firstName", "lastName", "id"]
-  })
+  return User.findByPk(req.params.id)
     .then(users => res.send(users))
     .catch(next);
 });
