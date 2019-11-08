@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { render } from 'react-dom';
 import { HashRouter, Switch, Link, Route, Redirect } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
+// import { ToastContainer, toast } from 'react-toastify';
 
 import Home from './pages/Home';
 import Products from './components/Products';
@@ -13,8 +14,6 @@ import Login from './pages/Login';
 import User from './components/User';
 import OrderHistory from './components/OrderHistory';
 
-
-
 import store, {
   attemptSessionLogin,
   setProductsThunk,
@@ -24,8 +23,7 @@ import store, {
   setOrderHistoryThunk
 } from './redux/store';
 import CheckOut from './components/CheckOut';
-
-
+import NewUser from './forms/NewUser';
 
 const root = document.querySelector('#root');
 
@@ -47,6 +45,7 @@ class _App extends Component {
     const { loggedIn } = this.props;
     return (
       <Provider store={store}>
+        {/* <ToastContainer /> */}
         <HashRouter>
           <Route component={Nav} />
           <Switch>
@@ -54,7 +53,8 @@ class _App extends Component {
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/products" component={Products} />
             <Route
-              exact path="/users/:id/cart"
+              exact
+              path="/users/:id/cart"
               render={props => <Cart {...props} />}
             />
             <Route exact path="/users/:id/checkout" component={CheckOut} />
@@ -64,6 +64,7 @@ class _App extends Component {
               path="/users/:id"
               render={props => <User {...props} />}
             />
+            <Route path="/signup" component={NewUser} exact />
             {loggedIn && <Redirect to="/" />}
             <Route path="/login" component={Login} exact />
           </Switch>

@@ -19,6 +19,10 @@ import {
   deleteOrderAction
 } from './actions';
 
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// toast.configure();
+
 ////////////////////////     REDUX - THUNKS    ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
@@ -77,10 +81,16 @@ export const setUsersThunk = () => {
   };
 };
 
-export const addNewUser = newUser => {
+export const addNewUser = (newUser, history) => {
   return async dispatch => {
     const user = (await axios.post('/api/users', newUser)).data;
-    dispatch(addUserAction(user));
+    console.log(user);
+    if (user.status === 400) {
+      toast.error(user.msg);
+    } else {
+      dispatch(addUserAction(user));
+      history.push('/');
+    }
   };
 };
 

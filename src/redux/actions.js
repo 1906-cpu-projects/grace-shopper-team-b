@@ -22,6 +22,9 @@ import {
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 export const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 export const setUsersAction = users => ({ type: SET_USERS, users });
+export const addUserAction = user => {
+  return { type: ADD_USER, user };
+};
 
 /////////////////////////ORDER ACTION CREATORS//////////////////////////
 //SET

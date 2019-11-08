@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import {
   attemptLogin,
   attemptSessionLogin,
+  addNewUser,
   logout,
   setProductsThunk,
   setUsersThunk,
@@ -18,12 +19,15 @@ import {
   deleteProductThunk,
   deleteUserThunk,
   deleteOrderThunk
-
 } from './thunks';
 
 import { reducer } from './reducer';
-import { setProductsAction, setUsersAction, setOrderHistoryAction } from './actions'
-
+import {
+  addUserAction,
+  setProductsAction,
+  setUsersAction,
+  setOrderHistoryAction
+} from './actions';
 
 //////////////////////////////////////////////////////////////////////////
 ////////////////////////  REDUX - CREATE STORE  ///////////////////////////
@@ -33,10 +37,16 @@ import { setProductsAction, setUsersAction, setOrderHistoryAction } from './acti
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
-export { setProductsAction, setUsersAction, setOrderHistoryAction };
+export {
+  addUserAction,
+  setProductsAction,
+  setUsersAction,
+  setOrderHistoryAction
+};
 export {
   attemptLogin,
   attemptSessionLogin,
+  addNewUser,
   logout,
   setProductsThunk,
   setOrdersThunk,

@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const SessionStore = require('express-session-sequelize')(session.Store);
 const path = require('path');
 const app = express();
 const db = require('../db/db');
@@ -8,6 +9,10 @@ const { Product, User, Order, OrderProducts } = models;
 const stripeLoader = require('stripe');
 const stripeSecretKey = require('../env');
 const hash = require('../src/utilities/hash');
+
+const sequelizeSessionStore = new SessionStore({
+  db: db.conn
+});
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -23,6 +28,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: SESS_SECRET,
+    store: sequelizeSessionStore,
     cookie: {
       maxAge: SESS_LIFETIME,
       sameSite: true
@@ -30,50 +36,7 @@ app.use(
   })
 );
 
-app.get('/users', (req, res, next) => {
-  const activeUser = req.session.user;
-  if (!activeUser) {
-    return res.status(401).json({
-      message: 'Auth Failed'
-    });
-  }
-  return User.findAll({
-    attributes: ['username', 'email', 'firstName', 'lastName', 'id']
-  })
-    .then(users => res.send(users))
-    .catch(next);
-});
-
-app.get('/users/:id', (req, res, next) => {
-  User.findByPk(req.params.id, {
-    attributes: ['username', 'email', 'firstName', 'lastName', 'id']
-  })
-    .then(users => res.send(users))
-    .catch(next);
-});
-
-app.put('/users/:id', (req, res, next) => {
-  User.findByPk(req.params.id)
-    .then(_user =>
-      _user.update({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        streetAddress: req.body.streetAddress,
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: req.body.zipcode,
-        billStreetAddress: req.body.billStreetAddress,
-        billCity: req.body.billCity,
-        billState: req.body.billState,
-        billZipcode: req.body.billZipcode
-      })
-    )
-    .then(() => res.sendStatus(201))
-    .catch(next);
-});
+app.use('/users', require('./routes/users'));
 
 app.get('/products', (req, res, next) => {
   Product.findAll()
@@ -259,31 +222,6 @@ app.get('/completedOrders/:id', (req, res, next) => {
 });
 
 //===================END COMPLETED ORDERS=====================
-
-// Signup
-
-app.post('/signup', (req, res, next) => {
-  if (!req.body.email || !req.body.password) {
-    console.log('Missing requested information.');
-    res.sendStatus(400);
-  } else {
-    const { email, password } = req.body;
-    User.create({
-      email,
-      password: hash(password, process.env.SALT)
-    })
-      .then(() => {
-        res.send({
-          message: 'User created successfully!'
-        });
-      })
-      .catch(ev => {
-        res.status(500).send({
-          message: ev.message
-        });
-      });
-  }
-});
 
 // Login
 

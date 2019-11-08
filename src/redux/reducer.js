@@ -79,7 +79,7 @@ const userReducer = (state = [], action) => {
     );
   }
   if (action.type === DELETE_USER) {
-    // Remove user
+    return state.filter(user => action.user !== user.id);
   }
   return state;
 };
