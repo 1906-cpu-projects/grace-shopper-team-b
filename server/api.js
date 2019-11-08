@@ -129,11 +129,14 @@ app.get('/orders/:id', (req, res, next) => {
 
 app.put('/orders/:id', (req, res, next) => {
   Order.findByPk(req.body.id)
-    .then(order =>
+    .then(order =>{
+      console.log('order in api', order)
+      console.log('req.body', req.body)
       order.update({
-        status: req.body.status,
         total: req.body.total
       })
+
+    }
     )
     .then(() => res.sendStatus(201))
     .catch(next);
@@ -331,7 +334,7 @@ const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
-    amount: amt * 100,
+    amount: (amt * 100),
     currency: 'usd',
     source: token,
     description: 'Statement Description'

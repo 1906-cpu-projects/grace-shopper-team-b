@@ -26,11 +26,13 @@ class _Cart extends React.Component {
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
-    // this.updateOrder = this.updateOrder.bind(this);
+    this.updateOrder = this.updateOrder.bind(this);
   }
   async componentDidMount(props) {
+    // const order = orders.find( _order => _order.userId=== auth.id && _order.status ==='cart')
+
     const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    // console.log('order', order)
+    console.log('order', order)
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -51,13 +53,14 @@ class _Cart extends React.Component {
       items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
     })
   }
-  updateOrder(total){
-
-    this.props.updateOrder({...this.state, total: total })
+  updateOrder(cartTotal){
+    console.log('total', cartTotal)
+    this.props.updateOrder({...this.state, total: cartTotal })
   }
   render() {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
+    console.log('orders in return', orders)
     if (!auth) {
       return (
         <div>
@@ -135,10 +138,12 @@ class _Cart extends React.Component {
             ): ${totalPrice}
           </h5>
           <br/>
+          Please refresh page for accruate portroyal of cart! Thank you!
           <button
             className="btn btn-outline-success"
             onClick={()=> {
-              this.updateOrder(totalPrice)
+              this.updateOrder(Number(totalPrice))
+              location.reload()
             }}
           >
             {<Link to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}

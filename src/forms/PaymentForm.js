@@ -27,7 +27,6 @@ class PaymentForm extends Component {
   }
 
   render() {
-
     return (
       <div>
         <h2>Payment</h2>

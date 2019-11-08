@@ -14,7 +14,8 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_ORDER,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  SET_ORDER
 } from './constants';
 
 // ACTION CREATORS
@@ -34,6 +35,8 @@ export const setOrderHistoryAction = orderHistory => ({
   type: SET_ORDER_HISTORY,
   orderHistory
 });
+
+export const setOrder = order => ({ type: SET_ORDER, order});
 
 //ADD
 export const addOrderProduct = orderProduct => ({

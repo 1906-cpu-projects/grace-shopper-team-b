@@ -171,11 +171,11 @@ const syncAndSeed = async () => {
   const orders = [
     { userId: dominiqueUser.id, total: 198.97, status: 'completed' },
     { userId: dominiqueUser.id, total: 99.97, status: 'completed' },
-    { userId: dominiqueUser.id, total: 279.94 },
+    { userId: dominiqueUser.id  },
     { userId: dominiqueUser.id, total: 59.97, status: 'completed' },
     { userId: dominiqueUser.id, total: 1059.92, status: 'completed' },
     { userId: robUser.id, total: 499.99, status: 'completed' },
-    { userId: robUser.id, total: 398.98 },
+    { userId: robUser.id },
     { userId: robUser.id, total: 288.99, status: 'completed' },
     { userId: robUser.id, total: 649.93, status: 'completed' },
     { userId: robUser.id, total: 299.95, status: 'completed' }
