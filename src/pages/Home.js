@@ -1,12 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-import { logout, addNewUserThunk } from '../redux/store';
-import NewUser from '../forms/NewUser';
-import Login from '../pages/Login';
-=======
 import { logout } from '../redux/store';
->>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
 
 const initialState = {
   email: '',
@@ -17,10 +11,6 @@ class _Home extends React.Component {
   constructor() {
     super();
     this.state = initialState;
-<<<<<<< HEAD
-    // this.routeChange = this.routeChange.bind(this);
-=======
->>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   }
 
   render() {

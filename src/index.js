@@ -12,10 +12,7 @@ import Admin from './components/Admin';
 import Login from './pages/Login';
 import User from './components/User';
 import OrderHistory from './components/OrderHistory';
-<<<<<<< HEAD
-=======
 import NewUser from './forms/NewUser';
->>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
 
 import store, {
   attemptSessionLogin,

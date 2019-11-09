@@ -94,29 +94,10 @@ export const setUsersThunk = () => {
   };
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-export const addNewUser = (newUser, history) => {
-  return async dispatch => {
-    const user = (await axios.post('/api/users', newUser)).data;
-    console.log(user);
-    if (user.status === 400) {
-      toast.error(user.msg);
-    } else {
-      dispatch(addUserAction(user));
-      history.push('/');
-    }
-=======
-=======
->>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
 export const addNewUserThunk = newUser => {
   return async dispatch => {
     const user = (await axios.post('/api/users', newUser)).data;
     dispatch(addUserAction(user));
-<<<<<<< HEAD
->>>>>>> 7ced249fb33ea7b78a233f3c41fe1f479a235430
-=======
->>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   };
 };
 
