@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import {
   deleteOrderProductsThunk,
   updateOrderProductThunk,
-  setOrderProductsThunk,
-  setOrdersThunk
+  setOrdersThunk,
 
 } from '../redux/store';
 import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
