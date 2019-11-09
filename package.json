@@ -4,7 +4,7 @@
   "description": "The Acme Store",
   "main": "index.js",
   "scripts": {
-    "test:dev": "mocha ./src/tests/tests-paul.js --watch",
+    "test:dev": "mocha ./src/tests/test-spec.js --watch",
     "start:dev": "npm run webpack:dev & nodemon ./server/server.js --ignore assets/",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack -- --watch --mode=development",
@@ -35,7 +35,7 @@
     "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^5.1.0",
     "sequelize": "^5.21.2",
-    "stripe": "^7.12.0"
+    "stripe": "^7.13.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -54,6 +54,7 @@
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "supertest": "^4.0.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   }

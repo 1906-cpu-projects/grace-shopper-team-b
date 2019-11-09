@@ -6,15 +6,12 @@ const db = require("../db/db");
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 
-const dotenv = require('dotenv')
-
+const dotenv = require("dotenv")
 dotenv.config()
-
 const stripeSecretKey = process.env.stripeSecretKey;
-const stripeLoader = require('stripe');
+const stripeLoader = require("stripe");
 
-const hash = require('../src/utilities/hash');
-
+const hash = require("../src/utilities/hash");
 
 // Setups for express-sessions
 const TWO_HOURS = 1000 * 60 * 60 * 2;
@@ -399,7 +396,6 @@ app.delete("/sessions", (req, res, next) => {
 });
 
 /// Stripe ////
-// const stripe = "hgdggd";
 const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
