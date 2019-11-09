@@ -1,6 +1,8 @@
 const { expect } = require("chai");
 const db = require("../../db/db");
 
+//Supertest for routes and api testing
+//const app = require('supertest')(require('../../server/server.js'))
 
 
 describe("ACME Store", () => {
@@ -34,5 +36,27 @@ describe("ACME Store", () => {
       expect((((seed.users.jamesUser.password.length)))).to.be.greaterThan(30)
       expect((((seed.users.jamesUser.password.length)))).to.be.greaterThan(30)
     });
+
+
   });
 });
+
+//Started testing API and routes
+
+/*
+describe('API tests', () => {
+  //let seed;
+  //beforeEach(async () => (seed = await db.syncAndSeed()));
+  describe("Testing API and routes", () => {
+    it('tests products', () => {
+      return app.get('/api/products')
+      .expect(200)
+      .then (response => {
+        console.log(response)
+      })
+    })
+  })
+
+})
+
+*/
