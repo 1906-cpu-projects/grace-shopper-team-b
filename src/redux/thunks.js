@@ -168,7 +168,6 @@ export const setOrdersThunk = () => {
 };
 
 export const updateOrderThunk = order => {
-  console.log('order in thunks', order)
   return async dispatch => {
     await axios.put(`/api/orders/${order.id}`,{
       id: order.id,
@@ -186,13 +185,6 @@ export const deleteOrderThunk = order => {
   };
 };
 
-// export const setOrderThunk = () => {
-//   return dispatch => {
-//     const order = (await axios.get(`/api/orders/${order.id}`)).data
-//     dispatch(set)
-//   }
-// }
-
 ////////////////////////     ORDERED PRODUCTS - THUNKS    //////////////////////////
 export const setOrderProductsThunk = () => {
   return async dispatch => {
@@ -209,7 +201,7 @@ export const addOrderProductThunk = payload => {
 };
 
 export const updateOrderProductThunk = cartItem => {
-  console.log("cart item in THunKS", cartItem);
+  // console.log("cart item in THunKS", cartItem);
   return async dispatch => {
     await axios.put(`/api/orderProducts/${cartItem.id}`, {
       id: cartItem.id,

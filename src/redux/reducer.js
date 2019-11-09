@@ -112,7 +112,6 @@ const orderReducer = (state = [], action) => {
   if (action.type === DELETE_ORDER) {
     return state.filter(order => order.id !== action.order.id);
   }
-  // console.log('order in state on reducer', state)
   return state;
 };
 

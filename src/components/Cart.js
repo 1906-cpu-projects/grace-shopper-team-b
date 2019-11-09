@@ -1,18 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
 import {
   deleteOrderProductsThunk,
   updateOrderProductThunk,
   setOrderProductsThunk,
-  setOrdersThunk,
-  setProductsThunk,
-  setUsersThunk
+
 } from '../redux/store';
 import axios from 'axios';
 import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
 import { Link } from 'react-router-dom';
-import StripeCheckout from 'react-stripe-checkout';
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -54,12 +50,10 @@ class _Cart extends React.Component {
     window.location.hash = `#/users/${this.props.match.params.id}/checkout`
   }
   updateItem(item) {
-    console.log('updateItem', item)
     this.props.updateItem(item);
     this.setState({
       items: this.state.items.filter(thing => thing.id=== item.id ? item: thing)
     })
-    console.log('state', this.state)
   }
   updateInventoryFromQuantity(item, number){
     let updated ={};
@@ -103,8 +97,7 @@ class _Cart extends React.Component {
       .toFixed(2);
     return (
       <div>
-        <h1>{auth.firstName}'s Shopping Cart</h1>
-        <br />
+        <h2>{auth.firstName}'s Shopping Cart</h2>
             Order # {id} <br />
             Order Status: In Progress...
           <div id="cartProducts">
@@ -158,13 +151,12 @@ class _Cart extends React.Component {
             Total ({itemsCount(totalItems)}
             ): ${totalPrice}
           </h5>
-          <br/>
+
           Please refresh page for accruate portroyal of cart! Thank you!
           <button
             className="btn btn-outline-success"
             onClick={()=> {
               this.updateOrder(Number(totalPrice))
-              console.log('orders after update', orders)
               this.changePage()
             }}
           >
