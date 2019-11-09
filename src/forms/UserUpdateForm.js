@@ -1,47 +1,46 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { updateUserThunk } from '../store';
-import axios from 'axios';
+import React from "react";
+import { connect } from "react-redux";
+import { updateUserThunk } from "../redux/store";
 
 class _UpdateUserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      username: '',
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      streetAddress: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      billStreetAddress: '',
-      billCity: '',
-      billState: '',
-      billZipcode: ''
+      id: "",
+      username: "",
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      streetAddress: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      billStreetAddress: "",
+      billCity: "",
+      billState: "",
+      billZipcode: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  async componentDidMount(props) {
-    const user = (await axios.get(`api/users/${this.props.match}`)).data;
+  componentDidMount() {
+    const user = this.props.auth;
     this.setState({
-      id: user[0].id,
-      username: user[0].username,
-      email: user[0].email,
-      password: user[0].password,
-      firstName: user[0].firstName,
-      lastName: user[0].lastName,
-      streetAddress: user[0].streetAddress,
-      city: user[0].city,
-      state: user[0].state,
-      zipcode: user[0].zipcode,
-      billStreetAddress: user[0].billStreetAddress,
-      billCity: user[0].billCity,
-      billState: user[0].billState,
-      billZipcode: user[0].billZipcode
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      password: "",
+      firstName: user.firstName,
+      lastName: user.lastName,
+      streetAddress: user.streetAddress,
+      city: user.city,
+      state: user.state,
+      zipcode: user.zipcode,
+      billStreetAddress: user.billStreetAddress,
+      billCity: user.billCity,
+      billState: user.billState,
+      billZipcode: user.billZipcode
     });
   }
   handleChange(ev) {
@@ -84,7 +83,7 @@ class _UpdateUserForm extends React.Component {
     this.setState({
       username: username,
       email: email,
-      password: password,
+      password: "",
       firstName: firstName,
       lastName: lastName,
       streetAddress: streetAddress,
@@ -98,14 +97,13 @@ class _UpdateUserForm extends React.Component {
     });
   }
   render() {
-    // console.log('PROPS ', this.props);
     return (
-      <div className={'container'}>
+      <div className={"container"}>
         <h3>Update Your Information</h3>
         {
           <form method="post" onSubmit={this.handleSubmit}>
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="username"
                 className="form-control"
@@ -118,7 +116,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="email"
                 className="form-control"
@@ -131,7 +129,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 type="password"
                 name="password"
@@ -145,7 +143,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="firstName"
                 className="form-control"
@@ -158,7 +156,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="lastName"
                 className="form-control"
@@ -173,7 +171,7 @@ class _UpdateUserForm extends React.Component {
             <br />
             <h4>Shipping Address:</h4>
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="streetAddress"
                 className="form-control"
@@ -186,7 +184,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="city"
                 className="form-control"
@@ -199,7 +197,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="state"
                 className="form-control"
@@ -212,7 +210,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="zipcode"
                 className="form-control"
@@ -228,7 +226,7 @@ class _UpdateUserForm extends React.Component {
             <br />
             <h4>Billing Address:</h4>
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billStreetAddress"
                 className="form-control"
@@ -241,7 +239,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billCity"
                 className="form-control"
@@ -254,7 +252,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billState"
                 className="form-control"
@@ -267,7 +265,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billZipcode"
                 className="form-control"

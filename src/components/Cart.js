@@ -3,47 +3,88 @@ import { connect } from 'react-redux';
 import {
   deleteOrderProductsThunk,
   updateOrderProductThunk,
-  setOrderProductsThunk,
   setOrdersThunk,
-  setProductsThunk,
-  setUsersThunk
-} from '../store';
+
+} from '../redux/store';
+import axios from 'axios';
+import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
+import { Link } from 'react-router-dom';
 
 class _Cart extends React.Component {
   constructor(props) {
     super();
+    this.state = {
+      id: '',
+      userId: '',
+      status:'',
+      total:'',
+      items:[]
+    };
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
+    this.updateOrder = this.updateOrder.bind(this);
+    this.updateInventoryFromDelete = this.updateInventoryFromDelete.bind(this);
+    this.updateInventoryFromQuantity = this.updateInventoryFromQuantity.bind(this);
+    this.changePage = this.changePage.bind(this)
   }
-  // async componentDidMount() {
-  //   await this.props.getUsers()
-  //   await this.props.getProducts()
-  //   await this.props.getOrders()
-  //   await this.props.getOrderProdcuts()
-  // }
-  async deleteItem(id) {
-    await this.props.deleteItem(id);
+  async componentDidMount(props) {
+    await this.props.setOrders()
+    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
+    // const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
+    // console.log('order in componentDidmount', order)
+    this.setState({
+      id: order.id,
+      userId: order.userId,
+      status: order.status,
+      total: order.total,
+      items: order.items
+    });
   }
-  async updateItem(item) {
-    await this.props.updateItem(item);
+  deleteItem(id) {
+    this.props.deleteItem(id);
+    this.setState({
+      items: this.state.items.filter(item => item.id !== id)
+    })
+  }
+  changePage(){
+    window.location.hash = `#/users/${this.props.match.params.id}/checkout`
+  }
+  updateItem(item) {
+    this.props.updateItem(item);
+    this.setState({
+      items: this.state.items.filter(thing => thing.id=== item.id ? item: thing)
+    })
+  }
+  updateInventoryFromQuantity(item, number){
+    let updated ={};
+    if(number > item.quantity){
+      updated = {...item.product, inventory: item.product.inventory -(number-item.quantity)}
+    }
+    if(number < item.quantity){
+      updated = {...item.product, inventory: item.product.inventory + (item.quantity -number )}
+    }
+    this.props.updateInventory(updated)
+
+  }
+  updateInventoryFromDelete(product, number){
+    const updated = {...product, inventory: (product.inventory + number)}
+    this.props.updateInventory(updated)
+  }
+  updateOrder(cartTotal){
+    this.props.updateOrder({...this.state, total: cartTotal })
   }
   render() {
-    const { orders, products, orderProducts, auth, match } = this.props;
-    const cart = orders.find(
-      order => order.userId === match.params.id && order.status === 'cart'
-    );
-    if (cart === undefined) {
-      return 'You have no cart at this time.';
+    const { id, items } = this.state;
+    const { auth, orders } = this.props;
+    if (id === undefined) {
+      return (
+        <div>
+          You have gone through the chekout process for your previous order and have no active cart at this time. <br/>
+          If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
+        </div>);
     }
-    // console.log('cart', cart)
-    // console.log('match', match)
-    // console.log('auth', auth)
-    const cartItems = orderProducts.filter(item => item.orderId === cart.id);
-    const totalItems = cartItems.reduce(
-      (sum, item) => sum + Number(item.quantity),
-      0
-    );
-    const items = total => {
+    const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
+    const itemsCount = total => {
       if (total === 1) {
         return '1 item';
       }
@@ -51,51 +92,53 @@ class _Cart extends React.Component {
         return `${total} items`;
       } else return '0 items';
     };
-    const total = cartItems
+    const totalPrice = items
       .reduce((sum, item) => sum + Number(item.subTotal), 0)
       .toFixed(2);
-    return cart === 'undefined' ? (
-      'Cart is unavailable at this time.'
-    ) : (
+    return (
       <div>
-        <h1>{auth.firstName}'s Shopping Cart</h1>
-        <br />
-        <div id="cart">
-          <div>
-            Order # {cart.id} <br />
+        <h2>{auth.firstName}'s Shopping Cart</h2>
+            Order # {id} <br />
             Order Status: In Progress...
-          </div>
           <div id="cartProducts">
-            {orderProducts
-              .filter(item => item.orderId === cart.id)
-              .map(item => {
-                const product = products.find(
-                  product => product.id === item.productId
-                );
+            {items.map(item => {
+              const inventoryNumber = [];
+              for(let i=1; i<=item.product.inventory+item.quantity; i++){
+                inventoryNumber.push(i)
+              }
                 return (
-                  <div key={item.id} id="cartProduct">
+                  <div key={item.id} id="orderProducts">
                     <div>
-                      <img height="100" width="100" src={product.imageURL} />
+                      <img height="150" width="150" src={item.product.imageURL} />
                     </div>
                     <div>
-                      Product Name: {product.productName} <br />
-                      Description: {product.description} <br />
-                      Price: ${product.price}
+                      Product Name: {item.product.productName} <br />
+                      Description: {item.product.description} <br />
+                      Price: ${item.product.price}
                       <br />
-                      Quantity {item.quantity}
-                      <br />
-                      Change Quantity{' '}
-                      <select>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
+                      Quantity
+                      <select onChange={(ev)=> {
+                        this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
+                        this.updateInventoryFromQuantity(item, ev.target.value)
+
+                        location.reload()
+                        }}>
+                        {
+                          inventoryNumber.map(number => (
+                            <option key={number} value={number} selected={item.quantity=== number}>{number}</option>
+                          ))
+                        }
                       </select>
-                      <br />
-                      {product.inventory < 6
-                        ? `Only ${product.inventory} left in stock - order soon`
+                      <br/>
+                      {item.product.inventory < 6
+                        ? `Only ${item.product.inventory} left in stock - order soon`
                         : ''}
                       <br />
-                      <button onClick={() => this.deleteItem(item.id)}>
+                      <button className="btn btn-outline-success" onClick={() => {
+                        this.deleteItem(item.id)
+                        this.updateInventoryFromDelete(item.product, item.quantity)
+                        this.updateOrder((Number(totalPrice)))
+                      }}>
                         Delete Item{' '}
                       </button>
                     </div>
@@ -103,39 +146,42 @@ class _Cart extends React.Component {
                 );
               })}
           </div>
-        </div>
         <div id="total">
-          <div>
-            Total ({items(totalItems)}
-            ): ${total}
-          </div>
-          <button className="btn btn-outline-success">
-            Proceed to Checkout
+          <h5>
+            Total ({itemsCount(totalItems)}
+            ): ${totalPrice}
+          </h5>
+
+          Please refresh page for accruate portroyal of cart! Thank you!
+          <button
+            className="btn btn-outline-success"
+            onClick={()=> {
+              this.updateOrder(Number(totalPrice))
+              this.changePage()
+            }}
+          >
+            Proceed to Payment
           </button>
         </div>
       </div>
-    );
+      );
   }
 }
 
-const mapStateToProps = ({ orders, users, products, orderProducts, auth }) => {
+const mapStateToProps = (state) => {
   return {
-    orders,
-    users,
-    products,
-    orderProducts,
-    auth
+    auth: state.auth,
+    orders: state.orders
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUsers: async () => dispatch(setUsersThunk()),
-    getProducts: async () => dispatch(setProductsThunk()),
-    getOrders: async () => dispatch(setOrdersThunk()),
-    getOrderProdcuts: async () => dispatch(setOrderProductsThunk()),
-    deleteItem: async id => dispatch(deleteOrderProductsThunk(id)),
-    updateItem: async item => dispatch(updateOrderProductThunk(item))
+    setOrders: () => dispatch(setOrdersThunk()),
+    deleteItem: id => dispatch(deleteOrderProductsThunk(id)),
+    updateItem:  item => dispatch(updateOrderProductThunk(item)),
+    updateOrder: (order) => dispatch(updateOrderThunk(order)),
+    updateInventory: product => dispatch(updateProductThunk(product))
   };
 };
 

@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333;
+  height: 4rem;
+  flex: 1;
+  color: white;
+  padding: 0 4rem;
+  margin-bottom: 1rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.admin-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  height: 4rem;
+  flex: 1;
+  color: blue;
+  padding: 0 4rem;
+  margin: 0 0 1rem 0;
+}
+
+.admin-nav a {
+  color: blue;
+  text-decoration: none;
+}
+
+.admin-users {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.admin-users > li {
+  margin: 0 2rem;
+}
+
+li {
+  list-style: none;
+}
+.low-inventory {
+  color: red;
+}
+
+.user {
+  width: 100%;
+  margin: 2rem 7.3rem;
+  text-align: left;
+  line-height: 1.3rem;
+  padding: 1rem;
+  border-radius: 0.3rem;
+}
+
+.admin {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.admin > li {
+  display: flex;
+  flex: 1 1 25%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 33%;
+  height: 50%;
+}
+#products {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#products > div {
+  border: solid black 1px;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5%;
+  width: (100% / 3 - 2);
+}
+
+#cartProducts {
+  display: flex;
+  flex-direction: column;
+}
+
+#cartProducts > div {
+  padding: 1rem;
+}
+
+#orderProducts {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+}
+#orderProducts > div {
+  padding: 1rem;
+}
+
+#total {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.pastorder {
+  border: black solid 2px;
+  margin: 1rem;
+  padding: 1rem;
+}
+/* Modal */
+.modal {
+  padding: 2rem;
+  width: 80%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.modal > div {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.modal > div > label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.modal > div > input,
+select {
+  flex: 1;
+}
+
+button.delete {
+  background-color: tomato;
+  color: white;
+  border-color: black;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+.modalBody {
+  width: 300px;
+  height: 450px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  background-color: #eee;
+  padding: 10px 20px 40px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalCloseButton {
+  margin-bottom: 15px;
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  align-self: flex-end;
+}

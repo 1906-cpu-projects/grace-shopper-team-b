@@ -4,46 +4,73 @@ import {
   setUsersThunk,
   setProductsThunk,
   setOrdersThunk,
-  setOrderProductsThunk
-} from '../store';
+  setOrderProductsThunk,
+  setOrderHistoryThunk
+} from '../redux/store';
 
 class _OrderHistory extends React.Component {
   constructor(props) {
     super();
   }
-  async componentDidMount() {
-    await this.props.getUsers();
-    await this.props.getProducts();
-    await this.props.getOrders();
-    await this.props.getOrderProdcuts();
-  }
+
   render() {
-    const { orders, users, products, orderProducts, auth } = this.props;
-    // console.log('auth', auth)
-    // console.log('users', users)
-    // console.log('orders',orders)
-    const ordersHistory = orders.filter(
+    const {
+      orders,
+      users,
+      products,
+      orderProducts,
+      auth,
+      orderHistory,
+      match
+    } = this.props;
+
+
+
+    const userOrders = orderHistory.filter(
       order => order.userId === auth.id && order.status === 'completed'
     );
-    // console.log('cart', cart)
-    // console.log('products', products)
-    // console.log('orderProducts', orderProducts)
 
-    // console.log("ORDERS HISTORY====", ordersHistory)
+
 
     return (
       <div>
-        <h1>{auth.firstName}'s Previous Orders</h1>
+        <h1>{auth.firstName}'s Previous Orders ({userOrders.length})</h1>
         <br />
         <div id="order-history">
-          {ordersHistory.map(order => (
-            <div key={order.id}>
+          {userOrders.map(order => (
+            <div key={order.id} className="pastorder">
               <br />
-              Order # {order.id} <br />
-              Order Status: {order.status}
+              <h5>Order Number: #{order.id}</h5>
               <br />
-              Order Total: ${order.total} <br />
+              <h5>Order Total: ${order.total} </h5>
               <br />
+              <strong>Order Status:</strong> {order.status}
+              <br />
+              <br />
+
+               <strong>Products Ordered:</strong>
+              {order.items.map(item => {
+                // console.log("ITEM IN MAP====", item)
+                  const product = products.find(
+                    product => product.id === item.productId
+                  );
+                  // console.log("PRODUCT IN MAP====", product)
+                    return(
+                      <div id='orderProducts'>
+                        <div>
+                          <img height="100" width="100" src={product.imageURL} />
+                        </div>
+                        <div>
+                          Product Name: {product.productName}<br />
+                          Individual Price: ${item.price}<br/>
+                          Quantity Ordered: {item.quantity}<br/>
+                          Price of all Units: ${item.subTotal}
+                        </div>
+
+                      </div>
+                    )
+                  } )}
+
             </div>
           ))}
         </div>
@@ -52,34 +79,37 @@ class _OrderHistory extends React.Component {
   }
 }
 
-const mapPropsToDispatch = ({
+const mapStateToProps = ({
   orders,
   users,
   products,
   orderProducts,
-  auth
+  auth,
+  orderHistory
 }) => {
   return {
     orders,
     users,
     products,
     orderProducts,
-    auth
+    auth,
+    orderHistory
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     getUsers: async () => dispatch(setUsersThunk()),
     getProducts: async () => dispatch(setProductsThunk()),
     getOrders: async () => dispatch(setOrdersThunk()),
-    getOrderProdcuts: async () => dispatch(setOrderProductsThunk())
+    getOrderProdcuts: async () => dispatch(setOrderProductsThunk()),
+    getOrderHistory: async () => dispatch(setOrderHistoryThunk())
   };
 };
 
 const OrderHistory = connect(
-  mapPropsToDispatch,
-  dispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(_OrderHistory);
 
 export default OrderHistory;

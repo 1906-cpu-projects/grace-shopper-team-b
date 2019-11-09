@@ -1,20 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../store';
+import { logout } from '../redux/store';
 
-const _Home = ({ auth, logout }) => (
-  <div className="container">
-    <h2>Home</h2>
-    <h4>Welcome {auth.firstName}!</h4>
-    <button
-      type="button"
-      className="btn btn-outline-secondary"
-      onClick={logout}
-    >
-      Logout
-    </button>
-  </div>
-);
+const initialState = {
+  email: '',
+  password: ''
+};
+
+class _Home extends React.Component {
+  constructor() {
+    super();
+    this.state = initialState;
+  }
+
+  render() {
+    const { auth, logout } = this.props;
+
+    return (
+      <div className="container">
+        <h2>Home</h2>
+        <h4>Welcome {auth.id ? auth.firstName : 'Guest'}!</h4>
+        {auth.id ? (
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={logout}
+          >
+            Logout
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+}
 
 const Home = connect(
   ({ auth }) => {
