@@ -1,10 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteUserThunk } from "../redux/thunks";
+import store, { deleteUserThunk, setUsersThunk } from "../redux/thunks";
 
-class Admin extends React.Component {
+class AdminUsers extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const _users = this.props.users.map(user => user);
+    const user = this.props.auth;
+    console.log("PROPS.AUTH ", user);
     return (
       <div>
         <h3>Manage Users</h3>
@@ -56,7 +61,8 @@ class Admin extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  users: state.users
+  users: state.users,
+  auth: state.auth
 });
 const mapDispatchToProps = dispatch => {
   return {
@@ -66,4 +72,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Admin);
+)(AdminUsers);

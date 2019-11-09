@@ -1,32 +1,31 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { updateUserThunk } from '../redux/store';
+import React from "react";
+import { connect } from "react-redux";
+import { updateUserThunk } from "../redux/store";
 
 class _UpdateUserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      username: '',
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      streetAddress: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      billStreetAddress: '',
-      billCity: '',
-      billState: '',
-      billZipcode: ''
+      id: "",
+      username: "",
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      streetAddress: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      billStreetAddress: "",
+      billCity: "",
+      billState: "",
+      billZipcode: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     const user = this.props.auth;
-    console.log(user);
     this.setState({
       id: user.id,
       username: user.username,
@@ -99,12 +98,12 @@ class _UpdateUserForm extends React.Component {
   }
   render() {
     return (
-      <div className={'container'}>
+      <div className={"container"}>
         <h3>Update Your Information</h3>
         {
           <form method="post" onSubmit={this.handleSubmit}>
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="username"
                 className="form-control"
@@ -117,7 +116,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="email"
                 className="form-control"
@@ -130,7 +129,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 type="password"
                 name="password"
@@ -144,7 +143,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="firstName"
                 className="form-control"
@@ -157,7 +156,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="lastName"
                 className="form-control"
@@ -172,7 +171,7 @@ class _UpdateUserForm extends React.Component {
             <br />
             <h4>Shipping Address:</h4>
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="streetAddress"
                 className="form-control"
@@ -185,7 +184,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="city"
                 className="form-control"
@@ -198,7 +197,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="state"
                 className="form-control"
@@ -211,7 +210,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="zipcode"
                 className="form-control"
@@ -227,7 +226,7 @@ class _UpdateUserForm extends React.Component {
             <br />
             <h4>Billing Address:</h4>
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billStreetAddress"
                 className="form-control"
@@ -240,7 +239,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billCity"
                 className="form-control"
@@ -253,7 +252,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billState"
                 className="form-control"
@@ -266,7 +265,7 @@ class _UpdateUserForm extends React.Component {
             </div>
 
             <div className="form-group">
-              {' '}
+              {" "}
               <input
                 name="billZipcode"
                 className="form-control"

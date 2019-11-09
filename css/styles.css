@@ -57,6 +57,9 @@ nav a {
 li {
   list-style: none;
 }
+.low-inventory {
+  color: red;
+}
 
 .user {
   width: 100%;

@@ -50,6 +50,18 @@ app.get("/users", (req, res, next) => {
   }
 });
 
+app.get("/admin/users", (req, res, next) => {
+  const activeUser = req.session.user;
+  if (!activeUser || req.session.user.isAdmin === false) {
+    return res.status(401).json({
+      message: "Auth Failed"
+    });
+  }
+  return User.findAll()
+    .then(users => res.send(users))
+    .catch(next);
+});
+
 app.get("/users/:id", (req, res, next) => {
   const activeUser = req.session.user;
   if (!activeUser) {

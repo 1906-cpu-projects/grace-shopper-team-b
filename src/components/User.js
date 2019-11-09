@@ -7,7 +7,7 @@ class User extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
+  async componentDidMount() {
     store.dispatch(setUsersThunk());
   }
   render() {
@@ -48,12 +48,3 @@ class User extends React.Component {
 
 const mapStateToProps = state => ({ users: state.users, auth: state.auth });
 export default connect(mapStateToProps)(User);
-
-// const User = connect(({ users, auth }) => {
-//   return {
-//     users,
-//     auth
-//   };
-// })(_User);
-
-// export default User;

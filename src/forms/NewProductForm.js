@@ -16,7 +16,6 @@ class NewProductForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(ev) {
-    console.log(ev.target.value);
     this.setState({
       [ev.target.name]: ev.target.value
     });
@@ -24,7 +23,6 @@ class NewProductForm extends React.Component {
   handleSubmit(ev) {
     ev.preventDefault();
     const product = this.state;
-    console.log("PRODUCT ", product);
     this.props.addProduct(product);
     this.setState({
       productName: "",

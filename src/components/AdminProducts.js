@@ -37,6 +37,18 @@ class Admin extends React.Component {
     return (
       <div>
         <h3>Manage Products</h3>
+        <h5 className="low-inventory">Low Inventory on:</h5>
+        <ul className="low-inventory">
+          {this.props.products.map(_product => {
+            if (_product.inventory < 3) {
+              return (
+                <li key={_product.id}>
+                  {_product.productName}: {_product.inventory} left.
+                </li>
+              );
+            }
+          })}
+        </ul>
         <ul className={"adminProducts"}>
           {this.props.products.map(product => (
             <li key={product.id}>
