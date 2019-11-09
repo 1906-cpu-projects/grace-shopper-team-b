@@ -27,13 +27,14 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.updateOrder = this.updateOrder.bind(this);
-    this.updateInventory = this.updateInventory.bind(this);
+    this.updateInventoryFromDelete = this.updateInventoryFromDelete.bind(this);
+    this.updateInventoryFromQuantity = this.updateInventoryFromQuantity.bind(this);
   }
   async componentDidMount(props) {
     await this.props.setOrders()
     const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
     // const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    console.log('order in componentDidmount', order)
+    // console.log('order in componentDidmount', order)
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -50,12 +51,27 @@ class _Cart extends React.Component {
   }
 
   updateItem(item) {
+    console.log(item)
     this.props.updateItem(item);
     this.setState({
       items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
     })
   }
-  updateInventory(product, number){
+  updateInventoryFromQuantity(item, number){
+    console.log( 'item',item)
+    console.log('number in update', number)
+    let updated ={};
+    if(number > item.quantity){
+      updated = {...item.product, inventory: item.product.inventory -(number-item.quantity)}
+    }
+    if(number < item.quantity){
+      updated = {...item.product, inventory: item.product.inventory + (item.quantity -number )}
+    }
+    console.log('new updated', updated)
+    this.props.updateInventory(updated)
+
+  }
+  updateInventoryFromDelete(product, number){
     // console.log('product', product)
     const updated = {...product, inventory: (product.inventory + number)}
     // console.log(updated)
@@ -96,7 +112,7 @@ class _Cart extends React.Component {
           <div id="cartProducts">
             {items.map(item => {
               const inventoryNumber = [];
-              for(let i=1; i<=item.product.inventory; i++){
+              for(let i=1; i<=item.product.inventory+item.quantity; i++){
                 inventoryNumber.push(i)
               }
                 return (
@@ -112,7 +128,7 @@ class _Cart extends React.Component {
                       Quantity
                       <select onChange={(ev)=> {
                         this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
-                        this.updateOrder(Number(totalPrice))
+                        this.updateInventoryFromQuantity(item, ev.target.value)
                         }}>
                         {
                           inventoryNumber.map(number => (
@@ -127,7 +143,7 @@ class _Cart extends React.Component {
                       <br />
                       <button className="btn btn-outline-success" onClick={() => {
                         this.deleteItem(item.id)
-                        this.updateInventory(item.product, item.quantity)
+                        this.updateInventoryFromDelete(item.product, item.quantity)
                         this.updateOrder((Number(totalPrice)))
                       }}>
                         Delete Item{' '}

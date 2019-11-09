@@ -186,7 +186,8 @@ app.put("/orders/:id", (req, res, next) => {
       console.log('order in api', order)
       console.log('req.body', req.body)
       order.update({
-        total: req.body.total
+        total: req.body.total,
+        items: req.body.items
       })
 
     }
@@ -281,6 +282,7 @@ app.delete("/orderProducts/:id", async (req, res, next) => {
 });
 
 app.put("/orderProducts/:id", async (req, res, next) => {
+  console.log('req.body for order products', req.body)
   OrderProducts.findByPk(req.body.id)
     .then(item =>
       item.update({

@@ -59,13 +59,6 @@ export const addProductThunk = () => {
   // Add Product Thunk
 };
 
-// export const updateProductThunk = (product) => {
-//   console.log('product', product)
-//   return async dispatch => {
-//     const updated = (await axios.put(`/api/products/${product.id}`, product)).data
-//     dispatch(updateProductAction(updated))
-//   }
-  //Update Product Thunk
 export const updateProductThunk = product => {
   console.log("THUNKS ", product);
   return async dispatch => {
@@ -175,11 +168,14 @@ export const setOrdersThunk = () => {
 };
 
 export const updateOrderThunk = order => {
-  console.log('order', order)
+  console.log('order in thunks', order)
   return async dispatch => {
-    const updated = (await axios.put(`/api/orders/${order.id}`, order)).data;
-    console.log(updated)
-    dispatch(updateOrder(updated));
+    await axios.put(`/api/orders/${order.id}`,{
+      id: order.id,
+      total: order.total,
+      items: order.items
+    }).data;
+    dispatch(updateOrder(order));
   };
 };
 
@@ -213,14 +209,14 @@ export const addOrderProductThunk = payload => {
 };
 
 export const updateOrderProductThunk = cartItem => {
-  console.log("cart", cartItem);
+  console.log("cart item in THunKS", cartItem);
   return async dispatch => {
-    const updated = (await axios.put(
-      `/api/orderProducts/${cartItem.id}`,
-      cartItem
-    )).data;
-    console.log("updated", updated);
-    dispatch(updateOrderProduct(updated));
+    await axios.put(`/api/orderProducts/${cartItem.id}`, {
+      id: cartItem.id,
+      quantity: cartItem.quantity,
+      subTotal: cartItem.subTotal
+    }).data;
+    dispatch(updateOrderProduct(cartItem));
   };
 };
 
