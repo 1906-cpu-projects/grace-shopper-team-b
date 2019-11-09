@@ -4,7 +4,7 @@
   "description": "The Acme Store",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:dev": "mocha ./src/tests/tests-paul.js --watch",
     "start:dev": "npm run webpack:dev & nodemon ./server/server.js --ignore assets/",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack -- --watch --mode=development",
@@ -43,6 +43,8 @@
     "@babel/preset-react": "^7.6.3",
     "axios": "^0.19.0",
     "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
