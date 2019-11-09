@@ -337,6 +337,21 @@ const syncAndSeed = async () => {
   ] = await Promise.all(
     orderProducts.map(orderProduct => OrderProducts.create(orderProduct))
   );
+  return {
+    products: {
+      product1,
+      product2
+    },
+    users: {
+      jamesUser,
+      paulUser,
+      dominiqueUser
+    },
+    orders: {
+      order1,
+      order2
+    }
+  };
 };
 
 module.exports = syncAndSeed;
