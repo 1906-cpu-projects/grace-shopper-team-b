@@ -171,8 +171,12 @@ export const setOrdersThunk = () => {
 
 export const updateOrderThunk = order => {
   return async dispatch => {
-    const updated = (await axios.put(`/api/orders/${order.id}`, order)).data;
-    dispatch(updateOrder(updated));
+    await axios.put(`/api/orders/${order.id}`,{
+      id: order.id,
+      total: order.total,
+      items: order.items
+    }).data;
+    dispatch(updateOrder(order));
   };
 };
 
@@ -199,12 +203,14 @@ export const addOrderProductThunk = payload => {
 };
 
 export const updateOrderProductThunk = cartItem => {
+  // console.log("cart item in THunKS", cartItem);
   return async dispatch => {
-    const updated = (await axios.put(
-      `/api/orderProducts/${cartItem.id}`,
-      cartItem
-    )).data;
-    dispatch(updateOrderProduct(updated));
+    await axios.put(`/api/orderProducts/${cartItem.id}`, {
+      id: cartItem.id,
+      quantity: cartItem.quantity,
+      subTotal: cartItem.subTotal
+    }).data;
+    dispatch(updateOrderProduct(cartItem));
   };
 };
 

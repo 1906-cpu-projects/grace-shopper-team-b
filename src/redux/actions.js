@@ -35,6 +35,8 @@ export const setOrderHistoryAction = orderHistory => ({
   orderHistory
 });
 
+export const setOrder = order => ({ type: SET_ORDER, order});
+
 //ADD
 export const addOrderProduct = orderProduct => ({
   type: ADD_ORDERPRODUCT,

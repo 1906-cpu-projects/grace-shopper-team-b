@@ -97,7 +97,7 @@ li {
   margin: 1rem;
   padding: 1rem;
   border-radius: 5%;
-  width: calc(100% / 3 - 2);
+  width: (100% / 3 - 2);
 }
 
 #cartProducts {
@@ -106,7 +106,6 @@ li {
 }
 
 #cartProducts > div {
-  margin: 0.5rem;
   padding: 1rem;
 }
 

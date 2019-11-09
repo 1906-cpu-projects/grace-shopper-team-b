@@ -194,11 +194,15 @@ app.delete("/orders/:id", (req, res, next) => {
 
 app.put("/orders/:id", (req, res, next) => {
   Order.findByPk(req.body.id)
-    .then(order =>
+    .then(order =>{
+      console.log('order in api', order)
+      console.log('req.body', req.body)
       order.update({
-        status: req.body.status,
-        total: req.body.total
+        total: req.body.total,
+        items: req.body.items
       })
+
+    }
     )
     .then(() => res.sendStatus(201))
     .catch(next);
@@ -290,6 +294,7 @@ app.delete("/orderProducts/:id", async (req, res, next) => {
 });
 
 app.put("/orderProducts/:id", async (req, res, next) => {
+  console.log('req.body for order products', req.body)
   OrderProducts.findByPk(req.body.id)
     .then(item =>
       item.update({
@@ -395,18 +400,19 @@ const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
-    amount: amt * 100,
+    amount: (amt * 100).toFixed(0),
     currency: "usd",
     source: token,
     description: "Statement Description"
   });
 };
 
-app.post("/donate", async (req, res, next) => {
+app.post('/checkout', async (req, res, next) => {
+  console.log('request: ', req.body)
   try {
     let data = await charge(req.body.token.id, req.body.amount);
-    console.log(data);
-    res.send("Charged!");
+    console.log('data', data);
+    res.send('Charged!');
   } catch (er) {
     console.log(er);
     res.sendStatus(500);

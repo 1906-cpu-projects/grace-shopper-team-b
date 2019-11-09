@@ -106,6 +106,7 @@ const orderReducer = (state = [], action) => {
     state = state.map(order =>
       order.id === action.order.id ? action.order : order
     );
+
   }
   if (action.type === DELETE_ORDER) {
     return state.filter(order => order.id !== action.order.id);
@@ -122,7 +123,7 @@ const orderProdutsReducer = (state = [], action) => {
   }
   if (action.type === UPDATE_ORDERPRODUCT) {
     state = state.map(item =>
-      item.id === action.item.id ? action.item : item
+      item.id === action.orderProduct.id ? action.orderProduct : item
     );
   }
   if (action.type === ADD_ORDERPRODUCT) {
