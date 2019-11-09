@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   deleteOrderProductsThunk,
   updateOrderProductThunk,
-  setOrderProductsThunk,
+  setOrdersThunk,
 
 } from '../redux/store';
 import axios from 'axios';

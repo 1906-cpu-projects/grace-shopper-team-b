@@ -30,7 +30,7 @@ class _UpdateUserForm extends React.Component {
       id: user.id,
       username: user.username,
       email: user.email,
-      password: user.password,
+      password: "",
       firstName: user.firstName,
       lastName: user.lastName,
       streetAddress: user.streetAddress,
@@ -83,7 +83,7 @@ class _UpdateUserForm extends React.Component {
     this.setState({
       username: username,
       email: email,
-      password: password,
+      password: "",
       firstName: firstName,
       lastName: lastName,
       streetAddress: streetAddress,
