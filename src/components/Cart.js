@@ -4,9 +4,9 @@ import {
   deleteOrderProductsThunk,
   updateOrderProductThunk,
   setOrderProductsThunk,
+  setOrdersThunk
 
 } from '../redux/store';
-import axios from 'axios';
 import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
 import { Link } from 'react-router-dom';
 
