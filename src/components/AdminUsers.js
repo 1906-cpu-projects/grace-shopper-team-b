@@ -1,8 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import store, { deleteUserThunk, setUsersThunk } from "../redux/thunks";
+import store, { deleteUserThunk, setUsersThunk } from "../redux/store";
 
 class AdminUsers extends React.Component {
+  async componentDidMount() {
+    store.dispatch(setUsersThunk());
+  }
+
   render() {
     const user = this.props.auth;
     console.log("PROPS.AUTH ", user);
