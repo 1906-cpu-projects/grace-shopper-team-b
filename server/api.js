@@ -6,7 +6,11 @@ const db = require('../db/db');
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 
+<<<<<<< HEAD
 const dotenv = require('dotenv');
+=======
+const dotenv = require("dotenv");
+>>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
 dotenv.config();
 const stripeSecretKey = process.env.stripeSecretKey;
 const stripeLoader = require('stripe');
@@ -73,7 +77,11 @@ app.get('/admin/users', (req, res, next) => {
 
 app.get('/users/:id', (req, res, next) => {
   const activeUser = req.session.user;
-  if (!activeUser) {
+  if (
+    !activeUser ||
+    (req.session.user.id !== req.params.id &&
+      req.session.user.isAdmin === false)
+  ) {
     return res.status(401).json({
       message: 'Auth Failed'
     });
@@ -200,8 +208,13 @@ app.delete('/orders/:id', (req, res, next) => {
 app.put('/orders/:id', (req, res, next) => {
   Order.findByPk(req.body.id)
     .then(order => {
+<<<<<<< HEAD
       console.log('order in api', order);
       console.log('req.body', req.body);
+=======
+      console.log("order in api", order);
+      console.log("req.body", req.body);
+>>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
       order.update({
         total: req.body.total,
         items: req.body.items
@@ -250,7 +263,12 @@ app.get('/orderProducts', (req, res, next) => {
     .catch(next);
 });
 
+<<<<<<< HEAD
 app.post('/orderProducts', async (req, res, next) => {
+=======
+app.post("/orderproducts", async (req, res, next) => {
+  //let item = null;
+>>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
   Order.findOne({
     where: {
       status: 'cart',
@@ -272,13 +290,14 @@ app.post('/orderProducts', async (req, res, next) => {
       });
       // console.log('item in cart', itemAlreadyInCart)
       // console.log('req body', req.body)
+
       if (!itemAlreadyInCart) {
-        let item = await OrderProducts.create({
+         item = await OrderProducts.create({
           ...req.body,
           orderId: order.id
         });
       } else {
-        item = await OrderProducts.update(
+         item = await OrderProducts.update(
           {
             quantity: itemAlreadyInCart.quantity + 1,
             subTotal: itemAlreadyInCart.price * (itemAlreadyInCart.quantity + 1)
@@ -296,8 +315,13 @@ app.delete('/orderProducts/:id', async (req, res, next) => {
   res.sendStatus(204);
 });
 
+<<<<<<< HEAD
 app.put('/orderProducts/:id', async (req, res, next) => {
   console.log('req.body for order products', req.body);
+=======
+app.put("/orderProducts/:id", async (req, res, next) => {
+  console.log("req.body for order products", req.body);
+>>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
   OrderProducts.findByPk(req.body.id)
     .then(item =>
       item.update({
@@ -410,12 +434,17 @@ const charge = (token, amt) => {
   });
 };
 
+<<<<<<< HEAD
 app.post('/checkout', async (req, res, next) => {
   console.log('request: ', req.body);
+=======
+app.post("/checkout", async (req, res, next) => {
+  console.log("request: ", req.body);
+>>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
   try {
     let data = await charge(req.body.token.id, req.body.amount);
-    console.log('data', data);
-    res.send('Charged!');
+    console.log("data", data);
+    res.send("Charged!");
   } catch (er) {
     console.log(er);
     res.sendStatus(500);

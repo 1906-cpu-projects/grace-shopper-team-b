@@ -23,23 +23,14 @@ class _OrderHistory extends React.Component {
       orderHistory,
       match
     } = this.props;
-    // console.log('auth', auth)
-    // console.log('users', users)
-    // console.log('orders',orders)
 
-    console.log('MATCH PARAMS ID', match.params.id);
-    console.log('ORDERS======', orders);
-    console.log('ORDER HISTORY======', orderHistory);
+
 
     const userOrders = orderHistory.filter(
       order => order.userId === auth.id && order.status === 'completed'
     );
-    // console.log('cart', cart)
-    // console.log('products', products)
-    // console.log('orderProducts', orderProducts)
 
-    console.log('ORDER HISTORY====', orderHistory);
-    console.log('USER ORDERS====', userOrders);
+
 
     return (
       <div>
