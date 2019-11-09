@@ -29,6 +29,7 @@ class _Cart extends React.Component {
     this.updateOrder = this.updateOrder.bind(this);
     this.updateInventoryFromDelete = this.updateInventoryFromDelete.bind(this);
     this.updateInventoryFromQuantity = this.updateInventoryFromQuantity.bind(this);
+    this.changePage = this.changePage.bind(this)
   }
   async componentDidMount(props) {
     await this.props.setOrders()
@@ -49,7 +50,9 @@ class _Cart extends React.Component {
       items: this.state.items.filter(item => item.id !== id)
     })
   }
-
+  changePage(){
+    window.location.hash = `#/users/${this.props.match.params.id}/checkout`
+  }
   updateItem(item) {
     console.log('updateItem', item)
     this.props.updateItem(item);
@@ -124,6 +127,7 @@ class _Cart extends React.Component {
                       <select onChange={(ev)=> {
                         this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
                         this.updateInventoryFromQuantity(item, ev.target.value)
+
                         location.reload()
                         }}>
                         {
@@ -161,9 +165,10 @@ class _Cart extends React.Component {
             onClick={()=> {
               this.updateOrder(Number(totalPrice))
               console.log('orders after update', orders)
+              this.changePage()
             }}
           >
-            {<Link  to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
+            Proceed to Payment
           </button>
         </div>
       </div>
