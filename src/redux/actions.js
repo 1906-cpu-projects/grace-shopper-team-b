@@ -15,13 +15,16 @@ import {
   UPDATE_PRODUCT,
   DELETE_ORDER,
   ADD_PRODUCT
-} from "./constants";
+} from './constants';
 
 // ACTION CREATORS
 
 /////////////////////////USERS ACTION CREATORS//////////////////////////
 export const setProductsAction = products => ({ type: SET_PRODUCTS, products });
 export const setUsersAction = users => ({ type: SET_USERS, users });
+export const addUserAction = user => {
+  return { type: ADD_USER, user };
+};
 
 /////////////////////////ORDER ACTION CREATORS//////////////////////////
 //SET
@@ -35,7 +38,7 @@ export const setOrderHistoryAction = orderHistory => ({
   orderHistory
 });
 
-export const setOrder = order => ({ type: SET_ORDER, order});
+export const setOrder = order => ({ type: SET_ORDER, order });
 
 //ADD
 export const addOrderProduct = orderProduct => ({
@@ -43,16 +46,12 @@ export const addOrderProduct = orderProduct => ({
   orderProduct
 });
 export const addProductAction = product => (
-  console.log("ACTION ", product),
+  console.log('ACTION ', product),
   {
     type: ADD_PRODUCT,
     product: product
   }
 );
-export const addUserAction = user => ({
-  type: ADD_USER,
-  user
-});
 
 //UPDATE
 export const updateOrder = order => ({ type: UPDATE_ORDER, order });

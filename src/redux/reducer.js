@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
 import {
   SET_AUTH,
@@ -18,7 +18,7 @@ import {
   DELETE_USER,
   DELETE_PRODUCT,
   DELETE_ORDER
-} from "./constants";
+} from './constants';
 
 const authReducer = (state = {}, action) => {
   if (action.type === SET_AUTH) {
@@ -34,7 +34,7 @@ const productReducer = (state = [], action) => {
     state = action.products;
   }
   if (action.type === ADD_PRODUCT) {
-    console.log("REDUCER ", action.product);
+    console.log('REDUCER ', action.product);
     return [...state, action.product];
   }
   if (action.type === UPDATE_PRODUCT) {
@@ -106,7 +106,6 @@ const orderReducer = (state = [], action) => {
     state = state.map(order =>
       order.id === action.order.id ? action.order : order
     );
-
   }
   if (action.type === DELETE_ORDER) {
     return state.filter(order => order.id !== action.order.id);
