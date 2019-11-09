@@ -38,7 +38,6 @@ const productReducer = (state = [], action) => {
   }
   if (action.type === UPDATE_PRODUCT) {
     state = state.filter(product => product.id===action.product.id ? action.product : product)
-    // Update product
   }
   if (action.type === DELETE_PRODUCT) {
     //Delete Product
@@ -95,10 +94,12 @@ const orderReducer = (state = [], action) => {
     state = state.map(order =>
       order.id === action.order.id ? action.order : order
     );
+
   }
   if (action.type === DELETE_ORDER) {
     // remove order
   }
+  // console.log('order in state on reducer', state)
   return state;
 };
 
@@ -125,7 +126,7 @@ const orderProdutsReducer = (state = [], action) => {
 const orderHistoryReducer = (state = [], action) => {
   if (action.type === SET_ORDER_HISTORY) {
     state = action.orderHistory;
-    console.log('ORDER HISTORY REDUCER STATE', state);
+    // console.log('ORDER HISTORY REDUCER STATE', state);
   }
   return state;
 };

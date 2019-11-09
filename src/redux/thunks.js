@@ -169,9 +169,11 @@ export const deleteOrderThunk = () => {
 
 // export const setOrderThunk = () => {
 //   return dispatch => {
-//     const order = (await axios.get(`/api/orders/${order.id}`))
+//     const order = (await axios.get(`/api/orders/${order.id}`)).data
+//     dispatch(set)
 //   }
 // }
+
 ////////////////////////     ORDERED PRODUCTS - THUNKS    //////////////////////////
 export const setOrderProductsThunk = () => {
   return async dispatch => {

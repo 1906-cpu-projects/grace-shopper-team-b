@@ -1,16 +1,24 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { addOrderProductThunk } from '../redux/store';
+import { addOrderProductThunk, updateProductThunk, setProductsThunk } from '../redux/store';
 
 class _Products extends Component {
   constructor() {
     super();
     this.addToCart = this.addToCart.bind(this);
+    this.updateInventory= this.updateInventory.bind(this);
   }
-  async addToCart(item) {
-    // console.log('item added to cart', item);
-    await this.props.addToCart(item);
+  componentDidMount(){
+    this.props.set
+  }
+  addToCart(item) {
+    console.log('item added to cart', item);
+    this.props.addToCart(item);
+  }
+  updateInventory(item){
+    console.log('item for update', item )
+    this.props.updateInventory({...item, inventory: item.inventory-1});
   }
   render() {
     const { products, auth } = this.props;
@@ -33,16 +41,17 @@ class _Products extends Component {
               <button
                 type="submit"
                 className="btn btn-outline-success"
-                onClick={() =>
-                  this.addToCart({
+                onClick={() => {
+                    this.addToCart({
                     quantity: 1,
                     price: product.price,
                     subTotal: product.price,
                     productId: product.id,
                     userId: auth.id,
                     orderId: ''
-                  })
-                }
+                    })
+                    this.updateInventory(product)
+                }}
               >
                 Add to Cart
               </button>
@@ -56,7 +65,9 @@ class _Products extends Component {
 
 const dispatchToProps = dispatch => {
   return {
-    addToCart: async item => dispatch(addOrderProductThunk(item))
+    addToCart: item => dispatch(addOrderProductThunk(item)),
+    updateInventory:  item => dispatch(updateProductThunk(item)),
+    setProducts: ()=> dispatch(setProductsThunk())
   };
 };
 

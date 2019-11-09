@@ -30,10 +30,10 @@ class _Cart extends React.Component {
     this.updateInventory = this.updateInventory.bind(this);
   }
   async componentDidMount(props) {
-    // const order = orders.find( _order => _order.userId=== auth.id && _order.status ==='cart')
-
-    const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    console.log('order', order)
+    await this.props.setOrders()
+    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
+    // const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
+    console.log('order in componentDidmount', order)
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -69,6 +69,8 @@ class _Cart extends React.Component {
   render() {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
+    const cart  = orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
+    console.log('cart in return ', cart)
     console.log('orders in return', orders)
     if (!auth) {
       return (
@@ -159,6 +161,7 @@ class _Cart extends React.Component {
             className="btn btn-outline-success"
             onClick={()=> {
               this.updateOrder(Number(totalPrice))
+              console.log('orders after update', orders)
             }}
           >
             {<Link  to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
@@ -170,15 +173,16 @@ class _Cart extends React.Component {
   }
 }
 
-const mapStateToProps = ({ auth, orders }) => {
+const mapStateToProps = (state) => {
   return {
-    auth,
-    orders
+    auth: state.auth,
+    orders: state.orders
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setOrders: () => dispatch(setOrdersThunk()),
     deleteItem: id => dispatch(deleteOrderProductsThunk(id)),
     updateItem:  item => dispatch(updateOrderProductThunk(item)),
     updateOrder: (order) => dispatch(updateOrderThunk(order)),
