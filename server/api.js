@@ -5,8 +5,12 @@ const app = express();
 const db = require("../db/db");
 const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
+
+const dotenv = require("dotenv")
+dotenv.config()
+const stripeSecretKey = process.env.stripeSecretKey;
 const stripeLoader = require("stripe");
-//const stripeSecretKey = require('../env');
+
 const hash = require("../src/utilities/hash");
 
 // Setups for express-sessions
@@ -387,8 +391,7 @@ app.delete("/sessions", (req, res, next) => {
 });
 
 /// Stripe ////
-const stripe = "hgdggd";
-//const stripe = new stripeLoader(stripeSecretKey);
+const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
