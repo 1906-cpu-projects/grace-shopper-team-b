@@ -16,8 +16,9 @@ class PaymentPage extends Component {
   render() {
     return (
       <StripeProvider
-      apiKey="pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT"
+      apiKey="pk_test_LxcyyDJDaxKtP8uy5xDO4xHr00zLPYZtPy"
       // Rob's apiKey="pk_test_LxcyyDJDaxKtP8uy5xDO4xHr00zLPYZtPy"
+      //Dom's apiKey="pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT"
       >
         <Elements>
           <PaymentForm  name={this.props.name} total={this.props.total}/>
