@@ -1,19 +1,18 @@
-import React from 'react';
-import { Component } from 'react';
-import { render } from 'react-dom';
-import { HashRouter, Switch, Link, Route, Redirect } from 'react-router-dom';
-import { Provider, connect } from 'react-redux';
+import React from "react";
+import { Component } from "react";
+import { render } from "react-dom";
+import { HashRouter, Switch, Link, Route, Redirect } from "react-router-dom";
+import { Provider, connect } from "react-redux";
 
-import Home from './pages/Home';
-import Products from './components/Products';
-import Cart from './components/Cart';
-import Nav from './Nav';
-import Admin from './components/Admin';
-import Login from './pages/Login';
-import User from './components/User';
-import OrderHistory from './components/OrderHistory';
-
-
+import Home from "./pages/Home";
+import Products from "./components/Products";
+import Cart from "./components/Cart";
+import Nav from "./Nav";
+import Admin from "./components/Admin";
+import Login from "./pages/Login";
+import AdminProductUpdate from "./forms/AdminProductUpdate";
+import User from "./components/User";
+import OrderHistory from "./components/OrderHistory";
 
 import store, {
   attemptSessionLogin,
@@ -28,7 +27,7 @@ import PaymentPage from './components/PaymentPage';
 
 
 
-const root = document.querySelector('#root');
+const root = document.querySelector("#root");
 
 class _App extends Component {
   constructor() {
@@ -52,7 +51,11 @@ class _App extends Component {
           <Route component={Nav} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/admin" component={Admin} />
+            <Route
+              exact
+              path="/admin/:id"
+              render={props => <Admin {...props} />}
+            />
             <Route exact path="/products" component={Products} />
             <Route exact path="/users/:id/checkout" component={CheckOut} />
             <Route exact path="/users/:id/payment" component={PaymentPage} />
