@@ -249,7 +249,8 @@ app.get("/orderProducts", (req, res, next) => {
     .catch(next);
 });
 
-app.post("/orderProducts", async (req, res, next) => {
+app.post("/orderproducts", async (req, res, next) => {
+  //let item = null;
   Order.findOne({
     where: {
       status: "cart",
@@ -271,13 +272,14 @@ app.post("/orderProducts", async (req, res, next) => {
       });
       // console.log('item in cart', itemAlreadyInCart)
       // console.log('req body', req.body)
+
       if (!itemAlreadyInCart) {
-        let item = await OrderProducts.create({
+         item = await OrderProducts.create({
           ...req.body,
           orderId: order.id
         });
       } else {
-        item = await OrderProducts.update(
+         item = await OrderProducts.update(
           {
             quantity: itemAlreadyInCart.quantity + 1,
             subTotal: itemAlreadyInCart.price * (itemAlreadyInCart.quantity + 1)
