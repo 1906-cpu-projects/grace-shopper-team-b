@@ -3,7 +3,6 @@ import { Component } from 'react';
 import { render } from 'react-dom';
 import { HashRouter, Switch, Link, Route, Redirect } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
-// import { ToastContainer, toast } from 'react-toastify';
 
 import Home from './pages/Home';
 import Products from './components/Products';
@@ -45,7 +44,6 @@ class _App extends Component {
     const { loggedIn } = this.props;
     return (
       <Provider store={store}>
-        {/* <ToastContainer /> */}
         <HashRouter>
           <Route component={Nav} />
           <Switch>

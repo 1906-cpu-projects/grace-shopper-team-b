@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { attemptLogin } from '../redux/store';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class _Login extends Component {
   constructor() {
     super();
@@ -28,6 +31,9 @@ class _Login extends Component {
   onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
+
+  notify = () => toast('Wow so easy !');
+
   render() {
     const { error, email, password } = this.state;
     const { onCloseLoginClick } = this.props || {};
@@ -79,6 +85,10 @@ class _Login extends Component {
               <Link className="btn btn-outline-primary" to="/signup">
                 Sign Up
               </Link>
+            </div>
+            <div>
+              <button onClick={this.notify}>Notify !</button>
+              <ToastContainer />
             </div>
           </form>
         </div>
