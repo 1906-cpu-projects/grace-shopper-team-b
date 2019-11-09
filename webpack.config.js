@@ -1,7 +1,9 @@
 const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+  mode: 'production',
   output: {
     filename: 'app.js',
     path: path.join(__dirname, 'assets')
@@ -21,6 +23,11 @@ module.exports = {
               {
                 loose: true
               }
+            ],
+            [
+              new HTMLWebpackPlugin({
+                template: 'index.html'
+              })
             ]
           ]
         }
