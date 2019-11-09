@@ -12,6 +12,7 @@ import Admin from './components/Admin';
 import Login from './pages/Login';
 import User from './components/User';
 import OrderHistory from './components/OrderHistory';
+import NewUser from './forms/NewUser';
 
 import store, {
   attemptSessionLogin,

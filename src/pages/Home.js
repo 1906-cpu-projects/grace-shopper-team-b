@@ -4,8 +4,7 @@ import { logout } from '../redux/store';
 
 const initialState = {
   email: '',
-  password: '',
-  showSignUpModal: false
+  password: ''
 };
 
 class _Home extends React.Component {
