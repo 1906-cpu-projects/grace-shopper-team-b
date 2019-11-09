@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 import store, { deleteUserThunk, setUsersThunk } from "../redux/thunks";
 
 class AdminUsers extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const user = this.props.auth;
     console.log("PROPS.AUTH ", user);
