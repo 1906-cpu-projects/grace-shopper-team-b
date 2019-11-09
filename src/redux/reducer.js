@@ -34,11 +34,10 @@ const productReducer = (state = [], action) => {
     state = action.products;
   }
   if (action.type === ADD_PRODUCT) {
-    // Add Product
+    console.log("REDUCER ", action.product);
+    return [...state, action.product];
   }
   if (action.type === UPDATE_PRODUCT) {
-    // console.log("REDUCER ", action);
-    // console.log("STATE ", state);
     return state.map(product =>
       action.id === product.id
         ? {
@@ -138,7 +137,6 @@ const orderProdutsReducer = (state = [], action) => {
 const orderHistoryReducer = (state = [], action) => {
   if (action.type === SET_ORDER_HISTORY) {
     state = action.orderHistory;
-    // console.log('ORDER HISTORY REDUCER STATE', state);
   }
   return state;
 };

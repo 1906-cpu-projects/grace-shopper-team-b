@@ -22,20 +22,19 @@ class _Products extends Component {
   }
   render() {
     const { products, auth } = this.props;
-    console.log('auth', auth)
     return (
       <div>
         <h1>Our Products</h1>
         <div id="products">
           {products.map(product => (
             <div key={product.id}>
-              {' '}
+              {" "}
               <br />
               Product Name: {product.productName} <br />
               Description: {product.description} <br />
               Price: ${product.price} <br />
               Amount In Stock: {product.inventory} <br />
-              Product Image: <br />{' '}
+              Product Image: <br />{" "}
               <img height="200" width="200" src={product.imageURL} /> <br />
               <br />
               <button

@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import { render } from "react-dom";
-import { HashRouter, Switch, Link, Route, Redirect } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import { Provider, connect } from "react-redux";
 
 import Home from "./pages/Home";
@@ -10,14 +10,12 @@ import Cart from "./components/Cart";
 import Nav from "./Nav";
 import Admin from "./components/Admin";
 import Login from "./pages/Login";
-import AdminProductUpdate from "./forms/AdminProductUpdate";
 import User from "./components/User";
 import OrderHistory from "./components/OrderHistory";
 
 import store, {
   attemptSessionLogin,
   setProductsThunk,
-  setUsersThunk,
   setOrdersThunk,
   setOrderProductsThunk,
   setOrderHistoryThunk
@@ -37,7 +35,6 @@ class _App extends Component {
   async componentDidMount() {
     store.dispatch(setProductsThunk());
     store.dispatch(attemptSessionLogin());
-    // store.dispatch(setUsersThunk());
     store.dispatch(setOrdersThunk());
     store.dispatch(setOrderProductsThunk());
     store.dispatch(setOrderHistoryThunk());

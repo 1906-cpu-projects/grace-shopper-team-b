@@ -17,7 +17,6 @@ class AdminUpdateProduct extends React.Component {
   }
   componentDidMount() {
     const product = this.props.product;
-    console.log(product);
     this.setState({
       productName: product.productName,
       description: product.description,
@@ -28,7 +27,6 @@ class AdminUpdateProduct extends React.Component {
   }
   handleChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
-    console.log("HANDLE CHNGE ", ev.target.value);
   }
   handleSubmit(ev) {
     ev.preventDefault();
@@ -80,6 +78,7 @@ class AdminUpdateProduct extends React.Component {
             <div>
               <form method="post" onSubmit={this.handleSubmit}>
                 <div className="form-group">
+                  <label>Product Name</label>
                   <input
                     type="text"
                     name="productName"
@@ -90,6 +89,7 @@ class AdminUpdateProduct extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label>Description</label>
                   <textarea
                     type="text"
                     name="description"
@@ -100,6 +100,7 @@ class AdminUpdateProduct extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label>Price</label>
                   <input
                     type="text"
                     name="price"
@@ -110,9 +111,10 @@ class AdminUpdateProduct extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label>Image Link</label>
                   <input
                     type="text"
-                    name="imageURl"
+                    name="imageURL"
                     placeholder="Image Link"
                     className="form-control"
                     value={this.state.imageURL}
@@ -120,6 +122,7 @@ class AdminUpdateProduct extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label>Inventory</label>
                   <input
                     type="text"
                     name="inventory"

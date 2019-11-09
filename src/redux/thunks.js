@@ -55,12 +55,15 @@ export const setProductsThunk = () => {
   };
 };
 
-export const addProductThunk = () => {
-  // Add Product Thunk
+export const addProductThunk = product => {
+  console.log("THUNKS ", product);
+  return async dispatch => {
+    const newProduct = await axios.post("/api/products", product);
+    dispatch(addProductAction(newProduct.data));
+  };
 };
 
 export const updateProductThunk = product => {
-  // console.log("THUNKS ", product);
   return async dispatch => {
     await axios.put(`/api/products/${product.id}`, {
       productName: product.productName,
@@ -151,7 +154,6 @@ export const updateUserThunk = (
 };
 
 export const deleteUserThunk = user => {
-  console.log("DELETE USER THUNK ", user);
   return async dispatch => {
     await axios.delete(`/api/users/${user.id}`);
     dispatch(deleteUserAction(user));
