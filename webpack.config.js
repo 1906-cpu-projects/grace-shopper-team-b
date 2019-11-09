@@ -18,12 +18,7 @@ module.exports = {
           presets: ['@babel/preset-env', '@babel/react'],
           plugins: [
             ['@babel/transform-runtime'],
-            [
-              '@babel/plugin-proposal-class-properties',
-              {
-                loose: true
-              }
-            ],
+            ['@babel/plugin-proposal-class-properties'],
             [
               new HTMLWebpackPlugin({
                 template: 'index.html'
