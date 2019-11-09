@@ -51,15 +51,14 @@ class _Cart extends React.Component {
   }
 
   updateItem(item) {
-    console.log(item)
+    console.log('updateItem', item)
     this.props.updateItem(item);
     this.setState({
-      items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
+      items: this.state.items.filter(thing => thing.id=== item.id ? item: thing)
     })
+    console.log('state', this.state)
   }
   updateInventoryFromQuantity(item, number){
-    console.log( 'item',item)
-    console.log('number in update', number)
     let updated ={};
     if(number > item.quantity){
       updated = {...item.product, inventory: item.product.inventory -(number-item.quantity)}
@@ -67,18 +66,14 @@ class _Cart extends React.Component {
     if(number < item.quantity){
       updated = {...item.product, inventory: item.product.inventory + (item.quantity -number )}
     }
-    console.log('new updated', updated)
     this.props.updateInventory(updated)
 
   }
   updateInventoryFromDelete(product, number){
-    // console.log('product', product)
     const updated = {...product, inventory: (product.inventory + number)}
-    // console.log(updated)
     this.props.updateInventory(updated)
   }
   updateOrder(cartTotal){
-    // console.log('total', cartTotal)
     this.props.updateOrder({...this.state, total: cartTotal })
   }
   render() {
@@ -129,6 +124,7 @@ class _Cart extends React.Component {
                       <select onChange={(ev)=> {
                         this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
                         this.updateInventoryFromQuantity(item, ev.target.value)
+                        location.reload()
                         }}>
                         {
                           inventoryNumber.map(number => (

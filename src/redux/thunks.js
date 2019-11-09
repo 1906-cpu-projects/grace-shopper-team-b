@@ -60,7 +60,7 @@ export const addProductThunk = () => {
 };
 
 export const updateProductThunk = product => {
-  console.log("THUNKS ", product);
+  // console.log("THUNKS ", product);
   return async dispatch => {
     await axios.put(`/api/products/${product.id}`, {
       productName: product.productName,

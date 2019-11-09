@@ -37,8 +37,8 @@ const productReducer = (state = [], action) => {
     // Add Product
   }
   if (action.type === UPDATE_PRODUCT) {
-    console.log("REDUCER ", action);
-    console.log("STATE ", state);
+    // console.log("REDUCER ", action);
+    // console.log("STATE ", state);
     return state.map(product =>
       action.id === product.id
         ? {
@@ -125,7 +125,7 @@ const orderProdutsReducer = (state = [], action) => {
   }
   if (action.type === UPDATE_ORDERPRODUCT) {
     state = state.map(item =>
-      item.id === action.orderProduct.id ? action.item : item
+      item.id === action.orderProduct.id ? action.orderProduct : item
     );
   }
   if (action.type === ADD_ORDERPRODUCT) {

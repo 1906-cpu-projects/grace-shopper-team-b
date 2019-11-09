@@ -384,12 +384,12 @@ app.delete("/sessions", (req, res, next) => {
 });
 
 /// Stripe ////
-const stripe = "hgdggd";
-//const stripe = new stripeLoader(stripeSecretKey);
+// const stripe = "hgdggd";
+const stripe = new stripeLoader(stripeSecretKey);
 
 const charge = (token, amt) => {
   return stripe.charges.create({
-    amount: amt * 100,
+    amount: (amt * 100).toFixed(0),
     currency: "usd",
     source: token,
     description: "Statement Description"

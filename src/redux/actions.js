@@ -55,7 +55,7 @@ export const updateOrderProduct = orderProduct => ({
   orderProduct
 });
 export const updateProductAction = product => {
-  console.log("ACTION ", product);
+  // console.log("ACTION ", product);
   return {
     type: UPDATE_PRODUCT,
     id: product.id,
