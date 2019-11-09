@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   box-sizing: border-box;
 }
 
@@ -27,8 +27,38 @@ nav a {
   text-decoration: none;
 }
 
+.admin-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  height: 4rem;
+  flex: 1;
+  color: blue;
+  padding: 0 4rem;
+  margin: 0 0 1rem 0;
+}
+
+.admin-nav a {
+  color: blue;
+  text-decoration: none;
+}
+
+.admin-users {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.admin-users > li {
+  margin: 0 2rem;
+}
+
 li {
   list-style: none;
+}
+.low-inventory {
+  color: red;
 }
 
 .user {
@@ -39,13 +69,24 @@ li {
   padding: 1rem;
   border-radius: 0.3rem;
 }
+
 .admin {
   display: flex;
+  align-items: stretch;
   justify-content: flex-start;
-  margin: 1rem;
+  flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
 }
-
+.admin > li {
+  display: flex;
+  flex: 1 1 25%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 33%;
+  height: 50%;
+}
 #products {
   display: flex;
   flex-wrap: wrap;
@@ -56,7 +97,7 @@ li {
   margin: 1rem;
   padding: 1rem;
   border-radius: 5%;
-  width: calc(100% / 3 - 2);
+  width: (100% / 3 - 2);
 }
 
 #cartProducts {
@@ -65,7 +106,6 @@ li {
 }
 
 #cartProducts > div {
-  margin: 0.5rem;
   padding: 1rem;
 }
 

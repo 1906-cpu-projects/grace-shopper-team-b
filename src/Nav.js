@@ -7,11 +7,16 @@ const _Nav = ({ products, auth }) => {
   let userPath = `/users/${auth.id}`;
   let orderPath = `/orders/${auth.id}`;
   let cartPath = `/users/${auth.id}/cart`;
+  let adminPath = `/admin/${auth.id}`;
 
   if (auth.id === undefined) {
     userPath = '/login';
     orderPath = '/login';
     cartPath = '/login';
+    adminPath = '/login';
+  }
+  if (auth.isAdmin === false) {
+    adminPath = '/';
   }
 
   return (
@@ -36,6 +41,9 @@ const _Nav = ({ products, auth }) => {
           Login
         </Link>
       )}
+      <Link className="nav-link" to={adminPath}>
+        Admin
+      </Link>
     </nav>
   );
 };

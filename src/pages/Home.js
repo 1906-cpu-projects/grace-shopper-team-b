@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout, addNewUser, attemptLogin } from '../redux/store';
-import NewUser from '../forms/NewUser';
-import Login from '../pages/Login';
+import { logout } from '../redux/store';
 
 const initialState = {
   email: '',
@@ -11,14 +9,13 @@ const initialState = {
 };
 
 class _Home extends React.Component {
-  state = initialState;
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
+  constructor() {
+    super();
+    this.state = initialState;
   }
 
   render() {
-    const { auth, logout, addNewUser } = this.props;
-    const { showSignUpModal } = this.state;
+    const { auth, logout } = this.props;
 
     return (
       <div className="container">

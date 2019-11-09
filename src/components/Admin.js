@@ -1,56 +1,35 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import { HashRouter, Switch, Link, Route, Redirect } from "react-router-dom";
 
-// Display users
-// Delete a user
-// Display product information
-// Add new products
-// Delete current products
-// Update product information
-// Display orders
+import AdminNav from "./AdminNav";
+import AdminOrders from "./AdminOrders";
+import AdminProducts from "./AdminProducts";
+import AdminUsers from "./AdminUsers";
+import NewProductForm from "../forms/NewProductForm";
 
 class Admin extends React.Component {
   render() {
-    console.log(this.props.products)
-    console.log(this.props.orders)
     return (
       <div>
-        <h3>Manage Orders</h3>
-        <ul className={"admin"}>
-          {
-            this.props.orders.map(order =>
-              <li key={order.id}>
-                Order Status: {order.status}<br />
-                Items Ordered:<ul>{order.items.map(item => <li key={item.id}>{item.product.productName}</li>)}</ul>
-                Order Total: ${order.total}<br />
-                Order placed on {order.orderDate}<br />
-                Shipping Address: {order.shippingAddress}<br />
-                <button>Delete Button</button>
-                <br /> <br />
-              </li>)
-          }
-        </ul>
-        <br /> <br />
-        <h3>Manage Products</h3>
-        <ul>
-          {
-            this.props.products.map(product =>
-              <li key={product.id}>
-                Product: {product.productName}<br />
-                Update Product |  Delete Product
-                <br /> <br />
-              </li>)
-          }
-        </ul>
-        <br />
-        <h3>Users</h3>
-      </div >
-    )
+        <HashRouter>
+          <Route component={AdminNav} />
+          <Switch>
+            <Route exact path="/admin/users" component={AdminUsers} />
+            <Route exact path="/admin/newProduct" component={NewProductForm} />
+            <Route exact path="/admin/products" component={AdminProducts} />
+            <Route exact path="/admin/:id" component={AdminOrders} />
+          </Switch>
+        </HashRouter>
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => ({ users: state.users, orders: state.orders, products: state.products });
+const mapStateToProps = state => ({
+  users: state.users,
+  orders: state.orders,
+  products: state.products
+});
+
 export default connect(mapStateToProps)(Admin);
-
-
-
