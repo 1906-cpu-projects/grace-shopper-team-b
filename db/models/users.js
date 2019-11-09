@@ -71,6 +71,10 @@ const User = conn.define('user', {
   billZipcode: {
     type: INTEGER
   },
+  date: {
+    type: DATE,
+    defaultValue: DATE.now
+  },
   isAdmin: {
     type: BOOLEAN,
     defaultValue: false
