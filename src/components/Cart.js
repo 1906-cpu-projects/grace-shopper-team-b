@@ -57,9 +57,8 @@ class _Cart extends React.Component {
   }
   updateInventory(product, number){
     // console.log('product', product)
-    console.log('number', number)
     const updated = {...product, inventory: (product.inventory + number)}
-    console.log(updated)
+    // console.log(updated)
     this.props.updateInventory(updated)
   }
   updateOrder(cartTotal){
@@ -69,15 +68,6 @@ class _Cart extends React.Component {
   render() {
     const { id, items } = this.state;
     const { auth, orders } = this.props;
-    const cart  = orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
-    console.log('cart in return ', cart)
-    console.log('orders in return', orders)
-    if (!auth) {
-      return (
-        <div>
-          If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
-        </div>);
-    }
     if (id === undefined) {
       return (
         <div>
@@ -101,11 +91,8 @@ class _Cart extends React.Component {
       <div>
         <h1>{auth.firstName}'s Shopping Cart</h1>
         <br />
-        <div id="cart">
-          <div>
             Order # {id} <br />
             Order Status: In Progress...
-          </div>
           <div id="cartProducts">
             {items.map(item => {
               const inventoryNumber = [];
@@ -141,6 +128,7 @@ class _Cart extends React.Component {
                       <button className="btn btn-outline-success" onClick={() => {
                         this.deleteItem(item.id)
                         this.updateInventory(item.product, item.quantity)
+                        this.updateOrder((Number(totalPrice)))
                       }}>
                         Delete Item{' '}
                       </button>
@@ -149,7 +137,6 @@ class _Cart extends React.Component {
                 );
               })}
           </div>
-        </div>
         <div id="total">
           <h5>
             Total ({itemsCount(totalItems)}
@@ -167,7 +154,6 @@ class _Cart extends React.Component {
             {<Link  to={`/users/${auth.id}/checkout`}>Proceed to Payment</Link>}
           </button>
         </div>
-        {/* <Route path='/users/:id/payment' render={() => <Product total={totalPrice}/>} /> */}
       </div>
       );
   }
