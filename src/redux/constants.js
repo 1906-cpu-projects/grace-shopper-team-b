@@ -6,6 +6,7 @@ export const SET_USERS = 'SET_USERS';
 export const SET_ORDERS = 'SET_ORDERS';
 export const SET_ORDERPRODUCTS = 'SET_ORDERPRODUCTS';
 export const SET_ORDER_HISTORY = 'SET_ORDER_HISTORY';
+export const SET_ORDER = 'SET_ORDER';
 //ADD
 export const ADD_ORDERPRODUCT = 'ADD_ORDERPRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';

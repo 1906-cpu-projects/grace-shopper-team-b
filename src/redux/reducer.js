@@ -34,13 +34,25 @@ const productReducer = (state = [], action) => {
     state = action.products;
   }
   if (action.type === ADD_PRODUCT) {
-    // Add Product
+    console.log('REDUCER ', action.product);
+    return [...state, action.product];
   }
   if (action.type === UPDATE_PRODUCT) {
-    // Update product
+    return state.map(product =>
+      action.id === product.id
+        ? {
+            ...product,
+            productName: action.productName,
+            description: action.description,
+            price: action.price,
+            imageURL: action.imageURL,
+            inventory: action.inventory
+          }
+        : product
+    );
   }
   if (action.type === DELETE_PRODUCT) {
-    //Delete Product
+    return state.filter(product => product.id !== action.product.id);
   }
   return state;
 };
@@ -79,7 +91,7 @@ const userReducer = (state = [], action) => {
     );
   }
   if (action.type === DELETE_USER) {
-    return state.filter(user => action.user !== user.id);
+    return state.filter(user => user.id !== action.user.id);
   }
   return state;
 };
@@ -96,7 +108,7 @@ const orderReducer = (state = [], action) => {
     );
   }
   if (action.type === DELETE_ORDER) {
-    // remove order
+    return state.filter(order => order.id !== action.order.id);
   }
   return state;
 };
@@ -110,7 +122,7 @@ const orderProdutsReducer = (state = [], action) => {
   }
   if (action.type === UPDATE_ORDERPRODUCT) {
     state = state.map(item =>
-      item.id === action.item.id ? action.item : item
+      item.id === action.orderProduct.id ? action.orderProduct : item
     );
   }
   if (action.type === ADD_ORDERPRODUCT) {
@@ -124,7 +136,6 @@ const orderProdutsReducer = (state = [], action) => {
 const orderHistoryReducer = (state = [], action) => {
   if (action.type === SET_ORDER_HISTORY) {
     state = action.orderHistory;
-    console.log('ORDER HISTORY REDUCER STATE', state);
   }
   return state;
 };

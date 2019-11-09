@@ -1,56 +1,65 @@
-const conn = require('./conn');
+const conn = require("./conn");
 
-const User = require('./models/users');
+const User = require("./models/users");
 
-const Product = require('./models/products');
+const Product = require("./models/products");
 
-const Order = require('./models/orders');
+const Order = require("./models/orders");
 
-const OrderProducts = require('./models/orderproducts');
+const OrderProducts = require("./models/orderproducts");
 
-const hash = require('../src/utilities/hash');
+const hash = require("../src/utilities/hash");
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true }); //THIS NEEDS TO BE REMOVED IN FINAL VERSION
 
   const users = [
     {
-      firstName: 'James',
-      lastName: 'Fuller',
-      username: 'jf',
-      email: 'archer@gmail.com',
-      password: hash('ARCHER'),
-      streetAddress: '123 Some Street ',
-      city: 'Some City',
-      state: 'California',
-      zipcode: '12345',
-      billStreetAddress: '123 Some Street ',
-      billCity: 'Some City',
-      billState: 'California',
-      billZipcode: '12345',
-      isAdmin: false
-    },
-    {
-      firstName: 'Rob',
-      lastName: 'Wise',
-      username: 'rw',
-      email: 'caster@gmail.com',
-      password: hash('CASTER'),
+      firstName: "James",
+      lastName: "Fuller",
+      username: "jf",
+      email: "archer@gmail.com",
+      password: hash("ARCHER"),
+      streetAddress: "123 Some Street ",
+      city: "Some City",
+      state: "California",
+      zipcode: "12345",
+      billStreetAddress: "123 Some Street ",
+      billCity: "Some City",
+      billState: "California",
+      billZipcode: "12345",
       isAdmin: true
     },
     {
-      firstName: 'Paul',
-      lastName: 'Blackburn',
-      username: 'pb',
-      email: 'saber@gmail.com',
-      password: hash('SABER')
+      firstName: "Rob",
+      lastName: "Wise",
+      username: "rw",
+      email: "caster@gmail.com",
+      password: hash("CASTER"),
+      isAdmin: true
     },
     {
-      firstName: 'Dominique',
-      lastName: 'Boyer',
-      username: 'db',
-      email: 'dom@gmail.com',
-      password: hash('DOM')
+      firstName: "Paul",
+      lastName: "Blackburn",
+      username: "pb",
+      email: "saber@gmail.com",
+      password: hash("SABER"),
+      streetAddress: "888 New Street ",
+      city: "New Town",
+      state: "California",
+      zipcode: "78787",
+      billStreetAddress: "888 New Street ",
+      billCity: "New Town",
+      billState: "California",
+      billZipcode: "78787",
+      isAdmin: false
+    },
+    {
+      firstName: "Dominique",
+      lastName: "Boyer",
+      username: "db",
+      email: "dom@gmail.com",
+      password: hash("DOM")
     }
   ];
 
@@ -59,94 +68,94 @@ const syncAndSeed = async () => {
   );
 
   const products = [
-    { productName: 'Rocket Powered Roller Skates', inventory: 5 },
+    { productName: "Rocket Powered Roller Skates", inventory: 5 },
     {
-      productName: 'Jet Propelled Tennis Shoes',
+      productName: "Jet Propelled Tennis Shoes",
       inventory: 3,
       imageURL:
-        'https://storage.googleapis.com/thehundreds/media/2018/09/jet-propelled-tennis-shoes-fleet-foot.png',
+        "https://storage.googleapis.com/thehundreds/media/2018/09/jet-propelled-tennis-shoes-fleet-foot.png",
       price: 49.99
     },
     {
-      productName: 'Artificial Rock',
+      productName: "Artificial Rock",
       inventory: 4,
       imageURL:
-        'https://storage.googleapis.com/thehundreds/media/2018/09/artifial-rock-acme.png',
+        "https://storage.googleapis.com/thehundreds/media/2018/09/artifial-rock-acme.png",
       price: 39.99
     },
     {
-      productName: 'Jet Propelled Pogo Stick',
+      productName: "Jet Propelled Pogo Stick",
       inventory: 10,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/4/4d/Jet-Propelled_Pogo-Stick.png/revision/latest/scale-to-width-down/100?cb=20150117160112',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/4/4d/Jet-Propelled_Pogo-Stick.png/revision/latest/scale-to-width-down/100?cb=20150117160112",
       price: 129.99
     },
     {
-      productName: 'Boomerang',
+      productName: "Boomerang",
       inventory: 8,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/7/7c/Boomerang.png/revision/latest?cb=20150117032356',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/7/7c/Boomerang.png/revision/latest?cb=20150117032356",
       price: 79.99
     },
     {
-      productName: 'Super Outfit',
+      productName: "Super Outfit",
       inventory: 9,
-      imageURL: 'https://pbs.twimg.com/media/DQdsYXLX4AAWvWf.jpg',
+      imageURL: "https://pbs.twimg.com/media/DQdsYXLX4AAWvWf.jpg",
       price: 19.99
     },
     {
-      productName: 'Bat Man Outfit',
+      productName: "Bat Man Outfit",
       inventory: 7,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/d/da/Bat-Man%27s_Outfit.png/revision/latest/scale-to-width-down/150?cb=20150115225343',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/d/da/Bat-Man%27s_Outfit.png/revision/latest/scale-to-width-down/150?cb=20150115225343",
       price: 19.99
     },
     {
-      productName: 'Anvil',
+      productName: "Anvil",
       inventory: 50,
       imageURL:
-        'https://images-na.ssl-images-amazon.com/images/I/51O2UPm7CuL.jpg',
+        "https://images-na.ssl-images-amazon.com/images/I/51O2UPm7CuL.jpg",
       price: 199.99
     },
     {
-      productName: 'Iron Carrot',
+      productName: "Iron Carrot",
       inventory: 25,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/7/7f/Iron_Carrot.png/revision/latest?cb=20150115210803',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/7/7f/Iron_Carrot.png/revision/latest?cb=20150115210803",
       price: 29.99
     },
     {
-      productName: 'Rocket Sled',
+      productName: "Rocket Sled",
       inventory: 1,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/4/4a/Rocket_Sled.png/revision/latest/scale-to-width-down/150?cb=20150117002527',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/4/4a/Rocket_Sled.png/revision/latest/scale-to-width-down/150?cb=20150117002527",
       price: 499.99
     },
     {
-      productName: 'Giant Rubber Band',
+      productName: "Giant Rubber Band",
       inventory: 5,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/f/f2/Giant_Rubber_Band_V3.png/revision/latest/scale-to-width-down/150?cb=20150116050517'
+        "https://vignette.wikia.nocookie.net/looneytunes/images/f/f2/Giant_Rubber_Band_V3.png/revision/latest/scale-to-width-down/150?cb=20150116050517"
     },
     {
-      productName: 'Jet Propelled Unicycle',
+      productName: "Jet Propelled Unicycle",
       inventory: 2,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/1/13/Jet-Propelled_Unicycle.png/revision/latest?cb=20150117160141',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/1/13/Jet-Propelled_Unicycle.png/revision/latest?cb=20150117160141",
       price: 299.99
     },
     {
-      productName: 'Axle Grease',
+      productName: "Axle Grease",
       inventory: 2,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/d/d1/Axle_Grease.png/revision/latest/scale-to-width-down/150?cb=20150117034005',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/d/d1/Axle_Grease.png/revision/latest/scale-to-width-down/150?cb=20150117034005",
       price: 9.99
     },
     {
-      productName: 'Dehydrated Boulders',
+      productName: "Dehydrated Boulders",
       inventory: 2,
       imageURL:
-        'https://vignette.wikia.nocookie.net/looneytunes/images/7/76/Dehydrated_Boudlers.png/revision/latest?cb=20150116011522',
+        "https://vignette.wikia.nocookie.net/looneytunes/images/7/76/Dehydrated_Boudlers.png/revision/latest?cb=20150116011522",
       price: 299.99
     }
   ];
@@ -169,16 +178,16 @@ const syncAndSeed = async () => {
   ] = await Promise.all(products.map(product => Product.create(product)));
 
   const orders = [
-    { userId: dominiqueUser.id, total: 198.97, status: 'completed' },
-    { userId: dominiqueUser.id, total: 99.97, status: 'completed' },
+    { userId: dominiqueUser.id, total: 198.97, status: "completed" },
+    { userId: dominiqueUser.id, total: 99.97, status: "completed" },
     { userId: dominiqueUser.id, total: 279.94 },
-    { userId: dominiqueUser.id, total: 59.97, status: 'completed' },
-    { userId: dominiqueUser.id, total: 1059.92, status: 'completed' },
-    { userId: robUser.id, total: 499.99, status: 'completed' },
+    { userId: dominiqueUser.id, total: 59.97, status: "completed" },
+    { userId: dominiqueUser.id, total: 1059.92, status: "completed" },
+    { userId: robUser.id, total: 499.99, status: "completed" },
     { userId: robUser.id, total: 398.98 },
-    { userId: robUser.id, total: 288.99, status: 'completed' },
-    { userId: robUser.id, total: 649.93, status: 'completed' },
-    { userId: robUser.id, total: 299.95, status: 'completed' }
+    { userId: robUser.id, total: 288.99, status: "completed" },
+    { userId: robUser.id, total: 649.93, status: "completed" },
+    { userId: robUser.id, total: 299.95, status: "completed" }
   ];
   const [
     order1,
@@ -328,6 +337,21 @@ const syncAndSeed = async () => {
   ] = await Promise.all(
     orderProducts.map(orderProduct => OrderProducts.create(orderProduct))
   );
+  return {
+    products: {
+      product1,
+      product2
+    },
+    users: {
+      jamesUser,
+      paulUser,
+      dominiqueUser
+    },
+    orders: {
+      order1,
+      order2
+    }
+  };
 };
 
 module.exports = syncAndSeed;

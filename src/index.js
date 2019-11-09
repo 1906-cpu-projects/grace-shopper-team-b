@@ -1,9 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
 import { render } from 'react-dom';
-import { HashRouter, Switch, Link, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
-// import { ToastContainer, toast } from 'react-toastify';
 
 import Home from './pages/Home';
 import Products from './components/Products';
@@ -17,13 +16,12 @@ import OrderHistory from './components/OrderHistory';
 import store, {
   attemptSessionLogin,
   setProductsThunk,
-  setUsersThunk,
   setOrdersThunk,
   setOrderProductsThunk,
   setOrderHistoryThunk
 } from './redux/store';
 import CheckOut from './components/CheckOut';
-import NewUser from './forms/NewUser';
+import PaymentPage from './components/PaymentPage';
 
 const root = document.querySelector('#root');
 
@@ -35,7 +33,6 @@ class _App extends Component {
   async componentDidMount() {
     store.dispatch(setProductsThunk());
     store.dispatch(attemptSessionLogin());
-    // store.dispatch(setUsersThunk());
     store.dispatch(setOrdersThunk());
     store.dispatch(setOrderProductsThunk());
     store.dispatch(setOrderHistoryThunk());
@@ -50,14 +47,19 @@ class _App extends Component {
           <Route component={Nav} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/admin" component={Admin} />
+            <Route
+              exact
+              path="/admin/:id"
+              render={props => <Admin {...props} />}
+            />
             <Route exact path="/products" component={Products} />
+            <Route exact path="/users/:id/checkout" component={CheckOut} />
+            <Route exact path="/users/:id/payment" component={PaymentPage} />
             <Route
               exact
               path="/users/:id/cart"
               render={props => <Cart {...props} />}
             />
-            <Route exact path="/users/:id/checkout" component={CheckOut} />
             <Route exact path="/orders/:id" component={OrderHistory} />
             <Route
               exact

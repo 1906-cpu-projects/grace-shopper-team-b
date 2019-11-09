@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout, addNewUser, attemptLogin } from '../redux/store';
+import { logout, addNewUserThunk } from '../redux/store';
 import NewUser from '../forms/NewUser';
 import Login from '../pages/Login';
 
@@ -11,9 +11,11 @@ const initialState = {
 };
 
 class _Home extends React.Component {
-  state = initialState;
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
+  // state = initialState;
+  constructor() {
+    super();
+    this.state = initialState;
+    // this.routeChange = this.routeChange.bind(this);
   }
 
   render() {

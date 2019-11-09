@@ -1,51 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import UserUpdateForm from '../forms/UserUpdateForm';
-import store, { setUsersThunk } from '../redux/store';
-
-// const _User = ({ users, auth, match }) => {
-//   store.dispatch(setUsersThunk());
-
-//   const _user = { ...users.find(_user => _user.id === match.params.id) };
-//   console.log(_user);
-//   return (
-//     <div>
-//       <ul>
-//         <li className={'user'} key={_user.id}>
-//           <h3>User Info</h3>
-//           Name: {_user.firstName} {_user.lastName}
-//           <br />
-//           Username: {_user.username} <br />
-//           Email: {_user.email}
-//           <br />
-//           Password: {_user.password}
-//           <br />
-//           <br />
-//           <br />
-//           <h3>Shipping Address</h3>Street Address: {_user.streetAddress} <br />
-//           City: {_user.city} <br />
-//           State: {_user.state} <br />
-//           ZIP Code: {_user.zipcode} <br />
-//           <br />
-//           <br />
-//           <h3>Billing Address</h3>
-//           Street Address: {_user.billStreetAddress} <br />
-//           City: {_user.billCity} <br />
-//           State: {_user.billState} <br />
-//           ZIP Code: {_user.billZipcode} <br />
-//         </li>
-//       </ul>
-
-//       <UserUpdateForm match={this.props.match.params.id} auth={_user} />
-//     </div>
-//   );
-// };
+import React from "react";
+import { connect } from "react-redux";
+import UserUpdateForm from "../forms/UserUpdateForm";
+import store, { setUsersThunk } from "../redux/store";
 
 class User extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
+  async componentDidMount() {
     store.dispatch(setUsersThunk());
   }
   render() {
@@ -55,7 +17,7 @@ class User extends React.Component {
     return (
       <div>
         <ul>
-          <li className={'user'} key={_user.id}>
+          <li className={"user"} key={_user.id}>
             <h3>User Info</h3>
             Name: {_user.firstName} {_user.lastName}
             <br />
@@ -63,7 +25,7 @@ class User extends React.Component {
             Email: {_user.email}
             <br />
             <br />
-            <h3>Shipping Address</h3>Street Address: {_user.streetAddress}{' '}
+            <h3>Shipping Address</h3>Street Address: {_user.streetAddress}{" "}
             <br />
             City: {_user.city} <br />
             State: {_user.state} <br />
@@ -86,12 +48,3 @@ class User extends React.Component {
 
 const mapStateToProps = state => ({ users: state.users, auth: state.auth });
 export default connect(mapStateToProps)(User);
-
-// const User = connect(({ users, auth }) => {
-//   return {
-//     users,
-//     auth
-//   };
-// })(_User);
-
-// export default User;

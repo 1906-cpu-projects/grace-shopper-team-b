@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { SET_AUTH } from './constants';
+import axios from "axios";
+import { SET_AUTH } from "./constants";
 import {
   setProductsAction,
   setUsersAction,
@@ -17,7 +17,7 @@ import {
   deleteProductAction,
   deleteUserAction,
   deleteOrderAction
-} from './actions';
+} from "./actions";
 
 // import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
@@ -30,22 +30,22 @@ import {
 
 export const attemptLogin = (credentials, history) => {
   return async dispatch => {
-    const auth = (await axios.post('/api/sessions', credentials)).data;
+    const auth = (await axios.post("/api/sessions", credentials)).data;
     dispatch({ type: SET_AUTH, auth });
-    history.push('/');
+    history.push("/");
   };
 };
 
 export const attemptSessionLogin = () => {
   return async dispatch => {
-    const auth = (await axios.get('/api/sessions')).data;
+    const auth = (await axios.get("/api/sessions")).data;
     dispatch({ type: SET_AUTH, auth });
   };
 };
 
 export const logout = () => {
   return async dispatch => {
-    await axios.delete('/api/sessions');
+    await axios.delete("/api/sessions");
     dispatch({ type: SET_AUTH, auth: {} });
   };
 };
@@ -54,33 +54,51 @@ export const logout = () => {
 
 export const setProductsThunk = () => {
   return async dispatch => {
-    const allProducts = (await axios.get('/api/products')).data;
+    const allProducts = (await axios.get("/api/products")).data;
     dispatch(setProductsAction(allProducts));
   };
 };
 
-export const addProductThunk = () => {
-  // Add Product Thunk
+export const addProductThunk = product => {
+  console.log("THUNKS ", product);
+  return async dispatch => {
+    const newProduct = await axios.post("/api/products", product);
+    dispatch(addProductAction(newProduct.data));
+  };
 };
 
-export const updateProductThunk = () => {
-  //Update Product Thunk
+export const updateProductThunk = product => {
+  return async dispatch => {
+    await axios.put(`/api/products/${product.id}`, {
+      productName: product.productName,
+      description: product.description,
+      price: product.price,
+      imageURL: product.imageURL,
+      inventory: product.inventory
+    }).data;
+
+    dispatch(updateProductAction(product));
+  };
 };
 
-export const deleteProductThunk = () => {
-  //Delete Product Thunk
+export const deleteProductThunk = product => {
+  return async dispatch => {
+    await axios.delete(`/api/products/${product.id}`);
+    dispatch(deleteProductAction(product));
+  };
 };
 
 ////////////////////////     USERS - THUNKS    //////////////////////////
 
 export const setUsersThunk = () => {
   return async dispatch => {
-    const allUsers = (await axios.get('/api/users')).data;
+    const allUsers = (await axios.get("/api/users")).data;
     // console.log('THUNKS ', allUsers);
     dispatch(setUsersAction(allUsers));
   };
 };
 
+<<<<<<< HEAD
 export const addNewUser = (newUser, history) => {
   return async dispatch => {
     const user = (await axios.post('/api/users', newUser)).data;
@@ -91,6 +109,12 @@ export const addNewUser = (newUser, history) => {
       dispatch(addUserAction(user));
       history.push('/');
     }
+=======
+export const addNewUserThunk = newUser => {
+  return async dispatch => {
+    const user = (await axios.post("/api/users", newUser)).data;
+    dispatch(addUserAction(user));
+>>>>>>> 7ced249fb33ea7b78a233f3c41fe1f479a235430
   };
 };
 
@@ -146,54 +170,64 @@ export const updateUserThunk = (
   };
 };
 
-export const deleteUserThunk = () => {
-  //Delete User Thunk
+export const deleteUserThunk = user => {
+  return async dispatch => {
+    await axios.delete(`/api/users/${user.id}`);
+    dispatch(deleteUserAction(user));
+  };
 };
 
 ////////////////////////     ORDERS - THUNKS    //////////////////////////
 
 export const setOrdersThunk = () => {
   return async dispatch => {
-    const allOrders = (await axios.get('/api/orders')).data;
+    const allOrders = (await axios.get("/api/orders")).data;
     dispatch(setOrdersAction(allOrders));
   };
 };
 
 export const updateOrderThunk = order => {
   return async dispatch => {
-    const updated = (await axios.put(`/api/orders/${order.id}`, order)).data;
-    dispatch(updateOrder(updated));
+    await axios.put(`/api/orders/${order.id}`,{
+      id: order.id,
+      total: order.total,
+      items: order.items
+    }).data;
+    dispatch(updateOrder(order));
   };
 };
 
-export const deleteOrderThunk = () => {
-  //Delete Order
+export const deleteOrderThunk = order => {
+  return async dispatch => {
+    await axios.delete(`/api/orders/${order.id}`);
+    dispatch(deleteOrderAction(order));
+  };
 };
 
 ////////////////////////     ORDERED PRODUCTS - THUNKS    //////////////////////////
 export const setOrderProductsThunk = () => {
   return async dispatch => {
-    const allOrderProducts = (await axios.get('/api/orderProducts')).data;
+    const allOrderProducts = (await axios.get("/api/orderProducts")).data;
     dispatch(setOrderProducts(allOrderProducts));
   };
 };
 
 export const addOrderProductThunk = payload => {
   return async dispatch => {
-    const item = (await axios.post('/api/orderProducts', payload)).data;
+    const item = (await axios.post("/api/orderProducts", payload)).data;
     dispatch(addOrderProduct(item));
   };
 };
 
 export const updateOrderProductThunk = cartItem => {
-  console.log('cart', cartItem);
+  // console.log("cart item in THunKS", cartItem);
   return async dispatch => {
-    const updated = (await axios.put(
-      `/api/orderProducts/${cartItem.id}`,
-      cartItem
-    )).data;
-    console.log('updated', updated);
-    dispatch(updateOrderProduct(updated));
+    await axios.put(`/api/orderProducts/${cartItem.id}`, {
+      id: cartItem.id,
+      quantity: cartItem.quantity,
+      subTotal: cartItem.subTotal
+    }).data;
+    dispatch(updateOrderProduct(cartItem));
   };
 };
 
@@ -207,14 +241,14 @@ export const deleteOrderProductsThunk = id => {
 ////////////////////////     ORDER HISTORY - THUNKS    //////////////////////////
 export const setOrderHistoryThunk = () => {
   return async dispatch => {
-    const allOrderHistory = (await axios.get('/api/completedorders/')).data;
+    const allOrderHistory = (await axios.get("/api/completedorders/")).data;
     dispatch(setOrderHistoryAction(allOrderHistory));
   };
 };
 
 export const setUserOrderHistoryThunk = () => {
   return async dispatch => {
-    const allOrderHistory = (await axios.get('/api/completedorders/')).data;
+    const allOrderHistory = (await axios.get("/api/completedorders/")).data;
     dispatch(setOrderHistoryAction(allOrderHistory));
   };
 };
