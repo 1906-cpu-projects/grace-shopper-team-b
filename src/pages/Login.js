@@ -28,6 +28,7 @@ class _Login extends Component {
   onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
+
   render() {
     const { error, email, password } = this.state;
     const { onCloseLoginClick } = this.props || {};

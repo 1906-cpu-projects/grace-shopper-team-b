@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import {
   attemptLogin,
   attemptSessionLogin,
-  addNewUser,
   logout,
   setProductsThunk,
   setUsersThunk,
@@ -47,7 +46,6 @@ export {
 export {
   attemptLogin,
   attemptSessionLogin,
-  addNewUser,
   logout,
   setProductsThunk,
   setOrdersThunk,

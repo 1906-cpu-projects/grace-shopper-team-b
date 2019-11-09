@@ -7,10 +7,15 @@ const { models } = db;
 const { Product, User, Order, OrderProducts } = models;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const dotenv = require('dotenv');
 =======
 const dotenv = require("dotenv");
 >>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
+=======
+
+const dotenv = require("dotenv");
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
 dotenv.config();
 const stripeSecretKey = process.env.stripeSecretKey;
 const stripeLoader = require('stripe');
@@ -160,6 +165,7 @@ app.delete('/products/:id', (req, res, next) => {
 });
 
 app.get('/orders', (req, res, next) => {
+<<<<<<< HEAD
   // const activeUser = req.session.user;
   // if (!activeUser) {
   //   res.send(`
@@ -168,6 +174,8 @@ app.get('/orders', (req, res, next) => {
   // `);
   // }
   // if (activeUser && activeUser.isAdmin === true) {
+=======
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   Order.findAll({
     include: [
       {
@@ -189,7 +197,6 @@ app.get('/orders', (req, res, next) => {
   })
     .then(orders => res.send(orders))
     .catch(next);
-  // }
 });
 
 app.get('/orders/:id', (req, res, next) => {
@@ -209,12 +216,19 @@ app.put('/orders/:id', (req, res, next) => {
   Order.findByPk(req.body.id)
     .then(order => {
 <<<<<<< HEAD
+<<<<<<< HEAD
       console.log('order in api', order);
       console.log('req.body', req.body);
 =======
       console.log("order in api", order);
       console.log("req.body", req.body);
 >>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
+=======
+
+      console.log("order in api", order);
+      console.log("req.body", req.body);
+
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
       order.update({
         total: req.body.total,
         items: req.body.items
@@ -264,11 +278,18 @@ app.get('/orderProducts', (req, res, next) => {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post('/orderProducts', async (req, res, next) => {
 =======
 app.post("/orderproducts", async (req, res, next) => {
   //let item = null;
 >>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
+=======
+
+app.post("/orderproducts", async (req, res, next) => {
+  //let item = null;
+
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   Order.findOne({
     where: {
       status: 'cart',
@@ -321,7 +342,11 @@ app.put('/orderProducts/:id', async (req, res, next) => {
 =======
 app.put("/orderProducts/:id", async (req, res, next) => {
   console.log("req.body for order products", req.body);
+<<<<<<< HEAD
 >>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
+=======
+
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   OrderProducts.findByPk(req.body.id)
     .then(item =>
       item.update({
@@ -435,12 +460,17 @@ const charge = (token, amt) => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post('/checkout', async (req, res, next) => {
   console.log('request: ', req.body);
 =======
 app.post("/checkout", async (req, res, next) => {
   console.log("request: ", req.body);
 >>>>>>> 4632326bed0a81b8896c64ce53ae83b0f1375f21
+=======
+app.post("/checkout", async (req, res, next) => {
+  console.log("request: ", req.body);
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   try {
     let data = await charge(req.body.token.id, req.body.amount);
     console.log("data", data);
@@ -450,7 +480,6 @@ app.post("/checkout", async (req, res, next) => {
     res.sendStatus(500);
   }
 });
-////////////
 
 // Page Not Fount Route
 app.get('*', (req, res) => {

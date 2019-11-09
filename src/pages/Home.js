@@ -1,26 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import { logout, addNewUserThunk } from '../redux/store';
 import NewUser from '../forms/NewUser';
 import Login from '../pages/Login';
+=======
+import { logout } from '../redux/store';
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
 
 const initialState = {
   email: '',
-  password: '',
-  showSignUpModal: false
+  password: ''
 };
 
 class _Home extends React.Component {
-  // state = initialState;
   constructor() {
     super();
     this.state = initialState;
+<<<<<<< HEAD
     // this.routeChange = this.routeChange.bind(this);
+=======
+>>>>>>> 5302b103361f687ae8fd749a5bca49ecc0010ab0
   }
 
   render() {
-    const { auth, logout, addNewUser } = this.props;
-    const { showSignUpModal } = this.state;
+    const { auth, logout } = this.props;
 
     return (
       <div className="container">
