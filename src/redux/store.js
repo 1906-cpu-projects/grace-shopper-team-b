@@ -1,5 +1,5 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import {
   attemptLogin,
   attemptSessionLogin,
@@ -19,15 +19,15 @@ import {
   deleteProductThunk,
   deleteUserThunk,
   deleteOrderThunk
-} from './thunks';
+} from "./thunks";
 
-import { reducer } from './reducer';
+import { reducer } from "./reducer";
 import {
   addUserAction,
   setProductsAction,
   setUsersAction,
   setOrderHistoryAction
-} from './actions';
+} from "./actions";
 
 //////////////////////////////////////////////////////////////////////////
 ////////////////////////  REDUX - CREATE STORE  ///////////////////////////
