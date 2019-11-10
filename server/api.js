@@ -416,14 +416,29 @@ const charge = (token, amt) => {
 
 app.post("/checkout", async (req, res, next) => {
   console.log("request: ", req.body);
+  let status;
   try {
-    let data = await charge(req.body.token.id, req.body.amount);
-    console.log("data", data);
-    res.send("Charged!");
+  const {token, order} = req.body;
+    const customer = await stripe.customers.create({
+      email: token.email,
+      source: token.id
+    })
+    const charge = await stripe.charges.create(
+      {
+        amount: (order.total * 100).toFixed(0),
+        currency: 'usd',
+        customer: customer.id,
+        description: 'Purchased from Acme Store',
+
+      });
+    // console.log('charge:', {charge});
+    status ="success"
   } catch (er) {
-    console.log(er);
+    // console.log(er);
+    status = 'failure'
     res.sendStatus(500);
   }
+  res.json({ status});
 });
 
 // Page Not Fount Route
