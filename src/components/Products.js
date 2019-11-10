@@ -9,9 +9,6 @@ class _Products extends Component {
     this.addToCart = this.addToCart.bind(this);
     this.updateInventory= this.updateInventory.bind(this);
   }
-  componentDidMount(){
-    this.props.set
-  }
   addToCart(item) {
     console.log('item added to cart', item);
     this.props.addToCart(item);

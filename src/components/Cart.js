@@ -6,9 +6,14 @@ import {
   setOrdersThunk,
 
 } from '../redux/store';
-import axios from 'axios';
 import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
 import { Link } from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
+import {toast } from 'react-toastify';
+
+
+toast.configure()
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -23,21 +28,22 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.updateOrder = this.updateOrder.bind(this);
+    this.completeOrder = this.completeOrder.bind(this);
     this.updateInventoryFromDelete = this.updateInventoryFromDelete.bind(this);
     this.updateInventoryFromQuantity = this.updateInventoryFromQuantity.bind(this);
-    this.changePage = this.changePage.bind(this)
+    this.changePage = this.changePage.bind(this);
+    this.handleToken = this.handleToken.bind(this);
   }
   async componentDidMount(props) {
     await this.props.setOrders()
-    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
-    // const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    // console.log('order in componentDidmount', order)
+    const order = this.props.orders.find(order => order.status === 'cart' && order.userId === this.props.match.params.id)
     this.setState({
       id: order.id,
       userId: order.userId,
       status: order.status,
       total: order.total,
-      items: order.items
+      items: order.items,
+      payment:''
     });
   }
   deleteItem(id) {
@@ -73,8 +79,25 @@ class _Cart extends React.Component {
   updateOrder(cartTotal){
     this.props.updateOrder({...this.state, total: cartTotal })
   }
+  completeOrder(){
+    this.props.updateOrder({...this.state, status: 'completed' })
+  }
+  async handleToken(token){
+    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
+    const response = await axios.post('/api/checkout', {
+      token,
+      order
+    })
+    const {status} = response.data;
+    if(status==='success'){
+      toast('Success! Payment went through.', {type: 'success'})
+      this.changePage()
+    } else{
+      toast('Something went wrong!', {type: 'error'})
+    }
+  }
   render() {
-    const { id, items } = this.state;
+    const { id, items, payment } = this.state;
     const { auth, orders } = this.props;
     if (id === undefined) {
       return (
@@ -83,6 +106,7 @@ class _Cart extends React.Component {
           If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
         </div>);
     }
+
     const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
     const itemsCount = total => {
       if (total === 1) {
@@ -120,7 +144,6 @@ class _Cart extends React.Component {
                       <select onChange={(ev)=> {
                         this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
                         this.updateInventoryFromQuantity(item, ev.target.value)
-
                         location.reload()
                         }}>
                         {
@@ -153,15 +176,11 @@ class _Cart extends React.Component {
           </h5>
 
           Please refresh page for accruate portroyal of cart! Thank you!
-          <button
-            className="btn btn-outline-success"
-            onClick={()=> {
-              this.updateOrder(Number(totalPrice))
-              this.changePage()
-            }}
-          >
-            Proceed to Payment
-          </button>
+          <StripeCheckout
+          stripeKey='pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT'
+          token={this.handleToken}
+          amount={totalPrice*100}
+          name={`Order ID#${id}`}/>
         </div>
       </div>
       );
@@ -191,3 +210,4 @@ const Cart = connect(
 )(_Cart);
 
 export default Cart;
+

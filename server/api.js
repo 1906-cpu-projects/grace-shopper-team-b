@@ -180,8 +180,16 @@ app.get("/orders", (req, res, next) => {
     .catch(next);
 });
 
+<<<<<<< HEAD
 app.get("/orders/:id", (req, res, next) => {
   Order.findAll({ where: { id: req.params.id } })
+||||||| merged common ancestors
+app.get('/orders/:id', (req, res, next) => {
+  Order.findAll({ where: { id: req.params.id } })
+=======
+app.get('/orders/:id', (req, res, next) => {
+  Order.findByPk(req.params.id)
+>>>>>>> c5bb80444a6856898d1f072720a6bbe6def9178d
     .then(order => res.send(order))
     .catch(next);
 });
@@ -271,7 +279,7 @@ app.post("/orderproducts", async (req, res, next) => {
       });
       // console.log('item in cart', itemAlreadyInCart)
       // console.log('req body', req.body)
-
+      let item
       if (!itemAlreadyInCart) {
         item = await OrderProducts.create({
           ...req.body,
@@ -413,14 +421,29 @@ const charge = (token, amt) => {
 
 app.post("/checkout", async (req, res, next) => {
   console.log("request: ", req.body);
+  let status;
   try {
-    let data = await charge(req.body.token.id, req.body.amount);
-    console.log("data", data);
-    res.send("Charged!");
+  const {token, order} = req.body;
+    const customer = await stripe.customers.create({
+      email: token.email,
+      source: token.id
+    })
+    const charge = await stripe.charges.create(
+      {
+        amount: (order.total * 100).toFixed(0),
+        currency: 'usd',
+        customer: customer.id,
+        description: 'Purchased from Acme Store',
+
+      });
+    // console.log('charge:', {charge});
+    status ="success"
   } catch (er) {
-    console.log(er);
+    // console.log(er);
+    status = 'failure'
     res.sendStatus(500);
   }
+  res.json({ status});
 });
 
 // Page Not Fount Route
