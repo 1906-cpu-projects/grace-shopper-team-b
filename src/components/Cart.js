@@ -12,6 +12,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import {toast } from 'react-toastify';
 
+
 toast.configure()
 
 class _Cart extends React.Component {
@@ -35,9 +36,7 @@ class _Cart extends React.Component {
   }
   async componentDidMount(props) {
     await this.props.setOrders()
-    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
-    // const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    // console.log('order in componentDidmount', order)
+    const order = this.props.orders.find(order => order.status === 'cart' && order.userId === this.props.match.params.id)
     this.setState({
       id: order.id,
       userId: order.userId,
@@ -85,15 +84,12 @@ class _Cart extends React.Component {
   }
   async handleToken(token){
     const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
-    // console.log('token', token)
     const response = await axios.post('/api/checkout', {
       token,
       order
     })
-    // console.log('response', response)
     const {status} = response.data;
     if(status==='success'){
-      // this.updateOrder(this.state.total, 'completed')
       toast('Success! Payment went through.', {type: 'success'})
       this.changePage()
     } else{
@@ -148,7 +144,6 @@ class _Cart extends React.Component {
                       <select onChange={(ev)=> {
                         this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
                         this.updateInventoryFromQuantity(item, ev.target.value)
-                        this.updateOrder(Number(totalPrice))
                         location.reload()
                         }}>
                         {

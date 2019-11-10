@@ -182,7 +182,7 @@ app.get('/orders', (req, res, next) => {
 });
 
 app.get('/orders/:id', (req, res, next) => {
-  Order.findAll({ where: { id: req.params.id } })
+  Order.findByPk(req.params.id)
     .then(order => res.send(order))
     .catch(next);
 });

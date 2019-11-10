@@ -1,15 +1,5 @@
 const Sequelize = require('sequelize');
-const {
-  TEXT,
-  ARRAY,
-  STRING,
-  DECIMAL,
-  INTEGER,
-  UUID,
-  UUIDV4,
-  DATE,
-  ENUM
-} = Sequelize;
+
 
 const conn = require('./conn');
 
