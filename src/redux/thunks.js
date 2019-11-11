@@ -170,11 +170,14 @@ export const setOrdersThunk = () => {
 };
 
 export const updateOrderThunk = order => {
+  console.log('order in thunks', order)
   return async dispatch => {
     await axios.put(`/api/orders/${order.id}`, {
       id: order.id,
+      userId: order.userId,
       total: order.total,
-      items: order.items
+      items: order.items,
+      status: order.status
     }).data;
     dispatch(updateOrder(order));
   };

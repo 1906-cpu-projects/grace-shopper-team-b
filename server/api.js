@@ -215,7 +215,8 @@ app.put("/orders/:id", (req, res, next) => {
 
       order.update({
         total: req.body.total,
-        items: req.body.items
+        items: req.body.items,
+        status: req.body.status
       });
     })
     .then(() => res.sendStatus(201))
