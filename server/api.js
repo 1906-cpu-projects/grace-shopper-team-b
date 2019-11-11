@@ -203,7 +203,8 @@ app.put('/orders/:id', (req, res, next) => {
 
       order.update({
         total: req.body.total,
-        items: req.body.items
+        items: req.body.items,
+        status: req.body.status
       });
     })
     .then(() => res.sendStatus(201))
@@ -418,7 +419,7 @@ app.post("/checkout", async (req, res, next) => {
   console.log("request: ", req.body);
   let status;
   try {
-  const {token, order} = req.body;
+  const {token, order, total} = req.body;
     const customer = await stripe.customers.create({
       email: token.email,
       source: token.id
@@ -431,7 +432,7 @@ app.post("/checkout", async (req, res, next) => {
         description: 'Purchased from Acme Store',
 
       });
-    // console.log('charge:', {charge});
+    console.log('charge:', {charge});
     status ="success"
   } catch (er) {
     // console.log(er);
