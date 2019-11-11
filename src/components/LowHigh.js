@@ -11,18 +11,18 @@ class _LowHigh extends Component {
     this.updateInventory= this.updateInventory.bind(this);
   }
   addToCart(item) {
-    console.log('item added to cart', item);
+    // console.log('item added to cart', item);
     this.props.addToCart(item);
   }
   updateInventory(item){
-    console.log('item for update', item )
+    // console.log('item for update', item )
     this.props.updateInventory({...item, inventory: item.inventory-1});
   }
   render() {
     const { products, auth } = this.props;
 
     const sorted = [...products].sort((a,b)=> (Number(a.price) > Number(b.price)) ? 1 : -1)
-    console.log(sorted)
+    // console.log(sorted)
     return (
       <div className="containerFluid">
 

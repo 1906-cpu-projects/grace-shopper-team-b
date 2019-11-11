@@ -16,6 +16,7 @@ import NewUser from './forms/NewUser';
 import ProductAZ from './components/ProductAZ';
 import LowHigh from './components/LowHigh';
 import HighLow from './components/HighLow';
+import AdminError from './components/AdminError';
 
 
 import store, {

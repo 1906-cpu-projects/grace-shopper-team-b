@@ -24,13 +24,16 @@ class _Products extends Component {
       <div className="containerFluid">
 
         <div className="sidebar">
-          Sort by:
+          <h3>Filter by:</h3>
           <br/>
           <Link to="/products/A-Z">A-Z</Link>
           <br/>
-          <Link>Highest Price - Lowest Price </Link>
           <br/>
-          <Link>LowestPrice - Highest Price </Link>
+          <Link to="/products/Price-High-Low">Highest Price - Lowest Price </Link>
+          <br/>
+          <br/>
+          <Link to="/products/Price-Low-High">LowestPrice - Highest Price </Link>
+          <br/>
           <br/>
         </div>
         <div id="products">

@@ -22,7 +22,6 @@ class _ProductAZ extends Component {
     const { products, auth } = this.props;
 
     const sorted = [...products].sort((a,b)=> (a.productName > b.productName) ? 1 : -1)
-    console.log(sorted)
     return (
       <div className="containerFluid">
 
@@ -32,7 +31,6 @@ class _ProductAZ extends Component {
           <Link to="/products/A-Z">A-Z</Link>
           <br/>
           <br/>
-
           <Link to="/products/Price-High-Low">Highest Price - Lowest Price </Link>
           <br/>
           <br/>
