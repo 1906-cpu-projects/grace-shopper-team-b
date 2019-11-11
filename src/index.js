@@ -13,6 +13,10 @@ import Login from './pages/Login';
 import User from './components/User';
 import OrderHistory from './components/OrderHistory';
 import NewUser from './forms/NewUser';
+import ProductAZ from './components/ProductAZ';
+import LowHigh from './components/LowHigh';
+import HighLow from './components/HighLow';
+
 
 import store, {
   attemptSessionLogin,
@@ -53,6 +57,9 @@ class _App extends Component {
               render={props => <Admin {...props} />}
             />
             <Route exact path="/products" component={Products} />
+            <Route exact path="/products/A-Z" component={ProductAZ} />
+            <Route exact path="/products/Price-Low-High" component={LowHigh} />
+            <Route exact path="/products/Price-High-Low" component={HighLow} />
             <Route exact path="/users/:id/checkout" component={CheckOut} />
             <Route exact path="/users/:id/payment" component={PaymentPage} />
             <Route

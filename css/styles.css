@@ -87,17 +87,30 @@ li {
   width: 33%;
   height: 50%;
 }
+
+.containerFluid {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  position: fixed;
+}
+
 #products {
+  margin-left: 210px;
   display: flex;
   flex-wrap: wrap;
 }
+
 
 #products > div {
   border: solid black 1px;
   margin: 1rem;
   padding: 1rem;
   border-radius: 5%;
-  width: (100% / 3 - 2);
+  width: 30%;
+  text-align: center;
 }
 
 #cartProducts {
@@ -198,3 +211,8 @@ img {
   font-weight: bold;
   align-self: flex-end;
 }
+
+.title {
+  text-align: center
+}
+
