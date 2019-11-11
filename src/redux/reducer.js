@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   SET_AUTH,
@@ -10,6 +10,7 @@ import {
   ADD_ORDERPRODUCT,
   ADD_PRODUCT,
   ADD_USER,
+  UPDATE_AUTH,
   UPDATE_USER,
   UPDATE_ORDER,
   UPDATE_ORDERPRODUCT,
@@ -18,7 +19,7 @@ import {
   DELETE_USER,
   DELETE_PRODUCT,
   DELETE_ORDER
-} from './constants';
+} from "./constants";
 
 const authReducer = (state = {}, action) => {
   if (action.type === SET_AUTH) {
@@ -34,7 +35,6 @@ const productReducer = (state = [], action) => {
     state = action.products;
   }
   if (action.type === ADD_PRODUCT) {
-    console.log('REDUCER ', action.product);
     return [...state, action.product];
   }
   if (action.type === UPDATE_PRODUCT) {
@@ -103,6 +103,7 @@ const orderReducer = (state = [], action) => {
     state = action.orders;
   }
   if (action.type === UPDATE_ORDER) {
+    // console.log('order from reducer', action.order)
     state = state.map(order =>
       order.id === action.order.id ? action.order : order
     );
@@ -121,6 +122,8 @@ const orderProdutsReducer = (state = [], action) => {
     state = state.filter(item => item.id !== action.id);
   }
   if (action.type === UPDATE_ORDERPRODUCT) {
+    // console.log('orderProduct from reducer', action.orderProduct)
+
     state = state.map(item =>
       item.id === action.orderProduct.id ? action.orderProduct : item
     );
@@ -128,6 +131,7 @@ const orderProdutsReducer = (state = [], action) => {
   if (action.type === ADD_ORDERPRODUCT) {
     state = [...state, action.orderProduct];
   }
+  // console.log('state from reducer', state)
   return state;
 };
 

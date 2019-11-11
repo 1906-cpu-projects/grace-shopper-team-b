@@ -4,22 +4,25 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addOrderProductThunk, updateProductThunk, setProductsThunk } from '../redux/store';
 
-class _Products extends Component {
+class _LowHigh extends Component {
   constructor() {
     super();
     this.addToCart = this.addToCart.bind(this);
     this.updateInventory= this.updateInventory.bind(this);
   }
   addToCart(item) {
-    console.log('item added to cart', item);
+    // console.log('item added to cart', item);
     this.props.addToCart(item);
   }
   updateInventory(item){
-    console.log('item for update', item )
+    // console.log('item for update', item )
     this.props.updateInventory({...item, inventory: item.inventory-1});
   }
   render() {
     const { products, auth } = this.props;
+
+    const sorted = [...products].sort((a,b)=> (Number(a.price) > Number(b.price)) ? 1 : -1)
+    // console.log(sorted)
     return (
       <div className="containerFluid">
 
@@ -29,6 +32,7 @@ class _Products extends Component {
           <Link to="/products/A-Z">A-Z</Link>
           <br/>
           <br/>
+
           <Link to="/products/Price-High-Low">Highest Price - Lowest Price </Link>
           <br/>
           <br/>
@@ -43,11 +47,9 @@ class _Products extends Component {
           <br/>
         </div>
         <div id="products">
-        {/* <h1>Our Products!</h1> */}
-          {products.map(product => (
+          {sorted.map(product => (
             <div key={product.id}>
               {" "}
-              <br />
               <h2>{product.productName}</h2>
               <img height="200" width="200" src={product.imageURL} /> <br />
               <br />
@@ -67,14 +69,14 @@ class _Products extends Component {
                     orderId: ''
                     })
                     this.updateInventory(product)
-                }}
-              >
+                }}>
                 Add to Cart
               </button>
             </div>
-          ))}
-        </div>
+        ))}
       </div>
+      </div>
+
     );
   }
 }
@@ -87,7 +89,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-const Products = connect(
+const LowHigh = connect(
   ({ products, auth }) => {
     return {
       products,
@@ -95,6 +97,6 @@ const Products = connect(
     };
   },
   dispatchToProps
-)(_Products);
+)(_LowHigh);
 
-export default Products;
+export default LowHigh;

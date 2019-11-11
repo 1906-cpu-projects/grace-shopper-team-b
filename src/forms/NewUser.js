@@ -1,13 +1,13 @@
-import React, { Component, Fragment, useState } from 'react';
-import { connect } from 'react-redux';
-import { addNewUser } from '../redux/thunks';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment, useState } from "react";
+import { connect } from "react-redux";
+import store, { addNewUserThunk } from "../redux/store";
+import PropTypes from "prop-types";
 
 const _NewUser = ({ addNewUser }) => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    password2: ''
+    email: "",
+    password: "",
+    password2: ""
   });
 
   const { email, password, password2 } = formData;
@@ -18,7 +18,7 @@ const _NewUser = ({ addNewUser }) => {
   const onSubmit = async ev => {
     ev.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do not match');
+      console.log("Passwords do not match");
     } else {
       addNewUser({ email, password });
     }
@@ -156,7 +156,7 @@ const NewUser = connect(
   null,
   (dispatch, { history }) => {
     return {
-      addNewUser: newUser => dispatch(addNewUser(newUser, history))
+      addNewUser: newUser => dispatch(addNewUserThunk(newUser, history))
     };
   }
 )(_NewUser);

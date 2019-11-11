@@ -6,9 +6,15 @@ import {
   setOrdersThunk,
 
 } from '../redux/store';
-import axios from 'axios';
 import { updateOrderThunk, updateProductThunk } from '../redux/thunks';
 import { Link } from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
+import {toast } from 'react-toastify';
+import {totalPrice, totalItems, itemsCount} from '../utilities/cart'
+
+
+toast.configure()
 
 class _Cart extends React.Component {
   constructor(props) {
@@ -23,21 +29,23 @@ class _Cart extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.updateOrder = this.updateOrder.bind(this);
+    this.completeOrder = this.completeOrder.bind(this);
     this.updateInventoryFromDelete = this.updateInventoryFromDelete.bind(this);
     this.updateInventoryFromQuantity = this.updateInventoryFromQuantity.bind(this);
-    this.changePage = this.changePage.bind(this)
+    this.changePage = this.changePage.bind(this);
+    this.handleToken = this.handleToken.bind(this);
   }
   async componentDidMount(props) {
     await this.props.setOrders()
-    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
-    // const order = (await axios.get(`api/orders/${this.props.match.params.id}/cart`)).data;
-    // console.log('order in componentDidmount', order)
+    // const order = this.props.orders.find(order => order.status === 'cart' && order.userId === this.props.match.params.id)
+    const order = (await axios.get(`/api/orders/${this.props.match.params.id}/cart`)).data
     this.setState({
       id: order.id,
       userId: order.userId,
       status: order.status,
       total: order.total,
-      items: order.items
+      items: order.items,
+      payment:''
     });
   }
   deleteItem(id) {
@@ -52,8 +60,9 @@ class _Cart extends React.Component {
   updateItem(item) {
     this.props.updateItem(item);
     this.setState({
-      items: this.state.items.filter(thing => thing.id=== item.id ? item: thing)
+      items: this.state.items.filter(thing => thing.id=== item.id ? item : thing)
     })
+    console.log('state', this.state)
   }
   updateInventoryFromQuantity(item, number){
     let updated ={};
@@ -71,11 +80,34 @@ class _Cart extends React.Component {
     this.props.updateInventory(updated)
   }
   updateOrder(cartTotal){
+    console.log('cartTotal', cartTotal)
+    this.setState({ total: cartTotal})
     this.props.updateOrder({...this.state, total: cartTotal })
   }
+  completeOrder(){
+    this.props.updateOrder({...this.state, status: 'completed' })
+  }
+  async handleToken(token){
+    const order = this.props.orders.find(order => order.status==='cart' && order.userId===this.props.match.params.id)
+    const response = await axios.post('/api/checkout', {
+      token,
+      order
+    })
+    const {status} = response.data;
+    if(status==='success'){
+      toast('Success! Payment went through.', {type: 'success'})
+      // this.setState({paymnent: 'completed'})
+      this.completeOrder()
+      this.changePage()
+    } else{
+      toast('Something went wrong!', {type: 'error'})
+    }
+  }
   render() {
-    const { id, items } = this.state;
+    const { id, items} = this.state;
     const { auth, orders } = this.props;
+    const order = this.props.orders.find(order => order.status === 'cart' && order.userId === this.props.match.params.id)
+    console.log('state', this.state)
     if (id === undefined) {
       return (
         <div>
@@ -83,18 +115,7 @@ class _Cart extends React.Component {
           If you wish to continue to shop, take a look at our {<Link to='/products'>Products</Link>}
         </div>);
     }
-    const totalItems = items.reduce((sum, item) => sum + Number(item.quantity),0 );
-    const itemsCount = total => {
-      if (total === 1) {
-        return '1 item';
-      }
-      if (total) {
-        return `${total} items`;
-      } else return '0 items';
-    };
-    const totalPrice = items
-      .reduce((sum, item) => sum + Number(item.subTotal), 0)
-      .toFixed(2);
+        const cartTotal = totalPrice(items);
     return (
       <div>
         <h2>{auth.firstName}'s Shopping Cart</h2>
@@ -119,8 +140,8 @@ class _Cart extends React.Component {
                       Quantity
                       <select onChange={(ev)=> {
                         this.updateItem({...item, quantity: ev.target.value, subTotal: ev.target.value*Number(item.price)})
+                        console.log('items', items)
                         this.updateInventoryFromQuantity(item, ev.target.value)
-
                         location.reload()
                         }}>
                         {
@@ -136,8 +157,9 @@ class _Cart extends React.Component {
                       <br />
                       <button className="btn btn-outline-success" onClick={() => {
                         this.deleteItem(item.id)
+                        this.setState({total: totalPrice})
                         this.updateInventoryFromDelete(item.product, item.quantity)
-                        this.updateOrder((Number(totalPrice)))
+                        this.updateOrder((Number(totalPrice)-Number(item.subTotal)))
                       }}>
                         Delete Item{' '}
                       </button>
@@ -148,20 +170,20 @@ class _Cart extends React.Component {
           </div>
         <div id="total">
           <h5>
-            Total ({itemsCount(totalItems)}
-            ): ${totalPrice}
+            Total ({itemsCount(totalItems(items))}
+            ): ${totalPrice(items)}
           </h5>
-
-          Please refresh page for accruate portroyal of cart! Thank you!
-          <button
-            className="btn btn-outline-success"
-            onClick={()=> {
-              this.updateOrder(Number(totalPrice))
-              this.changePage()
-            }}
-          >
-            Proceed to Payment
-          </button>
+          Please update cart total for accruate portroyal of cart! Thank you!
+          <button onClick={()=>{
+            this.setState({total: cartTotal})
+            this.updateOrder(cartTotal)
+          }}>
+          Update Cart Total</button>
+          <StripeCheckout
+          stripeKey='pk_test_G4F5UhFtJcLZieeW0kr1MQQa00ul9VeIdT'
+          token={this.handleToken}
+          amount={totalPrice*100}
+          name={`Order ID#${id}`}/>
         </div>
       </div>
       );
@@ -191,3 +213,4 @@ const Cart = connect(
 )(_Cart);
 
 export default Cart;
+

@@ -1,14 +1,7 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-
 import {StripeProvider, Elements} from 'react-stripe-elements';
-
 import PaymentForm from '../forms/PaymentForm';
-
-
-
 
 class _PaymentPage extends Component {
   constructor(props) {

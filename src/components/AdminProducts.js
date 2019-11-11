@@ -3,36 +3,7 @@ import { connect } from "react-redux";
 import { deleteProductThunk } from "../redux/thunks";
 import AdminProductUpdate from "../forms/AdminProductUpdate";
 
-class Admin extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      productName: "",
-      price: "",
-      inventory: "",
-      imageURL: "",
-      description: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  componentDidMount() {
-    const product = this.props.products.map(_product => _product);
-    const { productName, price, inventory, imageURL, description } = product;
-    this.setState({
-      productName: productName,
-      price: price,
-      inventory: inventory,
-      imageURL: imageURL,
-      description: description
-    });
-  }
-  handleChange(ev) {
-    this.setState({ [ev.target.name]: ev.target.value });
-  }
-  handleSubmit(ev) {
-    ev.preventDefault();
-  }
+class AdminProducts extends React.Component {
   render() {
     return (
       <div>
@@ -83,4 +54,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Admin);
+)(AdminProducts);
