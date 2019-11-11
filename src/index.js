@@ -17,7 +17,10 @@ import ProductAZ from './components/ProductAZ';
 import LowHigh from './components/LowHigh';
 import HighLow from './components/HighLow';
 import AdminError from './components/AdminError';
-
+import Under50 from './components/Under50';
+import CheckOut from "./components/CheckOut";
+import PaymentPage from "./components/PaymentPage";
+import Over50 from "./components/Over50";
 
 import store, {
   attemptSessionLogin,
@@ -26,8 +29,7 @@ import store, {
   setOrderProductsThunk,
   setOrderHistoryThunk
 } from "./redux/store";
-import CheckOut from "./components/CheckOut";
-import PaymentPage from "./components/PaymentPage";
+
 
 const root = document.querySelector("#root");
 
@@ -61,6 +63,8 @@ class _App extends Component {
             <Route exact path="/products/A-Z" component={ProductAZ} />
             <Route exact path="/products/Price-Low-High" component={LowHigh} />
             <Route exact path="/products/Price-High-Low" component={HighLow} />
+            <Route exact path="/products/UnderFifty" component={Under50} />
+            <Route exact path="/products/OverFifty" component={Over50} />
             <Route exact path="/users/:id/checkout" component={CheckOut} />
             <Route exact path="/users/:id/payment" component={PaymentPage} />
             <Route path="/adminError" component={AdminError} exact />

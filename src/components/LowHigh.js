@@ -39,6 +39,12 @@ class _LowHigh extends Component {
           <Link to="/products/Price-Low-High">LowestPrice - Highest Price </Link>
           <br/>
           <br/>
+          <Link to="/products/UnderFifty">Under 50</Link>
+          <br/>
+          <br/>
+          <Link to="/products/OverFifty">Over 50</Link>
+          <br/>
+          <br/>
         </div>
         <div id="products">
           {sorted.map(product => (
