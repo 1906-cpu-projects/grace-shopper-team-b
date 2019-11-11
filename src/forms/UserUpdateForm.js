@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updateUserThunk } from "../redux/store";
+import store, { updateUserThunk, setUsersThunk } from "../redux/store";
 
 class _UpdateUserForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log("C PROPS ", props);
     this.state = {
-      id: "",
       username: "",
       email: "",
       password: "",
@@ -24,10 +24,13 @@ class _UpdateUserForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentDidMount() {
-    const user = this.props.auth;
+
+  async componentDidMount() {
+    store.dispatch(setUsersThunk());
+    console.log("USERS ", this.props.users);
+    const user = this.props.user;
+    console.log("USER ", user);
     this.setState({
-      id: user.id,
       username: user.username,
       email: user.email,
       password: "",
@@ -138,7 +141,6 @@ class _UpdateUserForm extends React.Component {
                 value={this.state.password}
                 onChange={this.handleChange}
                 placeholder="Password"
-                required
               />
             </div>
 
@@ -288,7 +290,8 @@ class _UpdateUserForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  users: state.users
+  users: state.users,
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => {

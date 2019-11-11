@@ -15,7 +15,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_ORDER,
   ADD_PRODUCT
-} from './constants';
+} from "./constants";
 
 // ACTION CREATORS
 
@@ -46,7 +46,7 @@ export const addOrderProduct = orderProduct => ({
   orderProduct
 });
 export const addProductAction = product => (
-  console.log('ACTION ', product),
+  console.log("ACTION ", product),
   {
     type: ADD_PRODUCT,
     product: product
