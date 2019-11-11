@@ -64,7 +64,7 @@ app.get("/admin/users", (req, res, next) => {
   const activeUser = req.session.user;
   if (!activeUser || req.session.user.isAdmin === false) {
     return res.status(401).json({
-      message: "Auth Failed"
+      message: "Nice try, but I don't think so. Admins only my friend :)"
     });
   }
   return User.findAll()
@@ -89,33 +89,37 @@ app.get("/users/:id", (req, res, next) => {
 });
 
 app.put("/users/:id", (req, res, next) => {
-  User.findByPk(req.params.id)
-    .then(_user =>
-      _user.update({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        streetAddress: req.body.streetAddress,
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: req.body.zipcode,
-        billStreetAddress: req.body.billStreetAddress,
-        billCity: req.body.billCity,
-        billState: req.body.billState,
-        billZipcode: req.body.billZipcode
-      })
-    )
-    .then(() => res.sendStatus(201))
-    .catch(next);
+  if (req.session.user.id === req.params.id) {
+    return User.findByPk(req.params.id)
+      .then(_user =>
+        _user.update({
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          streetAddress: req.body.streetAddress,
+          city: req.body.city,
+          state: req.body.state,
+          zipcode: req.body.zipcode,
+          billStreetAddress: req.body.billStreetAddress,
+          billCity: req.body.billCity,
+          billState: req.body.billState,
+          billZipcode: req.body.billZipcode
+        })
+      )
+      .then(() => res.sendStatus(201))
+      .catch(next);
+  }
 });
 
 app.delete("/users/:id", (req, res, next) => {
-  User.findByPk(req.params.id)
-    .then(_user => _user.destroy())
-    .then(() => res.sendStatus(204))
-    .catch(next);
+  if (req.session.user.isAdmin === true) {
+    return User.findByPk(req.params.id)
+      .then(_user => _user.destroy())
+      .then(() => res.sendStatus(204))
+      .catch(next);
+  }
 });
 
 app.get("/products", (req, res, next) => {
@@ -131,29 +135,37 @@ app.get("/products/:id", (req, res, next) => {
 });
 
 app.post("/products", (req, res, next) => {
-  Product.create(req.body).then(_product => res.status(201).send(_product));
+  if (req.session.user.isAdmin === true) {
+    return Product.create(req.body).then(_product =>
+      res.status(201).send(_product)
+    );
+  }
 });
 
 app.put("/products/:id", (req, res, next) => {
-  Product.findByPk(req.params.id)
-    .then(_product =>
-      _product.update({
-        productName: req.body.productName,
-        description: req.body.description,
-        price: req.body.price,
-        imageURL: req.body.imageURL,
-        inventory: req.body.inventory
-      })
-    )
-    .then(() => res.sendStatus(201))
-    .catch(next);
+  if (req.session.user.isAdmin === true) {
+    return Product.findByPk(req.params.id)
+      .then(_product =>
+        _product.update({
+          productName: req.body.productName,
+          description: req.body.description,
+          price: req.body.price,
+          imageURL: req.body.imageURL,
+          inventory: req.body.inventory
+        })
+      )
+      .then(() => res.sendStatus(201))
+      .catch(next);
+  }
 });
 
 app.delete("/products/:id", (req, res, next) => {
-  Product.findByPk(req.params.id)
-    .then(_product => _product.destroy())
-    .then(() => res.sendStatus(204))
-    .catch(next);
+  if (req.session.user.isAdmin === true) {
+    return Product.findByPk(req.params.id)
+      .then(_product => _product.destroy())
+      .then(() => res.sendStatus(204))
+      .catch(next);
+  }
 });
 
 app.get("/orders", (req, res, next) => {
@@ -180,25 +192,19 @@ app.get("/orders", (req, res, next) => {
     .catch(next);
 });
 
-<<<<<<< HEAD
 app.get("/orders/:id", (req, res, next) => {
-  Order.findAll({ where: { id: req.params.id } })
-||||||| merged common ancestors
-app.get('/orders/:id', (req, res, next) => {
-  Order.findAll({ where: { id: req.params.id } })
-=======
-app.get('/orders/:id', (req, res, next) => {
   Order.findByPk(req.params.id)
->>>>>>> c5bb80444a6856898d1f072720a6bbe6def9178d
     .then(order => res.send(order))
     .catch(next);
 });
 
 app.delete("/orders/:id", (req, res, next) => {
-  Order.findByPk(req.params.id)
-    .then(_order => _order.destroy())
-    .then(() => res.sendStatus(204))
-    .catch(next);
+  if (req.session.user.isAdmin === true) {
+    return Order.findByPk(req.params.id)
+      .then(_order => _order.destroy())
+      .then(() => res.sendStatus(204))
+      .catch(next);
+  }
 });
 
 app.put("/orders/:id", (req, res, next) => {
@@ -279,7 +285,7 @@ app.post("/orderproducts", async (req, res, next) => {
       });
       // console.log('item in cart', itemAlreadyInCart)
       // console.log('req body', req.body)
-      let item
+      let item;
       if (!itemAlreadyInCart) {
         item = await OrderProducts.create({
           ...req.body,
@@ -423,27 +429,25 @@ app.post("/checkout", async (req, res, next) => {
   console.log("request: ", req.body);
   let status;
   try {
-  const {token, order} = req.body;
+    const { token, order } = req.body;
     const customer = await stripe.customers.create({
       email: token.email,
       source: token.id
-    })
-    const charge = await stripe.charges.create(
-      {
-        amount: (order.total * 100).toFixed(0),
-        currency: 'usd',
-        customer: customer.id,
-        description: 'Purchased from Acme Store',
-
-      });
+    });
+    const charge = await stripe.charges.create({
+      amount: (order.total * 100).toFixed(0),
+      currency: "usd",
+      customer: customer.id,
+      description: "Purchased from Acme Store"
+    });
     // console.log('charge:', {charge});
-    status ="success"
+    status = "success";
   } catch (er) {
     // console.log(er);
-    status = 'failure'
+    status = "failure";
     res.sendStatus(500);
   }
-  res.json({ status});
+  res.json({ status });
 });
 
 // Page Not Fount Route
