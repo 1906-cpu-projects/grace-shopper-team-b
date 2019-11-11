@@ -1,13 +1,8 @@
 const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'production',
-  output: {
-    filename: 'app.js',
-    path: path.join(__dirname, 'assets')
-  },
+  output: { filename: 'app.js', path: path.join(__dirname, 'assets') },
   module: {
     rules: [
       {
@@ -18,19 +13,11 @@ module.exports = {
           presets: ['@babel/preset-env', '@babel/react'],
           plugins: [
             ['@babel/transform-runtime'],
-            ['@babel/plugin-proposal-class-properties'],
-            [
-              new HTMLWebpackPlugin({
-                template: 'index.html'
-              })
-            ]
+            ['@babel/plugin-proposal-class-properties', { loose: true }]
           ]
         }
       },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
-      }
+      { test: /\.css$/i, use: ['style-loader', 'css-loader'] }
     ]
   }
 };
