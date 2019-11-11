@@ -1,13 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 
 import AdminNav from "./AdminNav";
 import AdminOrders from "./AdminOrders";
 import AdminProducts from "./AdminProducts";
 import AdminUsers from "./AdminUsers";
 import NewProductForm from "../forms/NewProductForm";
-import Login from "../pages/Login";
 
 class Admin extends React.Component {
   render() {
@@ -25,7 +24,7 @@ class Admin extends React.Component {
       newProductPath = "/login";
     }
     if (auth.isAdmin === false) {
-      adminPath = "/";
+      adminPath = "/adminError";
     }
     console.log("PROPS", this.props);
     return (
@@ -37,7 +36,6 @@ class Admin extends React.Component {
             <Route exact path={newProductPath} component={NewProductForm} />
             <Route exact path={productPath} component={AdminProducts} />
             <Route exact path={adminPath} component={AdminOrders} />
-            {/* <Redirect exact path="/login" component={Login} /> */}
           </Switch>
         </HashRouter>
       </div>

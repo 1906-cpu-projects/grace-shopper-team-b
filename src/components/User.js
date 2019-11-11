@@ -4,9 +4,6 @@ import UserUpdateForm from "../forms/UserUpdateForm";
 import store, { setUsersThunk } from "../redux/store";
 
 class User extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   async componentDidMount() {
     store.dispatch(setUsersThunk());
   }
@@ -14,6 +11,8 @@ class User extends React.Component {
     const _user =
       this.props.users.find(_user => _user.id === this.props.match.params.id) ||
       {};
+    console.log("USER PROPS ", this.props);
+    console.log("USER ", _user);
     return (
       <div>
         <ul>
@@ -40,7 +39,7 @@ class User extends React.Component {
           </li>
         </ul>
 
-        <UserUpdateForm match={this.props.match.params.id} auth={_user} />
+        <UserUpdateForm user={_user} match={this.props.match.params.id} />
       </div>
     );
   }

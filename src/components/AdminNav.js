@@ -22,7 +22,7 @@ class AdminNav extends React.Component {
       newProductPath = "/login";
     }
     if (auth.isAdmin === false) {
-      adminPath = "/";
+      adminPath = "/adminError";
     }
     return (
       <nav className="admin-nav">
@@ -42,41 +42,6 @@ class AdminNav extends React.Component {
     );
   }
 }
-
-// const AdminNav = ({ products, orders, users, auth }) => {
-//   const _auth = auth;
-//   console.log("AUTH ", _auth);
-//   let userPath = `/admin/users`;
-//   let productPath = `/admin/products`;
-//   let newProductPath = `/admin/newProduct`;
-//   let adminPath = `/admin/${_auth.id}`;
-
-//   if (auth.id === undefined) {
-//     userPath = "./login";
-//     adminPath = "/login";
-//     productPath = "/login";
-//     newProductPath = "/login";
-//   }
-//   if (auth.isAdmin === false) {
-//     adminPath = "/";
-//   }
-//   return (
-//     <nav className="admin-nav">
-//       <Link className="nav-link" to={adminPath}>
-//         Manage Orders ({orders.length})
-//       </Link>
-//       <Link className="nav-link" to={newProductPath}>
-//         Add a New Product
-//       </Link>
-//       <Link className="nav-link" to={productPath}>
-//         Manage Current Products ({products.length})
-//       </Link>
-//       <Link className="nav-link" to={userPath}>
-//         Manage Users ({users.length})
-//       </Link>
-//     </nav>
-//   );
-// };
 
 const mapStateToProps = state => ({
   users: state.users,
