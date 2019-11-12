@@ -103,29 +103,4 @@ app.post(
   }
 );
 
-// // Eliot's Signup
-
-// app.post('/signup', (req, res, next) => {
-//   if (!req.body.email || !req.body.password) {
-//     console.log('Missing requested information.');
-//     res.sendStatus(400);
-//   } else {
-//     const { email, password } = req.body;
-//     User.create({
-//       email,
-//       password: hash(password, process.env.SALT)
-//     })
-//       .then(() => {
-//         res.send({
-//           message: 'User created successfully!'
-//         });
-//       })
-//       .catch(ev => {
-//         res.status(500).send({
-//           message: ev.message
-//         });
-//       });
-//   }
-// });
-
 module.exports = app;

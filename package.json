@@ -1,15 +1,18 @@
 {
   "name": "grace-shopper-team-b",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.12.1"
+  },
   "description": "The Acme Store",
   "main": "index.js",
   "scripts": {
     "test:dev": "mocha ./src/tests/test-spec.js --watch",
     "start:dev": "npm run webpack:dev & nodemon ./server/server.js --ignore assets/",
-    "webpack": "webpack",
-    "webpack:dev": "npm run webpack -- --watch --mode=development",
-    "start": "node server.js",
-    "build": "npm run webpack"
+    "webpack:dev": "webpack --watch --mode=development",
+    "start": "node ./server/server.js",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -28,11 +31,17 @@
   },
   "homepage": "https://github.com/robcodehub/grace-shopper-team-b#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-brands-svg-icons": "^5.11.2",
+    "@fortawesome/free-regular-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "express-session-sequelize": "^2.1.0",
     "express-validator": "^6.2.0",
+    "html-webpack-plugin": "^3.2.0",
     "pg": "^7.12.1",
     "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^5.1.0",
@@ -41,7 +50,7 @@
     "stripe": "^7.13.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
+    "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
