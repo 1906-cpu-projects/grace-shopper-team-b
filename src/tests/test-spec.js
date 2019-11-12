@@ -1,9 +1,9 @@
 const { expect } = require("chai");
 const db = require("../../db/db");
+const app = require("supertest")(require("../../server/api"));
 
 //Supertest for routes and api testing
 //const app = require('supertest')(require('../../server/server.js'))
-
 
 describe("ACME Store", () => {
   let seed;
@@ -29,15 +29,24 @@ describe("ACME Store", () => {
     });
     //Rob's test 1
     it("checks that password is encrypted with all numbers", () => {
-      expect(((Number(seed.users.jamesUser.password)))).to.not.equal(NaN)
+      expect(Number(seed.users.jamesUser.password)).to.not.equal(NaN);
     });
     //Rob's test 2
     it("checks that encrypted password length is more than 30", () => {
-      expect((((seed.users.jamesUser.password.length)))).to.be.greaterThan(30)
-      expect((((seed.users.jamesUser.password.length)))).to.be.greaterThan(30)
+      expect(seed.users.jamesUser.password.length).to.be.greaterThan(30);
+      expect(seed.users.jamesUser.password.length).to.be.greaterThan(30);
     });
-
-
+    //Paul test 4
+    describe("GET /api/products", () => {
+      it("returns the products", () => {
+        return app
+          .get("/products")
+          .expect(200)
+          .then(response => {
+            expect(response.body.length).to.equal(14);
+          });
+      });
+    });
   });
 });
 
