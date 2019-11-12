@@ -451,7 +451,7 @@ app.post('/checkout', async (req, res, next) => {
 });
 ////////////
 
-// Page Not Fount Route
+// Page Not Found Route
 app.get('*', (req, res) => {
   res.send(`
     <h1>404 Page Not Found</h1>
